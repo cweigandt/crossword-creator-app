@@ -1,3 +1,7 @@
 import { combineReducers } from 'redux';
 
-export default combineReducers({});
+import puzzleReducer from './puzzleReducer';
+
+export default combineReducers({
+  puzzle: puzzleReducer,
+});

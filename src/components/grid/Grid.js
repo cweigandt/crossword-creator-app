@@ -1,4 +1,5 @@
 import { useCallback, useState } from 'react';
+import { connect } from 'react-redux';
 import '../../styles/grid/Grid.css';
 import Block from './Block';
 
@@ -18,21 +19,18 @@ const getClueNumber = (elements, row, column) => {
 };
 
 const Grid = ({ elements, template, onChange }) => {
-  const [puzzle, setPuzzle] = useState(template);
-
   const handleMouseUp = useCallback(
     (row, column) => {
-      const puzzleCopy = puzzle.map((row) => row.map((el) => el));
+      const puzzleCopy = template.map((row) => row.map((el) => el));
       puzzleCopy[row][column] = Math.abs(puzzleCopy[row][column] - 1); // 1 -> 0, 0 -> -1 -> 1
-      setPuzzle(puzzleCopy);
       onChange(puzzleCopy);
     },
-    [onChange, puzzle]
+    [onChange, template]
   );
 
   return (
     <div id='crossword' className='crossword-board'>
-      {puzzle.map((row, rowIndex) => {
+      {template.map((row, rowIndex) => {
         return (
           <div key={rowIndex} className='row'>
             {row.map((el, columnIndex) => (
@@ -52,4 +50,7 @@ const Grid = ({ elements, template, onChange }) => {
   );
 };
 
-export default Grid;
+export default connect((state) => ({
+  template: state.puzzle.puzzle,
+  elements: state.puzzle.elements,
+}))(Grid);

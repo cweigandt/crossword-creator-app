@@ -1,44 +1,36 @@
 import { useCallback, useState } from 'react';
+import { connect, useDispatch } from 'react-redux';
 
 import Grid from '../components/grid/Grid';
-import { populateElements } from '../utilities/CluesGenerator';
-import { copyTextToClipboard, newPuzzleObjFromTemplate } from '../utilities';
+import { templateUpdated } from '../actions/puzzleActions';
 
-import templates from '../templates.json';
 import CountsGraph from '../components/CountsGraph';
 
 import '../styles/containers/PuzzleContainer.css';
 
-const PuzzleContainer = (props) => {
-  const [puzzleObj, setPuzzleObj] = useState(
-    populateElements(newPuzzleObjFromTemplate(templates[0]))
-  );
-
-  const handleGetJSON = useCallback(() => {
-    copyTextToClipboard(JSON.stringify(puzzleObj));
-  }, [puzzleObj]);
+const PuzzleContainer = ({ template, elements }) => {
+  const dispatch = useDispatch();
 
   const handleChange = useCallback(
-    (puzzle) => {
-      const copy = newPuzzleObjFromTemplate(puzzleObj);
-      copy.puzzle = puzzle;
-      populateElements(copy);
-      setPuzzleObj(copy);
+    (updatedTemplate) => {
+      dispatch(templateUpdated(updatedTemplate));
     },
-    [puzzleObj]
+    [dispatch]
   );
 
   return (
     <div className='puzzle-container'>
       <Grid
-        template={templates[0].puzzle}
-        elements={puzzleObj.elements}
+        template={template}
+        elements={elements}
         onChange={handleChange}
       ></Grid>
-      <CountsGraph elements={puzzleObj.elements} />
-      <button onClick={handleGetJSON}>Copy JSON</button>
+      <CountsGraph elements={elements} />
     </div>
   );
 };
 
-export default PuzzleContainer;
+export default connect((state) => ({
+  template: state.puzzle.template,
+  elements: state.puzzle.elements,
+}))(PuzzleContainer);

@@ -8,12 +8,18 @@
   align-items: center;
 }
 
+.panel {
+  height: 100%;
+}
+
+.panel-container .panel-center {
+  width: 60%;
+}
+
 .panel-container .panel-left {
   width: 20%;
-  height: 100%;
 }
 
 .panel-container .panel-right {
   width: 20%;
-  height: 100%;
 }

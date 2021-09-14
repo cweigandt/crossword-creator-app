@@ -1,0 +1,20 @@
+.words-list {
+  padding: 5px;
+}
+
+.word {
+  font-family: monospace;
+  font-size: 18px;
+
+  text-align: center;
+
+  color: black;
+  padding: 3px;
+
+  cursor: default;
+}
+
+.word.has-answer {
+  background-color: lightblue;
+  border: 1px solid white;
+}
