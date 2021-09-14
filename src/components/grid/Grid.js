@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { useCallback } from 'react';
 import { connect } from 'react-redux';
 import '../../styles/grid/Grid.css';
 import Block from './Block';
