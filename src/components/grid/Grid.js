@@ -26,16 +26,13 @@ const Grid = ({ elements, template, selection, onClick }) => {
     [onClick]
   );
 
-  const selectedElement = getElement(
-    elements,
-    selection.row,
-    selection.column,
-    selection.direction
-  );
+  const selectedElement =
+    selection &&
+    getElement(elements, selection.row, selection.column, selection.direction);
 
   const renderBlock = (content, row, column) => {
     const classes = [];
-    if (row === selection.row && column === selection.column) {
+    if (selection && row === selection.row && column === selection.column) {
       // This is the selected block
       classes.push('selected-block');
     }

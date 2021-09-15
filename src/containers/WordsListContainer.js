@@ -2,13 +2,41 @@ import WordsList from '../components/words-list/WordsList';
 
 import '../styles/containers/WordsListContainer.css';
 import wordsList from '../data/allClues.json';
+import { connect } from 'react-redux';
+import { getElement } from '../utilities';
+import { GridModes } from '../constants/GridModes';
 
-const WordsListContainer = () => {
+const MAX_WORDS = 100;
+
+const WordsListContainer = ({ elements, mode, selection }) => {
+  let displayedWords = wordsList.slice(0, MAX_WORDS);
+
+  if (mode === GridModes.LETTER) {
+    const selectedElement = getElement(
+      elements,
+      selection.row,
+      selection.column,
+      selection.direction
+    );
+
+    displayedWords = selectedElement
+      ? wordsList.filter((word) => {
+          return (
+            word.answer.replace(/[ -]/g, '').length === selectedElement.length
+          );
+        })
+      : wordsList;
+  }
+
   return (
     <div className='words-list-container'>
-      <WordsList words={wordsList} />
+      <WordsList words={displayedWords} />
     </div>
   );
 };
 
-export default WordsListContainer;
+export default connect((state) => ({
+  elements: state.puzzle.elements,
+  selection: state.interaction.selectedElement,
+  mode: state.puzzle.mode,
+}))(WordsListContainer);

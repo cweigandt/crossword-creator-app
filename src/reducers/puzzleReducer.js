@@ -10,7 +10,7 @@ const initialState = {
     defaultTemplate.width,
     defaultTemplate.height
   ),
-  mode: GridModes.LETTER,
+  mode: GridModes.TEMPLATE,
 };
 
 const reducer = (state = initialState, action) => {

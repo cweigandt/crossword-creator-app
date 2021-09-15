@@ -2,7 +2,7 @@ import { useCallback } from 'react';
 import { connect, useDispatch } from 'react-redux';
 
 import Grid from '../components/grid/Grid';
-import { templateUpdated } from '../actions/puzzleActions';
+import { modeChanged, templateUpdated } from '../actions/puzzleActions';
 
 import CountsGraph from '../components/CountsGraph';
 import { GridModes } from '../constants/GridModes';
@@ -67,12 +67,22 @@ const PuzzleContainer = ({ template, elements, mode, selection }) => {
     [dispatch, elements, mode, selection, template]
   );
 
+  const handleToggleMode = () => {
+    dispatch(
+      modeChanged(
+        mode === GridModes.TEMPLATE ? GridModes.LETTER : GridModes.TEMPLATE
+      )
+    );
+    return false;
+  };
+
   return (
     <div className='puzzle-container'>
+      <button onClick={handleToggleMode}>Toggle mode</button>
       <Grid
         template={template}
         elements={elements}
-        selection={selection}
+        selection={mode === GridModes.LETTER ? selection : null}
         onClick={handleBlockClicked}
       ></Grid>
       <CountsGraph elements={elements} />

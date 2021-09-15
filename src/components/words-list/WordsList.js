@@ -11,11 +11,7 @@ const sortFunction = (a, b) => {
 };
 
 const WordsList = ({ words }) => {
-  const displayedWords = words
-    .filter((word) => {
-      return word.answer.replace(/[ -]/g, '').length === 7;
-    })
-    .sort(sortFunction);
+  const displayedWords = words.sort(sortFunction);
 
   return (
     <div className='words-list'>
