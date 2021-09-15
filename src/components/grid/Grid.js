@@ -1,6 +1,6 @@
 import { useCallback } from 'react';
 import '../../styles/grid/Grid.css';
-import { getElementForRowColumn, isRowColumnInElement } from '../../utilities';
+import { getElement, isRowColumnInElement } from '../../utilities';
 import Block from './Block';
 
 const getClueNumber = (elements, row, column) => {
@@ -26,7 +26,7 @@ const Grid = ({ elements, template, selection, onClick }) => {
     [onClick]
   );
 
-  const selectedElement = getElementForRowColumn(
+  const selectedElement = getElement(
     elements,
     selection.row,
     selection.column,

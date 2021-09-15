@@ -23,14 +23,21 @@ export const copyTextToClipboard = (text) => {
 };
 
 export const isRowColumnInElement = (element, row, column) => {
-  const length = element.answer.replace(/[ -]/g, '').length;
   if (element.direction === Directions.ACROSS) {
-    if (column >= element.column && column < element.column + length) {
+    if (element.row !== row) {
+      return false;
+    }
+
+    if (column >= element.column && column < element.column + element.length) {
       return true;
     }
   }
   if (element.direction === Directions.DOWN) {
-    if (row >= element.row && row < element.row + length) {
+    if (element.column !== column) {
+      return false;
+    }
+
+    if (row >= element.row && row < element.row + element.length) {
       return true;
     }
   }
@@ -38,7 +45,7 @@ export const isRowColumnInElement = (element, row, column) => {
   return false;
 };
 
-export const getElementForRowColumn = (elements, row, column, direction) => {
+export const getElement = (elements, row, column, direction) => {
   const possibleElements = elements.filter((el) => {
     return (
       el.direction === direction && (el.row === row || el.column === column)
@@ -53,4 +60,8 @@ export const getElementForRowColumn = (elements, row, column, direction) => {
   });
 
   return foundElement;
+};
+
+export const getElementsForRowColumn = (elements, row, column) => {
+  return elements.filter((el) => isRowColumnInElement(el, row, column));
 };

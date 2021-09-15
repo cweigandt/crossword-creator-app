@@ -10,6 +10,7 @@ import { GridModes } from '../constants/GridModes';
 import '../styles/containers/PuzzleContainer.css';
 import { elementSelected } from '../actions/interactionActions';
 import { Directions } from '../constants/Directions';
+import { getElementsForRowColumn } from '../utilities';
 
 const PuzzleContainer = ({ template, elements, mode, selection }) => {
   const dispatch = useDispatch();
@@ -25,15 +26,45 @@ const PuzzleContainer = ({ template, elements, mode, selection }) => {
       }
 
       if (mode === GridModes.LETTER) {
-        const newSelection = {
-          row,
-          column,
-          direction: Directions.ACROSS,
-        };
-        dispatch(elementSelected(newSelection));
+        if (template[row][column] === 1) {
+          let newSelection = { ...selection };
+
+          // If clicking on same block, toggle direction
+          if (selection.row === row && selection.column === column) {
+            newSelection.direction =
+              newSelection.direction === Directions.ACROSS
+                ? Directions.DOWN
+                : Directions.ACROSS;
+          } else {
+            const possibleSelectedElements = getElementsForRowColumn(
+              elements,
+              row,
+              column
+            );
+
+            if (possibleSelectedElements.length === 0) {
+              console.error(`Did not find element for block ${row} ${column}`);
+            } else if (possibleSelectedElements.length === 1) {
+              newSelection = {
+                row,
+                column: column,
+                direction: possibleSelectedElements[0].direction,
+              };
+            } else {
+              // Down and Across both have clues, default to current direction
+              newSelection = {
+                row,
+                column,
+                direction: selection.direction,
+              };
+            }
+          }
+
+          dispatch(elementSelected(newSelection));
+        }
       }
     },
-    [dispatch, mode, template]
+    [dispatch, elements, mode, selection, template]
   );
 
   return (
