@@ -11,6 +11,7 @@ import '../styles/containers/PuzzleContainer.css';
 import { elementSelected } from '../actions/interactionActions';
 import { Directions } from '../constants/Directions';
 import { getElementsForRowColumn } from '../utilities';
+import ModeToggle from '../components/ModeToggle';
 
 const PuzzleContainer = ({ template, elements, mode, selection }) => {
   const dispatch = useDispatch();
@@ -67,18 +68,9 @@ const PuzzleContainer = ({ template, elements, mode, selection }) => {
     [dispatch, elements, mode, selection, template]
   );
 
-  const handleToggleMode = () => {
-    dispatch(
-      modeChanged(
-        mode === GridModes.TEMPLATE ? GridModes.LETTER : GridModes.TEMPLATE
-      )
-    );
-    return false;
-  };
-
   return (
     <div className='puzzle-container'>
-      <button onClick={handleToggleMode}>Toggle mode</button>
+      <ModeToggle />
       <Grid
         template={template}
         elements={elements}

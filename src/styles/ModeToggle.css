@@ -1,0 +1,26 @@
+.mode-toggle {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 6px;
+  padding: 3px;
+}
+
+.mode {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  width: 20px;
+  height: 20px;
+
+  margin: 6px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+
+  transform: scale(1.5);
+}
+
+.mode.selected {
+  background-color: darkseagreen;
+}
