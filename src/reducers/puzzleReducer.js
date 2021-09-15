@@ -1,3 +1,4 @@
+import { GridModes } from '../actions/constants/GridModes';
 import templates from '../templates.json';
 import { generateElements } from '../utilities/CluesGenerator';
 
@@ -5,11 +6,13 @@ const defaultTemplate = templates[0];
 const initialState = {
   ...defaultTemplate,
   elements: generateElements(
-    defaultTemplate.puzzle,
+    defaultTemplate.template,
     defaultTemplate.width,
     defaultTemplate.height
   ),
+  mode: GridModes.TEMPLATE,
 };
+
 const reducer = (state = initialState, action) => {
   switch (action.type) {
     case 'ELEMENTS_UPDATED':
@@ -20,8 +23,13 @@ const reducer = (state = initialState, action) => {
     case 'TEMPLATE_UPDATED':
       return {
         ...state,
-        puzzle: action.template,
+        template: action.template,
         elements: generateElements(action.template, state.width, state.height),
+      };
+    case 'MODE_CHANGED':
+      return {
+        ...state,
+        mode: action.mode,
       };
 
     default:

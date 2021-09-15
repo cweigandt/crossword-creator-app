@@ -11,11 +11,13 @@ import '../styles/containers/PuzzleContainer.css';
 const PuzzleContainer = ({ template, elements }) => {
   const dispatch = useDispatch();
 
-  const handleChange = useCallback(
-    (updatedTemplate) => {
+  const handleBlockClicked = useCallback(
+    (row, column) => {
+      const updatedTemplate = template.map((row) => row.map((el) => el));
+      updatedTemplate[row][column] = Math.abs(updatedTemplate[row][column] - 1); // 1 -> 0, 0 -> -1 -> 1
       dispatch(templateUpdated(updatedTemplate));
     },
-    [dispatch]
+    [dispatch, template]
   );
 
   return (
@@ -23,7 +25,7 @@ const PuzzleContainer = ({ template, elements }) => {
       <Grid
         template={template}
         elements={elements}
-        onChange={handleChange}
+        onClick={handleBlockClicked}
       ></Grid>
       <CountsGraph elements={elements} />
     </div>

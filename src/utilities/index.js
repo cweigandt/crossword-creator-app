@@ -1,6 +1,6 @@
 export const newPuzzleObjFromTemplate = (puzzleObj) => {
   const copy = { ...puzzleObj };
-  copy.puzzle = copy.puzzle.map((row) => row.map((el) => el));
+  copy.template = copy.template.map((row) => row.map((el) => el));
   delete copy['elements'];
   return copy;
 };

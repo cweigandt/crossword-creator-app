@@ -18,14 +18,12 @@ const getClueNumber = (elements, row, column) => {
   return -1;
 };
 
-const Grid = ({ elements, template, onChange }) => {
+const Grid = ({ elements, template, onClick }) => {
   const handleMouseUp = useCallback(
     (row, column) => {
-      const puzzleCopy = template.map((row) => row.map((el) => el));
-      puzzleCopy[row][column] = Math.abs(puzzleCopy[row][column] - 1); // 1 -> 0, 0 -> -1 -> 1
-      onChange(puzzleCopy);
+      onClick(row, column);
     },
-    [onChange, template]
+    [onClick]
   );
 
   return (
@@ -50,7 +48,4 @@ const Grid = ({ elements, template, onChange }) => {
   );
 };
 
-export default connect((state) => ({
-  template: state.puzzle.puzzle,
-  elements: state.puzzle.elements,
-}))(Grid);
+export default Grid;
