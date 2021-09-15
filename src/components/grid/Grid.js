@@ -1,5 +1,4 @@
 import { useCallback } from 'react';
-import { connect } from 'react-redux';
 import '../../styles/grid/Grid.css';
 import Block from './Block';
 
@@ -18,7 +17,7 @@ const getClueNumber = (elements, row, column) => {
   return -1;
 };
 
-const Grid = ({ elements, template, onClick }) => {
+const Grid = ({ elements, template, selection, onClick }) => {
   const handleMouseUp = useCallback(
     (row, column) => {
       onClick(row, column);

@@ -1,3 +1,5 @@
+import { Directions } from '../actions/constants/Directions';
+
 const getLength = (template, startRow, startColumn, yStep, xStep) => {
   let currentRow = startRow;
   let currentColumn = startColumn;
@@ -35,7 +37,7 @@ const getAcrossElement = (template, row, column, clueNumber) => {
       row,
       column,
       length,
-      direction: 'across',
+      direction: Directions.ACROSS,
       clue: '',
       answer: '',
     };
@@ -63,7 +65,7 @@ const getDownElement = (template, row, column, clueNumber) => {
       row,
       column,
       length,
-      direction: 'down',
+      direction: Directions.DOWN,
       clue: '',
       answer: '',
     };

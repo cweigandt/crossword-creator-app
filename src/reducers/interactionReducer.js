@@ -1,12 +1,18 @@
+import { Directions } from '../actions/constants/Directions';
+
 const initialState = {
-  selectedElement: null,
+  selectedElement: {
+    row: -1,
+    column: -1,
+    direction: Directions.ACROSS,
+  },
 };
 const reducer = (state = initialState, action) => {
   switch (action.type) {
     case 'ELEMENT_SELECTED':
       return {
         ...state,
-        selectedElement: action.element,
+        selectedElement: action.selection,
       };
 
     default:

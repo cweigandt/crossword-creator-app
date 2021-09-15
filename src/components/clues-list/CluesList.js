@@ -1,3 +1,4 @@
+import { Directions } from '../../actions/constants/Directions';
 import '../../styles/clues-list/CluesList.css';
 
 const sortFunction = (a, b) => {
@@ -8,11 +9,11 @@ const sortFunction = (a, b) => {
     return 1;
   }
 
-  if (a.direction === 'across' && b.direction === 'down') {
+  if (a.direction === Directions.ACROSS && b.direction === Directions.DOWN) {
     return -1;
   }
 
-  if (b.direction === 'across' && a.direction === 'down') {
+  if (b.direction === Directions.ACROSS && a.direction === Directions.DOWN) {
     return 1;
   }
 
@@ -20,7 +21,7 @@ const sortFunction = (a, b) => {
 };
 
 const makeDisplayString = (clueObj) => {
-  const direction = clueObj.direction === 'across' ? 'a' : 'd';
+  const direction = clueObj.direction === Directions.ACROSS ? 'a' : 'd';
   return `${clueObj.number}${direction}: ${clueObj.clue}`;
 };
 

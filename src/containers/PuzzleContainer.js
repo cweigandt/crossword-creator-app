@@ -5,19 +5,27 @@ import Grid from '../components/grid/Grid';
 import { templateUpdated } from '../actions/puzzleActions';
 
 import CountsGraph from '../components/CountsGraph';
+import GridModes from '../../constants/GridModes';
 
 import '../styles/containers/PuzzleContainer.css';
 
-const PuzzleContainer = ({ template, elements }) => {
+const PuzzleContainer = ({ template, elements, mode, selection }) => {
   const dispatch = useDispatch();
 
   const handleBlockClicked = useCallback(
     (row, column) => {
-      const updatedTemplate = template.map((row) => row.map((el) => el));
-      updatedTemplate[row][column] = Math.abs(updatedTemplate[row][column] - 1); // 1 -> 0, 0 -> -1 -> 1
-      dispatch(templateUpdated(updatedTemplate));
+      if (mode === GridModes.TEMPLATE) {
+        const updatedTemplate = template.map((row) => row.map((el) => el));
+        updatedTemplate[row][column] = Math.abs(
+          updatedTemplate[row][column] - 1
+        ); // 1 -> 0, 0 -> -1 -> 1
+        dispatch(templateUpdated(updatedTemplate));
+      }
+
+      if (mode === GridModes.LETTER) {
+      }
     },
-    [dispatch, template]
+    [dispatch, mode, template]
   );
 
   return (
@@ -25,6 +33,7 @@ const PuzzleContainer = ({ template, elements }) => {
       <Grid
         template={template}
         elements={elements}
+        selection={selection}
         onClick={handleBlockClicked}
       ></Grid>
       <CountsGraph elements={elements} />
@@ -35,4 +44,6 @@ const PuzzleContainer = ({ template, elements }) => {
 export default connect((state) => ({
   template: state.puzzle.template,
   elements: state.puzzle.elements,
+  mode: state.puzzle.mode,
+  selection: state.interaction.selection,
 }))(PuzzleContainer);

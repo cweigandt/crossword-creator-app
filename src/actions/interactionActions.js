@@ -1,6 +1,4 @@
-export const elementSelected = ({ row, column, direction }) => ({
+export const elementSelected = (selection) => ({
   type: 'ELEMENT_SELECTED',
-  row,
-  column,
-  direction,
+  selection,
 });
