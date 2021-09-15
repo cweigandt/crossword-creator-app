@@ -57,3 +57,11 @@
 
   cursor: default;
 }
+
+.crossword-board .block.selected-block {
+  background-color: yellow;
+}
+
+.crossword-board .block.selected-word {
+  background-color: lightyellow;
+}

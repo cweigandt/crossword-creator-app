@@ -1,4 +1,4 @@
-import { GridModes } from '../actions/constants/GridModes';
+import { GridModes } from '../constants/GridModes';
 import templates from '../templates.json';
 import { generateElements } from '../utilities/CluesGenerator';
 
@@ -10,7 +10,7 @@ const initialState = {
     defaultTemplate.width,
     defaultTemplate.height
   ),
-  mode: GridModes.TEMPLATE,
+  mode: GridModes.LETTER,
 };
 
 const reducer = (state = initialState, action) => {

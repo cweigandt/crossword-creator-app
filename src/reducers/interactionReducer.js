@@ -1,4 +1,4 @@
-import { Directions } from '../actions/constants/Directions';
+import { Directions } from '../constants/Directions';
 
 const initialState = {
   selectedElement: {

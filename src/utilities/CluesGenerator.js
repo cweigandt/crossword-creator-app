@@ -1,4 +1,4 @@
-import { Directions } from '../actions/constants/Directions';
+import { Directions } from '../constants/Directions';
 
 const getLength = (template, startRow, startColumn, yStep, xStep) => {
   let currentRow = startRow;

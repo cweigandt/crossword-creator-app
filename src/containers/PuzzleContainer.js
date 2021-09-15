@@ -5,9 +5,11 @@ import Grid from '../components/grid/Grid';
 import { templateUpdated } from '../actions/puzzleActions';
 
 import CountsGraph from '../components/CountsGraph';
-import GridModes from '../../constants/GridModes';
+import { GridModes } from '../constants/GridModes';
 
 import '../styles/containers/PuzzleContainer.css';
+import { elementSelected } from '../actions/interactionActions';
+import { Directions } from '../constants/Directions';
 
 const PuzzleContainer = ({ template, elements, mode, selection }) => {
   const dispatch = useDispatch();
@@ -23,6 +25,12 @@ const PuzzleContainer = ({ template, elements, mode, selection }) => {
       }
 
       if (mode === GridModes.LETTER) {
+        const newSelection = {
+          row,
+          column,
+          direction: Directions.ACROSS,
+        };
+        dispatch(elementSelected(newSelection));
       }
     },
     [dispatch, mode, template]
@@ -45,5 +53,5 @@ export default connect((state) => ({
   template: state.puzzle.template,
   elements: state.puzzle.elements,
   mode: state.puzzle.mode,
-  selection: state.interaction.selection,
+  selection: state.interaction.selectedElement,
 }))(PuzzleContainer);

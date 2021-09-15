@@ -1,4 +1,4 @@
-import { Directions } from '../../actions/constants/Directions';
+import { Directions } from '../../constants/Directions';
 import '../../styles/clues-list/CluesList.css';
 
 const sortFunction = (a, b) => {
