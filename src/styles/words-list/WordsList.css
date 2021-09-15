@@ -10,11 +10,13 @@
 
   color: black;
   padding: 3px;
+  margin: 2px;
 
   cursor: default;
+
+  background-color: lightgray;
 }
 
 .word.has-answer {
   background-color: lightblue;
-  border: 1px solid white;
 }

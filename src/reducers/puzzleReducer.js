@@ -1,16 +1,15 @@
-import { GridModes } from '../constants/GridModes';
 import templates from '../templates.json';
 import { generateElements } from '../utilities/CluesGenerator';
 
 const defaultTemplate = templates[0];
 const initialState = {
   ...defaultTemplate,
+  solution: defaultTemplate.template.map((row) => row.map((el) => '')),
   elements: generateElements(
     defaultTemplate.template,
     defaultTemplate.width,
     defaultTemplate.height
   ),
-  mode: GridModes.TEMPLATE,
 };
 
 const reducer = (state = initialState, action) => {
@@ -25,11 +24,6 @@ const reducer = (state = initialState, action) => {
         ...state,
         template: action.template,
         elements: generateElements(action.template, state.width, state.height),
-      };
-    case 'MODE_CHANGED':
-      return {
-        ...state,
-        mode: action.mode,
       };
 
     default:

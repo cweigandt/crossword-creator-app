@@ -3,7 +3,7 @@ import { FiEdit, FiSquare } from 'react-icons/fi';
 
 import '../styles/ModeToggle.css';
 import { GridModes } from '../constants/GridModes';
-import { modeChanged } from '../actions/puzzleActions';
+import { modeChanged } from '../actions/interactionActions';
 
 const ModeToggle = ({ mode }) => {
   const dispatch = useDispatch();
@@ -34,4 +34,6 @@ const ModeToggle = ({ mode }) => {
   );
 };
 
-export default connect((state) => ({ mode: state.puzzle.mode }))(ModeToggle);
+export default connect((state) => ({ mode: state.interaction.mode }))(
+  ModeToggle
+);

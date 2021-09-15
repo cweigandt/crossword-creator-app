@@ -1,6 +1,8 @@
 import { Directions } from '../constants/Directions';
+import { GridModes } from '../constants/GridModes';
 
 const initialState = {
+  mode: GridModes.TEMPLATE,
   selectedElement: {
     row: -1,
     column: -1,
@@ -13,6 +15,11 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         selectedElement: action.selection,
+      };
+    case 'MODE_CHANGED':
+      return {
+        ...state,
+        mode: action.mode,
       };
 
     default:

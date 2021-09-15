@@ -9,7 +9,7 @@ import { GridModes } from '../constants/GridModes';
 const MAX_WORDS = 100;
 
 const WordsListContainer = ({ elements, mode, selection }) => {
-  let displayedWords = wordsList.slice(0, MAX_WORDS);
+  let displayedWords = wordsList;
 
   if (mode === GridModes.LETTER) {
     const selectedElement = getElement(
@@ -26,6 +26,12 @@ const WordsListContainer = ({ elements, mode, selection }) => {
           );
         })
       : wordsList;
+  } else if (wordsList.length > MAX_WORDS) {
+    return (
+      <div className='words-list-container'>
+        <div style={{ textAlign: 'center' }}>{`${wordsList.length} words`}</div>
+      </div>
+    );
   }
 
   return (
@@ -38,5 +44,5 @@ const WordsListContainer = ({ elements, mode, selection }) => {
 export default connect((state) => ({
   elements: state.puzzle.elements,
   selection: state.interaction.selectedElement,
-  mode: state.puzzle.mode,
+  mode: state.interaction.mode,
 }))(WordsListContainer);

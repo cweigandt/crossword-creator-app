@@ -59,9 +59,9 @@
 }
 
 .crossword-board .block.selected-word {
-  background-color: lightyellow;
+  background-color: yellow;
 }
 
 .crossword-board .block.selected-block {
-  background-color: yellow;
+  background-color: yellowgreen;
 }

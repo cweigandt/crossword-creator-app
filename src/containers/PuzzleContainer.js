@@ -2,7 +2,7 @@ import { useCallback } from 'react';
 import { connect, useDispatch } from 'react-redux';
 
 import Grid from '../components/grid/Grid';
-import { modeChanged, templateUpdated } from '../actions/puzzleActions';
+import { templateUpdated } from '../actions/puzzleActions';
 
 import CountsGraph from '../components/CountsGraph';
 import { GridModes } from '../constants/GridModes';
@@ -85,6 +85,6 @@ const PuzzleContainer = ({ template, elements, mode, selection }) => {
 export default connect((state) => ({
   template: state.puzzle.template,
   elements: state.puzzle.elements,
-  mode: state.puzzle.mode,
+  mode: state.interaction.mode,
   selection: state.interaction.selectedElement,
 }))(PuzzleContainer);
