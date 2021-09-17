@@ -1,5 +1,7 @@
 import { Directions } from '../../constants/Directions';
 
+export type TemplateType = number[][];
+
 export type ElementType = {
   number: number;
   row: number;
@@ -13,7 +15,7 @@ export type PuzzleType = {
   id: number;
   width: number;
   height: number;
-  template: number[][];
+  template: TemplateType;
 
   solution?: string[][];
   elements?: any;

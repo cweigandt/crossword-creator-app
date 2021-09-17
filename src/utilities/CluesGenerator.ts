@@ -1,6 +1,13 @@
 import { Directions } from '../constants/Directions';
+import { ElementType, TemplateType } from '../data/types/PuzzleTypes';
 
-const getLength = (template, startRow, startColumn, yStep, xStep) => {
+const getLength = (
+  template: TemplateType,
+  startRow: number,
+  startColumn: number,
+  yStep: number,
+  xStep: number
+): number => {
   let currentRow = startRow;
   let currentColumn = startColumn;
 
@@ -18,7 +25,12 @@ const getLength = (template, startRow, startColumn, yStep, xStep) => {
   return len;
 };
 
-const getAcrossElement = (template, row, column, clueNumber) => {
+const getAcrossElement = (
+  template: TemplateType,
+  row: number,
+  column: number,
+  clueNumber: number
+): ElementType | null => {
   if (template[row][column] === 0) {
     return null;
   }
@@ -42,9 +54,16 @@ const getAcrossElement = (template, row, column, clueNumber) => {
       answer: '',
     };
   }
+
+  return null;
 };
 
-const getDownElement = (template, row, column, clueNumber) => {
+const getDownElement = (
+  template: TemplateType,
+  row: number,
+  column: number,
+  clueNumber: number
+): ElementType | null => {
   if (template[row][column] === 0) {
     return null;
   }
@@ -70,9 +89,15 @@ const getDownElement = (template, row, column, clueNumber) => {
       answer: '',
     };
   }
+
+  return null;
 };
 
-export const generateElements = (template, width, height) => {
+export const generateElements = (
+  template: TemplateType,
+  width: number,
+  height: number
+): ElementType[] => {
   const elements = [];
   let clueNumber = 1;
 

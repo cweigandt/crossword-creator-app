@@ -4,8 +4,13 @@ import { FiEdit, FiSquare } from 'react-icons/fi';
 import '../styles/ModeToggle.css';
 import { GridModes } from '../constants/GridModes';
 import { modeChanged } from '../actions/interactionActions';
+import { RootState } from '../reducers';
 
-const ModeToggle = ({ mode }) => {
+type PropTypes = {
+  mode: GridModes;
+};
+
+const ModeToggle = ({ mode }: PropTypes) => {
   const dispatch = useDispatch();
 
   return (
@@ -34,6 +39,6 @@ const ModeToggle = ({ mode }) => {
   );
 };
 
-export default connect((state) => ({ mode: state.interaction.mode }))(
-  ModeToggle
-);
+export default connect((state: RootState) => ({
+  mode: state.interaction.mode,
+}))(ModeToggle);

@@ -1,13 +1,14 @@
 import { Directions } from '../constants/Directions';
+import { ElementType, PuzzleType } from '../data/types/PuzzleTypes';
 
-export const newPuzzleObjFromTemplate = (puzzleObj) => {
+export const newPuzzleObjFromTemplate = (puzzleObj: PuzzleType): PuzzleType => {
   const copy = { ...puzzleObj };
   copy.template = copy.template.map((row) => row.map((el) => el));
   delete copy['elements'];
   return copy;
 };
 
-export const copyTextToClipboard = (text) => {
+export const copyTextToClipboard = (text: string): void => {
   if (!navigator.clipboard) {
     alert('Unable to copy to clipboard');
     return;
@@ -22,7 +23,11 @@ export const copyTextToClipboard = (text) => {
   );
 };
 
-export const isRowColumnInElement = (element, row, column) => {
+export const isRowColumnInElement = (
+  element: ElementType,
+  row: number,
+  column: number
+): boolean => {
   if (element.direction === Directions.ACROSS) {
     if (element.row !== row) {
       return false;
@@ -45,7 +50,12 @@ export const isRowColumnInElement = (element, row, column) => {
   return false;
 };
 
-export const getElement = (elements, row, column, direction) => {
+export const getElement = (
+  elements: ElementType[],
+  row: number,
+  column: number,
+  direction: Directions
+): ElementType | null => {
   const possibleElements = elements.filter((el) => {
     return (
       el.direction === direction && (el.row === row || el.column === column)
@@ -62,6 +72,10 @@ export const getElement = (elements, row, column, direction) => {
   return foundElement;
 };
 
-export const getElementsForRowColumn = (elements, row, column) => {
+export const getElementsForRowColumn = (
+  elements: ElementType[],
+  row: number,
+  column: number
+): ElementType[] => {
   return elements.filter((el) => isRowColumnInElement(el, row, column));
 };
