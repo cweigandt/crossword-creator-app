@@ -5,6 +5,7 @@
 .word {
   font-family: monospace;
   font-size: 18px;
+  font-variant: small-caps;
 
   text-align: center;
 
@@ -19,4 +20,8 @@
 
 .word.has-answer {
   background-color: lightblue;
+}
+
+.word.selected {
+  background-color: yellowgreen;
 }

@@ -10,19 +10,33 @@ const sortFunction = (a, b) => {
   return 0;
 };
 
-const WordsList = ({ words }) => {
-  const displayedWords = words.sort(sortFunction);
+const WordsList = ({ clues, onClick, selectedClue }) => {
+  const displayedWords = clues.sort(sortFunction);
 
   return (
     <div className='words-list'>
-      {displayedWords.map((wordObj, index) => (
-        <div
-          key={index}
-          className={`word ${wordObj.clue.length > 0 && 'has-answer'}`}
-        >
-          {wordObj.answer}
-        </div>
-      ))}
+      {displayedWords.map((wordObj, index) => {
+        const classes = ['word'];
+        if (wordObj.clue.length > 0) {
+          classes.push('has-answer');
+        }
+        if (
+          wordObj.clue === selectedClue.clue &&
+          wordObj.answer === selectedClue.answer
+        ) {
+          classes.push('selected');
+        }
+
+        return (
+          <div
+            key={index}
+            className={classes.join(' ')}
+            onClick={() => onClick(wordObj)}
+          >
+            {wordObj.answer}
+          </div>
+        );
+      })}
     </div>
   );
 };

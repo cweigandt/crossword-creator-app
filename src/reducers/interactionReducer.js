@@ -8,6 +8,7 @@ const initialState = {
     column: -1,
     direction: Directions.ACROSS,
   },
+  selectedClue: {},
 };
 const reducer = (state = initialState, action) => {
   switch (action.type) {
@@ -20,6 +21,11 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         mode: action.mode,
+      };
+    case 'WORD_SELECTED':
+      return {
+        ...state,
+        selectedClue: { ...action.clue },
       };
 
     default:

@@ -2,13 +2,24 @@ import WordsList from '../components/words-list/WordsList';
 
 import '../styles/containers/WordsListContainer.css';
 import wordsList from '../data/allClues.json';
-import { connect } from 'react-redux';
+import { connect, useDispatch } from 'react-redux';
 import { getElement } from '../utilities';
 import { GridModes } from '../constants/GridModes';
+import { useCallback } from 'react';
+import { wordSelected } from '../actions/interactionActions';
 
 const MAX_WORDS = 100;
 
-const WordsListContainer = ({ elements, mode, selection }) => {
+const WordsListContainer = ({ elements, mode, selection, selectedClue }) => {
+  const dispatch = useDispatch();
+
+  const handleWordClick = useCallback(
+    (clue) => {
+      dispatch(wordSelected(clue));
+    },
+    [dispatch]
+  );
+
   let displayedWords = wordsList;
 
   if (mode === GridModes.LETTER) {
@@ -36,7 +47,11 @@ const WordsListContainer = ({ elements, mode, selection }) => {
 
   return (
     <div className='words-list-container'>
-      <WordsList words={displayedWords} />
+      <WordsList
+        clues={displayedWords}
+        onClick={handleWordClick}
+        selectedClue={selectedClue}
+      />
     </div>
   );
 };
@@ -45,4 +60,5 @@ export default connect((state) => ({
   elements: state.puzzle.elements,
   selection: state.interaction.selectedElement,
   mode: state.interaction.mode,
+  selectedClue: state.interaction.selectedClue,
 }))(WordsListContainer);
