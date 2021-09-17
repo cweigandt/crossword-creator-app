@@ -18,8 +18,8 @@ export type PuzzleType = {
   height: number;
   template: TemplateType;
 
-  solution?: SolutionType;
-  elements?: ElementType[];
+  solution: SolutionType;
+  elements: ElementType[];
 };
 
 export type ClueType = {

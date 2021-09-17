@@ -3,12 +3,22 @@ import WordsList from '../components/words-list/WordsList';
 import '../styles/containers/WordsListContainer.css';
 import wordsList from '../data/allClues.json';
 import { connect, useDispatch } from 'react-redux';
-import { getElement } from '../utilities';
 import { GridModes } from '../constants/GridModes';
 import { useCallback } from 'react';
 import { wordSelected } from '../actions/interactionActions';
 import { addClue } from '../actions/puzzleActions';
 import { getWordsThatFit } from '../utilities/WordsListUtils';
+import { ClueType, ElementType, SolutionType } from '../data/types/PuzzleTypes';
+import { SelectionType } from '../data/types/InteractionTypes';
+import { RootState } from '../reducers';
+
+type PropsType = {
+  elements: ElementType[];
+  mode: GridModes;
+  selection: SelectionType;
+  solution: SolutionType;
+  selectedClue: ClueType;
+};
 
 const MAX_WORDS = 100;
 
@@ -18,7 +28,7 @@ const WordsListContainer = ({
   selection,
   solution,
   selectedClue,
-}) => {
+}: PropsType) => {
   const dispatch = useDispatch();
 
   const handleWordClick = useCallback(
@@ -29,7 +39,7 @@ const WordsListContainer = ({
     [dispatch, selection]
   );
 
-  let displayedWords = wordsList;
+  let displayedWords = wordsList as ClueType[];
 
   if (mode === GridModes.LETTER) {
     displayedWords = getWordsThatFit(wordsList, elements, selection, solution);
@@ -52,7 +62,7 @@ const WordsListContainer = ({
   );
 };
 
-export default connect((state) => ({
+export default connect((state: RootState) => ({
   elements: state.puzzle.elements,
   selection: state.interaction.selectedElement,
   solution: state.puzzle.solution,

@@ -31,8 +31,8 @@ const reducer = (state = initialState, action: AnyAction) => {
       };
     case 'ADD_CLUE':
       const rootSelection = getRootSelection(
-        state.elements!,
-        action.selection!,
+        state.elements,
+        action.selection,
         action.selection.row,
         action.selection.column
       );
@@ -43,16 +43,8 @@ const reducer = (state = initialState, action: AnyAction) => {
 
       return {
         ...state,
-        solution: addClueToSolution(
-          state.solution!,
-          action.clue,
-          rootSelection
-        ),
-        elements: addClueToElements(
-          state.elements!,
-          action.clue,
-          rootSelection
-        ),
+        solution: addClueToSolution(state.solution, action.clue, rootSelection),
+        elements: addClueToElements(state.elements, action.clue, rootSelection),
       };
 
     default:

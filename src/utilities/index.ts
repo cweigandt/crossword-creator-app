@@ -2,13 +2,6 @@ import { Directions } from '../constants/Directions';
 import { SelectionType } from '../data/types/InteractionTypes';
 import { ElementType, PuzzleType } from '../data/types/PuzzleTypes';
 
-export const newPuzzleObjFromTemplate = (puzzleObj: PuzzleType): PuzzleType => {
-  const copy = { ...puzzleObj };
-  copy.template = copy.template.map((row) => row.map((el) => el));
-  delete copy['elements'];
-  return copy;
-};
-
 export const copyTextToClipboard = (text: string): void => {
   if (!navigator.clipboard) {
     alert('Unable to copy to clipboard');
