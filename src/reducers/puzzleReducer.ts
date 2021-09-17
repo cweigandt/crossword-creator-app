@@ -2,7 +2,12 @@ import { AnyAction } from 'redux';
 
 import { ElementType, PuzzleType } from '../data/types/PuzzleTypes';
 import templates from '../templates.json';
-import { generateElements } from '../utilities/CluesGenerator';
+import { getRootSelection } from '../utilities';
+import {
+  addClueToElements,
+  addClueToSolution,
+  generateElements,
+} from '../utilities/CluesGenerator';
 
 const defaultPuzzle = templates[0];
 
@@ -18,16 +23,36 @@ const initialState: PuzzleType = {
 
 const reducer = (state = initialState, action: AnyAction) => {
   switch (action.type) {
-    case 'ELEMENTS_UPDATED':
-      return {
-        ...state,
-        elements: action.elements.map((el: ElementType) => el),
-      };
     case 'TEMPLATE_UPDATED':
       return {
         ...state,
         template: action.template,
         elements: generateElements(action.template, state.width, state.height),
+      };
+    case 'ADD_CLUE':
+      const rootSelection = getRootSelection(
+        state.elements!,
+        action.selection!,
+        action.selection.row,
+        action.selection.column
+      );
+
+      if (!rootSelection) {
+        return state;
+      }
+
+      return {
+        ...state,
+        solution: addClueToSolution(
+          state.solution!,
+          action.clue,
+          rootSelection
+        ),
+        elements: addClueToElements(
+          state.elements!,
+          action.clue,
+          rootSelection
+        ),
       };
 
     default:

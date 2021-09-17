@@ -13,7 +13,7 @@ import { Directions } from '../constants/Directions';
 import { getElementsForRowColumn } from '../utilities';
 import ModeToggle from '../components/ModeToggle';
 
-const PuzzleContainer = ({ template, elements, mode, selection }) => {
+const PuzzleContainer = ({ template, solution, elements, mode, selection }) => {
   const dispatch = useDispatch();
 
   const handleBlockClicked = useCallback(
@@ -73,6 +73,7 @@ const PuzzleContainer = ({ template, elements, mode, selection }) => {
       <ModeToggle />
       <Grid
         template={template}
+        solution={solution}
         elements={elements}
         selection={mode === GridModes.LETTER ? selection : null}
         onClick={handleBlockClicked}
@@ -84,6 +85,7 @@ const PuzzleContainer = ({ template, elements, mode, selection }) => {
 
 export default connect((state) => ({
   template: state.puzzle.template,
+  solution: state.puzzle.solution,
   elements: state.puzzle.elements,
   mode: state.interaction.mode,
   selection: state.interaction.selectedElement,

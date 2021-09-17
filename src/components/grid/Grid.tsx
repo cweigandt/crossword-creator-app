@@ -1,12 +1,17 @@
 import { useCallback } from 'react';
 import { SelectionType } from '../../data/types/InteractionTypes';
-import { ElementType, TemplateType } from '../../data/types/PuzzleTypes';
+import {
+  ElementType,
+  SolutionType,
+  TemplateType,
+} from '../../data/types/PuzzleTypes';
 import '../../styles/grid/Grid.css';
 import { getElement, isRowColumnInElement } from '../../utilities';
 import Block from './Block';
 
 type PropsType = {
   elements: ElementType[];
+  solution: SolutionType;
   template: TemplateType;
   selection: SelectionType;
   onClick: (row: number, column: number) => void;
@@ -31,7 +36,13 @@ const getClueNumber = (
   return -1;
 };
 
-const Grid = ({ elements, template, selection, onClick }: PropsType) => {
+const Grid = ({
+  elements,
+  solution,
+  template,
+  selection,
+  onClick,
+}: PropsType) => {
   const handleMouseUp = useCallback(
     (row, column) => {
       onClick(row, column);
@@ -43,14 +54,9 @@ const Grid = ({ elements, template, selection, onClick }: PropsType) => {
     selection &&
     getElement(elements, selection.row, selection.column, selection.direction);
 
-  const renderBlock = (
-    content: string | number,
-    row: number,
-    column: number
-  ) => {
+  const renderBlock = (templateValue: number, row: number, column: number) => {
     const classes = [];
     if (selection && row === selection.row && column === selection.column) {
-      // This is the selected block
       classes.push('selected-block');
     }
 
@@ -58,9 +64,12 @@ const Grid = ({ elements, template, selection, onClick }: PropsType) => {
       classes.push('selected-word');
     }
 
+    const content = solution[row][column];
+
     return (
       <Block
         content={content}
+        isWhite={templateValue === 1}
         row={row}
         column={column}
         clueNumber={getClueNumber(elements, row, column)}
@@ -76,8 +85,8 @@ const Grid = ({ elements, template, selection, onClick }: PropsType) => {
       {template.map((row, rowIndex) => {
         return (
           <div key={rowIndex} className='row'>
-            {row.map((content, columnIndex) =>
-              renderBlock(content, rowIndex, columnIndex)
+            {row.map((templateValue, columnIndex) =>
+              renderBlock(templateValue, rowIndex, columnIndex)
             )}
           </div>
         );

@@ -1,5 +1,11 @@
 import { Directions } from '../constants/Directions';
-import { ElementType, TemplateType } from '../data/types/PuzzleTypes';
+import { SelectionType } from '../data/types/InteractionTypes';
+import {
+  ClueType,
+  ElementType,
+  SolutionType,
+  TemplateType,
+} from '../data/types/PuzzleTypes';
 
 const getLength = (
   template: TemplateType,
@@ -129,4 +135,47 @@ export const generateElements = (
   }
 
   return elements;
+};
+
+export const addClueToSolution = (
+  solution: SolutionType,
+  clue: ClueType,
+  selection: SelectionType
+): SolutionType => {
+  // This function assumes row, column, and length are all appropriate for the puzzle
+  const compressedAnswer = clue.answer.replace(/[ -]/g, '');
+
+  let currentRow = selection.row;
+  let currentColumn = selection.column;
+
+  const rowStep = selection.direction === Directions.ACROSS ? 1 : 0;
+  const columnStep = selection.direction === Directions.DOWN ? 1 : 0;
+
+  for (let counter = 0; counter < compressedAnswer.length; counter++) {
+    solution[currentRow][currentColumn] =
+      compressedAnswer[counter].toUpperCase();
+    currentRow = currentRow + columnStep;
+    currentColumn = currentColumn + rowStep;
+  }
+  return solution;
+};
+
+export const addClueToElements = (
+  elements: ElementType[],
+  clue: ClueType,
+  selection: SelectionType
+): ElementType[] => {
+  return elements.map((el) => {
+    if (
+      el.row === selection.row &&
+      el.column === selection.column &&
+      el.direction === selection.direction
+    ) {
+      el = {
+        ...el,
+        ...clue,
+      };
+    }
+    return el;
+  });
 };

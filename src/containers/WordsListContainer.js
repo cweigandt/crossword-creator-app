@@ -7,6 +7,7 @@ import { getElement } from '../utilities';
 import { GridModes } from '../constants/GridModes';
 import { useCallback } from 'react';
 import { wordSelected } from '../actions/interactionActions';
+import { addClue } from '../actions/puzzleActions';
 
 const MAX_WORDS = 100;
 
@@ -16,8 +17,9 @@ const WordsListContainer = ({ elements, mode, selection, selectedClue }) => {
   const handleWordClick = useCallback(
     (clue) => {
       dispatch(wordSelected(clue));
+      dispatch(addClue(clue, selection));
     },
-    [dispatch]
+    [dispatch, selection]
   );
 
   let displayedWords = wordsList;
