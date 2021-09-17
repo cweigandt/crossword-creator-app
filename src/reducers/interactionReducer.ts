@@ -2,15 +2,12 @@ import { AnyAction } from 'redux';
 
 import { Directions } from '../constants/Directions';
 import { GridModes } from '../constants/GridModes';
+import { SelectionType } from '../data/types/InteractionTypes';
 import { ClueType } from '../data/types/PuzzleTypes';
 
 type ReducerType = {
   mode: GridModes;
-  selectedElement: {
-    row: number;
-    column: number;
-    direction: Directions;
-  };
+  selectedElement: SelectionType;
   selectedClue: ClueType;
 };
 

@@ -1,7 +1,12 @@
 import Chart from 'react-google-charts';
+import { ElementType } from '../data/types/PuzzleTypes';
 import '../styles/CountsGraph.css';
 
-const CountsGraph = ({ elements }) => {
+type PropsType = {
+  elements: ElementType[];
+};
+
+const CountsGraph = ({ elements }: PropsType) => {
   const data = new Array(15).fill([]).map((_, i) => [i + 1, 0]);
   elements.forEach((el) => {
     const existingValue = data[el.length - 1][1];
@@ -28,7 +33,7 @@ const CountsGraph = ({ elements }) => {
           },
           legend: { position: 'none' },
           hAxis: {
-            ticks: new Array(15).fill([]).map((_, i) => `${i + 1}`),
+            ticks: new Array(15).fill([]).map((_, i) => i + 1),
             viewWindow: {
               max: 16,
               min: 0,

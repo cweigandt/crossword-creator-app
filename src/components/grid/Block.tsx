@@ -1,4 +1,20 @@
-const Block = ({ clueNumber, content, row, column, onMouseUp, classes }) => {
+type PropsType = {
+  clueNumber: number;
+  content: string | number;
+  row: number;
+  column: number;
+  onMouseUp: (row: number, column: number) => void;
+  classes: string;
+};
+
+const Block = ({
+  clueNumber,
+  content,
+  row,
+  column,
+  onMouseUp,
+  classes,
+}: PropsType) => {
   const handleMouseUp = () => {
     onMouseUp(row, column);
   };

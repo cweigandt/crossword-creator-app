@@ -1,9 +1,22 @@
 import { useCallback } from 'react';
+import { SelectionType } from '../../data/types/InteractionTypes';
+import { ElementType, TemplateType } from '../../data/types/PuzzleTypes';
 import '../../styles/grid/Grid.css';
 import { getElement, isRowColumnInElement } from '../../utilities';
 import Block from './Block';
 
-const getClueNumber = (elements, row, column) => {
+type PropsType = {
+  elements: ElementType[];
+  template: TemplateType;
+  selection: SelectionType;
+  onClick: (row: number, column: number) => void;
+};
+
+const getClueNumber = (
+  elements: ElementType[],
+  row: number,
+  column: number
+): number => {
   if (!elements) {
     return -1;
   }
@@ -18,7 +31,7 @@ const getClueNumber = (elements, row, column) => {
   return -1;
 };
 
-const Grid = ({ elements, template, selection, onClick }) => {
+const Grid = ({ elements, template, selection, onClick }: PropsType) => {
   const handleMouseUp = useCallback(
     (row, column) => {
       onClick(row, column);
@@ -30,7 +43,11 @@ const Grid = ({ elements, template, selection, onClick }) => {
     selection &&
     getElement(elements, selection.row, selection.column, selection.direction);
 
-  const renderBlock = (content, row, column) => {
+  const renderBlock = (
+    content: string | number,
+    row: number,
+    column: number
+  ) => {
     const classes = [];
     if (selection && row === selection.row && column === selection.column) {
       // This is the selected block
