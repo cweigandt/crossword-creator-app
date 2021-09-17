@@ -8,10 +8,17 @@ import { GridModes } from '../constants/GridModes';
 import { useCallback } from 'react';
 import { wordSelected } from '../actions/interactionActions';
 import { addClue } from '../actions/puzzleActions';
+import { getWordsThatFit } from '../utilities/WordsListUtils';
 
 const MAX_WORDS = 100;
 
-const WordsListContainer = ({ elements, mode, selection, selectedClue }) => {
+const WordsListContainer = ({
+  elements,
+  mode,
+  selection,
+  solution,
+  selectedClue,
+}) => {
   const dispatch = useDispatch();
 
   const handleWordClick = useCallback(
@@ -25,20 +32,7 @@ const WordsListContainer = ({ elements, mode, selection, selectedClue }) => {
   let displayedWords = wordsList;
 
   if (mode === GridModes.LETTER) {
-    const selectedElement = getElement(
-      elements,
-      selection.row,
-      selection.column,
-      selection.direction
-    );
-
-    displayedWords = selectedElement
-      ? wordsList.filter((word) => {
-          return (
-            word.answer.replace(/[ -]/g, '').length === selectedElement.length
-          );
-        })
-      : wordsList;
+    displayedWords = getWordsThatFit(wordsList, elements, selection, solution);
   } else if (wordsList.length > MAX_WORDS) {
     return (
       <div className='words-list-container'>
@@ -61,6 +55,7 @@ const WordsListContainer = ({ elements, mode, selection, selectedClue }) => {
 export default connect((state) => ({
   elements: state.puzzle.elements,
   selection: state.interaction.selectedElement,
+  solution: state.puzzle.solution,
   mode: state.interaction.mode,
   selectedClue: state.interaction.selectedClue,
 }))(WordsListContainer);
