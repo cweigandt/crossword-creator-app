@@ -48,20 +48,22 @@ const PuzzleContainer = ({
       if (mode === GridModes.LETTER) {
         if (template[row][column] === 1) {
           let newSelection = { ...selection };
+          const possibleSelectedElements = getElementsForRowColumn(
+            elements,
+            row,
+            column
+          );
 
           // If clicking on same block, toggle direction
           if (selection.row === row && selection.column === column) {
-            newSelection.direction =
-              newSelection.direction === Directions.ACROSS
-                ? Directions.DOWN
-                : Directions.ACROSS;
+            if (possibleSelectedElements.length === 2) {
+              // If there is the ability to change direction
+              newSelection.direction =
+                newSelection.direction === Directions.ACROSS
+                  ? Directions.DOWN
+                  : Directions.ACROSS;
+            }
           } else {
-            const possibleSelectedElements = getElementsForRowColumn(
-              elements,
-              row,
-              column
-            );
-
             if (possibleSelectedElements.length === 0) {
               console.error(`Did not find element for block ${row} ${column}`);
             } else if (possibleSelectedElements.length === 1) {
