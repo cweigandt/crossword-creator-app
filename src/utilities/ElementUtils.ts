@@ -1,34 +1,39 @@
 import { Directions } from '../constants/Directions';
 import { SelectionType } from '../data/types/InteractionTypes';
-import {
-  ClueType,
-  ElementType,
-  SolutionType,
-  TemplateType,
-} from '../data/types/PuzzleTypes';
+import { ClueType, ElementType, TemplateType } from '../data/types/PuzzleTypes';
 
-const getLength = (
-  template: TemplateType,
-  startRow: number,
-  startColumn: number,
-  yStep: number,
-  xStep: number
-): number => {
-  let currentRow = startRow;
-  let currentColumn = startColumn;
+export const addClueToElements = (
+  elements: ElementType[],
+  clue: ClueType,
+  selection: SelectionType
+): ElementType[] => {
+  return elements.map((el) => {
+    if (
+      el.row === selection.row &&
+      el.column === selection.column &&
+      el.direction === selection.direction
+    ) {
+      el = {
+        ...el,
+        ...clue,
+      };
+    }
+    return el;
+  });
+};
 
-  // TODO: assuming square here
-  let len = 0;
-  while (
-    currentRow < template[0].length &&
-    currentColumn < template[0].length &&
-    template[currentRow][currentColumn] === 1
-  ) {
-    len++;
-    currentRow = currentRow + xStep;
-    currentColumn = currentColumn + yStep;
-  }
-  return len;
+export const findElement = (
+  elements: ElementType[],
+  elementToFind: ElementType
+): ElementType | undefined => {
+  return elements.find((el) => {
+    return (
+      el.row === elementToFind.row &&
+      el.column === elementToFind.column &&
+      el.direction === elementToFind.direction &&
+      el.length === elementToFind.length
+    );
+  });
 };
 
 const getAcrossElement = (
@@ -99,6 +104,30 @@ const getDownElement = (
   return null;
 };
 
+const getLength = (
+  template: TemplateType,
+  startRow: number,
+  startColumn: number,
+  yStep: number,
+  xStep: number
+): number => {
+  let currentRow = startRow;
+  let currentColumn = startColumn;
+
+  // TODO: assuming square here
+  let len = 0;
+  while (
+    currentRow < template[0].length &&
+    currentColumn < template[0].length &&
+    template[currentRow][currentColumn] === 1
+  ) {
+    len++;
+    currentRow = currentRow + xStep;
+    currentColumn = currentColumn + yStep;
+  }
+  return len;
+};
+
 export const generateElements = (
   template: TemplateType,
   width: number,
@@ -137,47 +166,21 @@ export const generateElements = (
   return elements;
 };
 
-export const addClueToSolution = (
-  solution: SolutionType,
-  clue: ClueType,
-  selection: SelectionType
-): SolutionType => {
-  const solutionCopy = solution.map((row) => row.map((el) => el));
-
-  // This function assumes row, column, and length are all appropriate for the puzzle
-  const compressedAnswer = clue.answer.replace(/[ -]/g, '');
-
-  let currentRow = selection.row;
-  let currentColumn = selection.column;
-
-  const rowStep = selection.direction === Directions.ACROSS ? 1 : 0;
-  const columnStep = selection.direction === Directions.DOWN ? 1 : 0;
-
-  for (let counter = 0; counter < compressedAnswer.length; counter++) {
-    solutionCopy[currentRow][currentColumn] =
-      compressedAnswer[counter].toUpperCase();
-    currentRow = currentRow + columnStep;
-    currentColumn = currentColumn + rowStep;
-  }
-  return solutionCopy;
-};
-
-export const addClueToElements = (
-  elements: ElementType[],
-  clue: ClueType,
-  selection: SelectionType
+export const transferElements = (
+  oldElements: ElementType[],
+  newTemplate: TemplateType,
+  width: number,
+  height: number
 ): ElementType[] => {
-  return elements.map((el) => {
-    if (
-      el.row === selection.row &&
-      el.column === selection.column &&
-      el.direction === selection.direction
-    ) {
-      el = {
-        ...el,
-        ...clue,
-      };
+  const newElements = generateElements(newTemplate, width, height);
+
+  return newElements.map((newEl) => {
+    const preExistingElement = findElement(oldElements, newEl);
+    if (preExistingElement) {
+      newEl.clue = preExistingElement.clue;
+      newEl.answer = preExistingElement.answer;
+      newEl.length = preExistingElement.length;
     }
-    return el;
+    return newEl;
   });
 };

@@ -1,13 +1,14 @@
 import { AnyAction } from 'redux';
 
-import { ElementType, PuzzleType } from '../data/types/PuzzleTypes';
+import { PuzzleType } from '../data/types/PuzzleTypes';
 import templates from '../templates.json';
 import { getRootSelection } from '../utilities';
+import { addClueToSolution, buildSolution } from '../utilities/SolutionUtils';
 import {
   addClueToElements,
-  addClueToSolution,
   generateElements,
-} from '../utilities/CluesGenerator';
+  transferElements,
+} from '../utilities/ElementUtils';
 
 const defaultPuzzle = templates[0];
 
@@ -24,10 +25,17 @@ const initialState: PuzzleType = {
 const reducer = (state = initialState, action: AnyAction) => {
   switch (action.type) {
     case 'TEMPLATE_UPDATED':
+      const newElements = transferElements(
+        state.elements,
+        action.template,
+        state.width,
+        state.height
+      );
       return {
         ...state,
         template: action.template,
-        elements: generateElements(action.template, state.width, state.height),
+        elements: newElements,
+        solution: buildSolution(action.template, newElements),
       };
     case 'ADD_CLUE':
       const rootSelection = getRootSelection(
