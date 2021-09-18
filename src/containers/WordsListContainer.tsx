@@ -7,7 +7,7 @@ import { GridModes } from '../constants/GridModes';
 import { useCallback } from 'react';
 import { wordSelected } from '../actions/interactionActions';
 import { addClue } from '../actions/puzzleActions';
-import { getWordsThatFit } from '../utilities/WordsListUtils';
+import { getClueRank, getWordsThatFit } from '../utilities/WordsListUtils';
 import { ClueType, ElementType, SolutionType } from '../data/types/PuzzleTypes';
 import { SelectionType } from '../data/types/InteractionTypes';
 import { RootState } from '../reducers';
@@ -31,6 +31,16 @@ const WordsListContainer = ({
 }: PropsType) => {
   const dispatch = useDispatch();
 
+  const sortFunction = (a: ClueType, b: ClueType): number => {
+    if (a.clue !== '' && b.clue === '') {
+      return -1;
+    }
+    if (b.clue !== '' && a.clue === '') {
+      return 1;
+    }
+    return 0;
+  };
+
   const handleWordClick = useCallback(
     (clue) => {
       dispatch(wordSelected(clue));
@@ -39,10 +49,11 @@ const WordsListContainer = ({
     [dispatch, selection]
   );
 
-  let displayedWords = wordsList as ClueType[];
+  let displayedWords = (wordsList as ClueType[]).sort(sortFunction);
 
   if (mode === GridModes.LETTER) {
     displayedWords = getWordsThatFit(wordsList, elements, selection, solution);
+    console.log(getClueRank(wordsList, elements, selection, solution));
   } else if (wordsList.length > MAX_WORDS) {
     return (
       <div className='words-list-container'>

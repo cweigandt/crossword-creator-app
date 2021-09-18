@@ -1,30 +1,22 @@
-import { getElement } from './ElementUtils';
-import { Directions } from '../constants/Directions';
+import { getElement, getElementsForRowColumn } from './ElementUtils';
 import { SelectionType } from '../data/types/InteractionTypes';
 import { ClueType, ElementType, SolutionType } from '../data/types/PuzzleTypes';
+import { visitSelectionBlocks } from './SolutionUtils';
+import { getOppositeDirection } from '../constants/Directions';
 
 const doLettersLineUp = (
   solution: SolutionType,
   word: string,
   element: ElementType
 ): boolean => {
-  let currentRow = element.row;
-  let currentColumn = element.column;
-
-  const rowStep = element.direction === Directions.ACROSS ? 1 : 0;
-  const columnStep = element.direction === Directions.DOWN ? 1 : 0;
-
-  for (let counter = 0; counter < element.length; counter++) {
-    if (
-      solution[currentRow][currentColumn] !== '' &&
-      word[counter] !== solution[currentRow][currentColumn]
-    ) {
-      return false;
+  let theyLineUp = true;
+  visitSelectionBlocks(element, element.length, (row, column, index) => {
+    if (solution[row][column] !== '' && word[index] !== solution[row][column]) {
+      theyLineUp = false;
     }
-    currentRow = currentRow + columnStep;
-    currentColumn = currentColumn + rowStep;
-  }
-  return true;
+  });
+
+  return theyLineUp;
 };
 
 export const getWordsThatFit = (
@@ -55,4 +47,53 @@ export const getWordsThatFit = (
         selectedElement
       );
     });
+};
+
+export const getClueRank = (
+  wordsList: ClueType[],
+  elements: ElementType[],
+  selection: SelectionType,
+  solution: SolutionType
+): number => {
+  let crossingCount = 0;
+
+  const selectedElement = getElement(
+    elements,
+    selection.row,
+    selection.column,
+    selection.direction
+  );
+
+  if (!selectedElement) {
+    return 0;
+  }
+
+  visitSelectionBlocks(
+    selection,
+    selectedElement.length,
+    (row, column, index) => {
+      const crossingElement = getElement(
+        elements,
+        row,
+        column,
+        getOppositeDirection(selection.direction)
+      );
+
+      if (!crossingElement) {
+        return;
+      }
+
+      if (crossingElement.answer === '') {
+        const possibleElements = getWordsThatFit(
+          wordsList,
+          elements,
+          crossingElement,
+          solution
+        );
+
+        crossingCount = crossingCount + possibleElements.length;
+      }
+    }
+  );
+  return crossingCount;
 };

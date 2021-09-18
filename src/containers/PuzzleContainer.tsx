@@ -9,7 +9,7 @@ import { GridModes } from '../constants/GridModes';
 
 import '../styles/containers/PuzzleContainer.css';
 import { elementSelected } from '../actions/interactionActions';
-import { Directions } from '../constants/Directions';
+import { Directions, getOppositeDirection } from '../constants/Directions';
 import {
   ElementType,
   SolutionType,
@@ -58,10 +58,9 @@ const PuzzleContainer = ({
           if (selection.row === row && selection.column === column) {
             if (possibleSelectedElements.length === 2) {
               // If there is the ability to change direction
-              newSelection.direction =
-                newSelection.direction === Directions.ACROSS
-                  ? Directions.DOWN
-                  : Directions.ACROSS;
+              newSelection.direction = getOppositeDirection(
+                newSelection.direction
+              );
             }
           } else {
             if (possibleSelectedElements.length === 0) {

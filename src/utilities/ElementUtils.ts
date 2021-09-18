@@ -36,7 +36,7 @@ export const findElement = (
   });
 };
 
-const getAcrossElement = (
+const buildAcrossElement = (
   template: TemplateType,
   row: number,
   column: number,
@@ -69,7 +69,7 @@ const getAcrossElement = (
   return null;
 };
 
-const getDownElement = (
+const buildDownElement = (
   template: TemplateType,
   row: number,
   column: number,
@@ -138,13 +138,13 @@ export const generateElements = (
 
   for (let rowIndex = 0; rowIndex < height; rowIndex++) {
     for (let columnIndex = 0; columnIndex < width; columnIndex++) {
-      const acrossElement = getAcrossElement(
+      const acrossElement = buildAcrossElement(
         template,
         rowIndex,
         columnIndex,
         clueNumber
       );
-      const downElement = getDownElement(
+      const downElement = buildDownElement(
         template,
         rowIndex,
         columnIndex,

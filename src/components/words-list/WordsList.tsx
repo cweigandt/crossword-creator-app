@@ -6,22 +6,11 @@ type PropsType = {
   onClick: (clueObj: ClueType) => void;
   selectedClue: ClueType;
 };
-const sortFunction = (a: ClueType, b: ClueType): number => {
-  if (a.clue !== '' && b.clue === '') {
-    return -1;
-  }
-  if (b.clue !== '' && a.clue === '') {
-    return 1;
-  }
-  return 0;
-};
 
 const WordsList = ({ clues, onClick, selectedClue }: PropsType) => {
-  const displayedWords = clues.sort(sortFunction);
-
   return (
     <div className='words-list'>
-      {displayedWords.map((clueObj, index) => {
+      {clues.map((clueObj, index) => {
         const classes = ['word'];
         if (clueObj.clue.length > 0) {
           classes.push('has-answer');
