@@ -10,7 +10,6 @@ import { GridModes } from '../constants/GridModes';
 import '../styles/containers/PuzzleContainer.css';
 import { elementSelected } from '../actions/interactionActions';
 import { Directions } from '../constants/Directions';
-import ModeToggle from '../components/ModeToggle';
 import {
   ElementType,
   SolutionType,
@@ -90,7 +89,6 @@ const PuzzleContainer = ({
 
   return (
     <div className='puzzle-container'>
-      <ModeToggle />
       <Grid
         template={template}
         solution={solution}

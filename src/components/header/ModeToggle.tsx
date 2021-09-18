@@ -1,10 +1,10 @@
 import { connect, useDispatch } from 'react-redux';
 import { FiEdit, FiSquare } from 'react-icons/fi';
 
-import '../styles/ModeToggle.css';
-import { GridModes } from '../constants/GridModes';
-import { modeChanged } from '../actions/interactionActions';
-import { RootState } from '../reducers';
+import '../../styles/header/ModeToggle.css';
+import { GridModes } from '../../constants/GridModes';
+import { modeChanged } from '../../actions/interactionActions';
+import { RootState } from '../../reducers';
 
 type PropTypes = {
   mode: GridModes;

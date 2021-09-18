@@ -1,7 +1,8 @@
 .panel-container {
   position: relative;
   width: 100%;
-  height: 100%;
+  height: calc(100% - 50px);
+  top: 50px;
 
   display: flex;
   flex-direction: row;
@@ -9,7 +10,7 @@
 }
 
 .panel {
-  height: 100vh;
+  height: calc(100vh - 50px);
 
   padding: 5px;
 }
@@ -18,12 +19,14 @@
   width: 60%;
 }
 
-.panel-container .panel-left {
-  width: 20%;
-  background-color: rgba(255, 255, 255, 0.6);
-}
-
+.panel-container .panel-left,
 .panel-container .panel-right {
   width: 20%;
-  background-color: rgba(255, 255, 255, 0.8);
+  z-index: 2;
+
+  background: rgba(255, 255, 255, 0.25);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  backdrop-filter: blur(4px);
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
 }
