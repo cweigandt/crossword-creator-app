@@ -1,6 +1,13 @@
+import { ReactNode } from 'react';
 import '../styles/containers/PanelContainer.css';
 
-const PanelContainer = ({ left, center, right }) => {
+type PropsType = {
+  left: ReactNode;
+  center: ReactNode;
+  right: ReactNode;
+};
+
+const PanelContainer = ({ left, center, right }: PropsType) => {
   return (
     <div className='panel-container'>
       <div className='panel panel-left'>{left}</div>

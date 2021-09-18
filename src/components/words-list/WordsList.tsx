@@ -1,6 +1,12 @@
+import { ClueType } from '../../data/types/PuzzleTypes';
 import '../../styles/words-list/WordsList.css';
 
-const sortFunction = (a, b) => {
+type PropsType = {
+  clues: ClueType[];
+  onClick: (clueObj: ClueType) => void;
+  selectedClue: ClueType;
+};
+const sortFunction = (a: ClueType, b: ClueType): number => {
   if (a.clue !== '' && b.clue === '') {
     return -1;
   }
@@ -10,19 +16,19 @@ const sortFunction = (a, b) => {
   return 0;
 };
 
-const WordsList = ({ clues, onClick, selectedClue }) => {
+const WordsList = ({ clues, onClick, selectedClue }: PropsType) => {
   const displayedWords = clues.sort(sortFunction);
 
   return (
     <div className='words-list'>
-      {displayedWords.map((wordObj, index) => {
+      {displayedWords.map((clueObj, index) => {
         const classes = ['word'];
-        if (wordObj.clue.length > 0) {
+        if (clueObj.clue.length > 0) {
           classes.push('has-answer');
         }
         if (
-          wordObj.clue === selectedClue.clue &&
-          wordObj.answer === selectedClue.answer
+          clueObj.clue === selectedClue.clue &&
+          clueObj.answer === selectedClue.answer
         ) {
           classes.push('selected');
         }
@@ -31,9 +37,9 @@ const WordsList = ({ clues, onClick, selectedClue }) => {
           <div
             key={index}
             className={classes.join(' ')}
-            onClick={() => onClick(wordObj)}
+            onClick={() => onClick(clueObj)}
           >
-            {wordObj.answer}
+            {clueObj.answer}
           </div>
         );
       })}

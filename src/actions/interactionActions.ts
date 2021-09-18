@@ -1,9 +1,10 @@
 import { AnyAction } from 'redux';
 
 import { GridModes } from '../constants/GridModes';
-import { ClueType, ElementType } from '../data/types/PuzzleTypes';
+import { SelectionType } from '../data/types/InteractionTypes';
+import { ClueType } from '../data/types/PuzzleTypes';
 
-export const elementSelected = (selection: ElementType): AnyAction => ({
+export const elementSelected = (selection: SelectionType): AnyAction => ({
   type: 'ELEMENT_SELECTED',
   selection,
 });

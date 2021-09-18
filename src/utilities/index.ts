@@ -1,6 +1,6 @@
 import { Directions } from '../constants/Directions';
 import { SelectionType } from '../data/types/InteractionTypes';
-import { ElementType, PuzzleType } from '../data/types/PuzzleTypes';
+import { ElementType } from '../data/types/PuzzleTypes';
 
 export const copyTextToClipboard = (text: string): void => {
   if (!navigator.clipboard) {
@@ -107,5 +107,4 @@ export const getRootSelection = (
       };
     }
   }
-  return null;
 };

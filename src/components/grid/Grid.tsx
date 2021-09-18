@@ -13,7 +13,7 @@ type PropsType = {
   elements: ElementType[];
   solution: SolutionType;
   template: TemplateType;
-  selection: SelectionType;
+  selection: SelectionType | null;
   onClick: (row: number, column: number) => void;
 };
 
