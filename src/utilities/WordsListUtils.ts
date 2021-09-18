@@ -1,4 +1,4 @@
-import { getElement } from '.';
+import { getElement } from './ElementUtils';
 import { Directions } from '../constants/Directions';
 import { SelectionType } from '../data/types/InteractionTypes';
 import { ClueType, ElementType, SolutionType } from '../data/types/PuzzleTypes';

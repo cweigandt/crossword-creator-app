@@ -2,7 +2,7 @@ import { AnyAction } from 'redux';
 
 import { PuzzleType } from '../data/types/PuzzleTypes';
 import templates from '../templates.json';
-import { getRootSelection } from '../utilities';
+import { getRootSelection } from '../utilities/SelectionUtils';
 import { addClueToSolution, buildSolution } from '../utilities/SolutionUtils';
 import {
   addClueToElements,

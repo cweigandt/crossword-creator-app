@@ -6,7 +6,7 @@ import {
   TemplateType,
 } from '../../data/types/PuzzleTypes';
 import '../../styles/grid/Grid.css';
-import { getElement, isRowColumnInElement } from '../../utilities';
+import { getElement, isRowColumnInElement } from '../../utilities/ElementUtils';
 import Block from './Block';
 
 type PropsType = {

@@ -184,3 +184,60 @@ export const transferElements = (
     return newEl;
   });
 };
+
+export const isRowColumnInElement = (
+  element: ElementType,
+  row: number,
+  column: number
+): boolean => {
+  if (element.direction === Directions.ACROSS) {
+    if (element.row !== row) {
+      return false;
+    }
+
+    if (column >= element.column && column < element.column + element.length) {
+      return true;
+    }
+  }
+  if (element.direction === Directions.DOWN) {
+    if (element.column !== column) {
+      return false;
+    }
+
+    if (row >= element.row && row < element.row + element.length) {
+      return true;
+    }
+  }
+
+  return false;
+};
+
+export const getElement = (
+  elements: ElementType[],
+  row: number,
+  column: number,
+  direction: Directions
+): ElementType | null => {
+  const possibleElements = elements.filter((el) => {
+    return (
+      el.direction === direction && (el.row === row || el.column === column)
+    );
+  });
+
+  let foundElement = null;
+  possibleElements.forEach((el) => {
+    if (isRowColumnInElement(el, row, column)) {
+      foundElement = el;
+    }
+  });
+
+  return foundElement;
+};
+
+export const getElementsForRowColumn = (
+  elements: ElementType[],
+  row: number,
+  column: number
+): ElementType[] => {
+  return elements.filter((el) => isRowColumnInElement(el, row, column));
+};

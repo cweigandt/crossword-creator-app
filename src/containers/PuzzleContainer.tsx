@@ -10,7 +10,6 @@ import { GridModes } from '../constants/GridModes';
 import '../styles/containers/PuzzleContainer.css';
 import { elementSelected } from '../actions/interactionActions';
 import { Directions } from '../constants/Directions';
-import { getElementsForRowColumn } from '../utilities';
 import ModeToggle from '../components/ModeToggle';
 import {
   ElementType,
@@ -19,6 +18,7 @@ import {
 } from '../data/types/PuzzleTypes';
 import { SelectionType } from '../data/types/InteractionTypes';
 import { RootState } from '../reducers';
+import { getElementsForRowColumn } from '../utilities/ElementUtils';
 
 type PropsType = {
   template: TemplateType;
