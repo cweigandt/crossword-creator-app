@@ -18,3 +18,13 @@
   background-color: lightblue;
   border: 1px solid white;
 }
+
+.clue-count {
+  font-size: 18px;
+  font-family: sans-serif;
+  text-align: center;
+
+  border-bottom: 1px solid black;
+  padding: 6px;
+  margin-bottom: 10px;
+}

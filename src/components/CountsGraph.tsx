@@ -15,7 +15,6 @@ const CountsGraph = ({ elements }: PropsType) => {
 
   return (
     <div>
-      <div className='clue-count'>{`${elements.length} clues`}</div>
       <Chart
         loader={<div style={{ height: 200 }}></div>}
         width={500}
@@ -28,6 +27,7 @@ const CountsGraph = ({ elements }: PropsType) => {
             easing: 'out',
             startup: true,
           },
+          backgroundColor: 'transparent',
           chart: {
             title: 'Clue Length Counts',
           },

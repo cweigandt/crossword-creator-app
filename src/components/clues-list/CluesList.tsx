@@ -28,6 +28,8 @@ const CluesList = ({ elements }: PropsType) => {
 
   return (
     <div className='clues-list'>
+      <div className='clue-count'>{`${elements.length} clues`}</div>
+
       {displayedClues.map((element, index) => (
         <div
           key={index}
