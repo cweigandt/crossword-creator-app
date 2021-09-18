@@ -142,6 +142,8 @@ export const addClueToSolution = (
   clue: ClueType,
   selection: SelectionType
 ): SolutionType => {
+  const solutionCopy = solution.map((row) => row.map((el) => el));
+
   // This function assumes row, column, and length are all appropriate for the puzzle
   const compressedAnswer = clue.answer.replace(/[ -]/g, '');
 
@@ -152,12 +154,12 @@ export const addClueToSolution = (
   const columnStep = selection.direction === Directions.DOWN ? 1 : 0;
 
   for (let counter = 0; counter < compressedAnswer.length; counter++) {
-    solution[currentRow][currentColumn] =
+    solutionCopy[currentRow][currentColumn] =
       compressedAnswer[counter].toUpperCase();
     currentRow = currentRow + columnStep;
     currentColumn = currentColumn + rowStep;
   }
-  return solution;
+  return solutionCopy;
 };
 
 export const addClueToElements = (
