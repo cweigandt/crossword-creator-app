@@ -1,7 +1,7 @@
-import { getElement, getElementsForRowColumn } from './ElementUtils';
+import { getElement } from './ElementUtils';
 import { SelectionType } from '../data/types/InteractionTypes';
 import { ClueType, ElementType, SolutionType } from '../data/types/PuzzleTypes';
-import { visitSelectionBlocks } from './SolutionUtils';
+import { addClueToSolution, visitSelectionBlocks } from './SolutionUtils';
 import { getOppositeDirection } from '../constants/Directions';
 
 const doLettersLineUp = (
@@ -53,9 +53,12 @@ export const getClueRank = (
   wordsList: ClueType[],
   elements: ElementType[],
   selection: SelectionType,
-  solution: SolutionType
+  solution: SolutionType,
+  clue: ClueType
 ): number => {
   let crossingCount = 0;
+
+  const newSolution = addClueToSolution(solution, clue, selection);
 
   const selectedElement = getElement(
     elements,
@@ -88,7 +91,7 @@ export const getClueRank = (
           wordsList,
           elements,
           crossingElement,
-          solution
+          newSolution
         );
 
         crossingCount = crossingCount + possibleElements.length;
@@ -96,4 +99,28 @@ export const getClueRank = (
     }
   );
   return crossingCount;
+};
+
+let clueRanks: { [key: string]: number } = {};
+export const memoGetClueRank = (
+  wordsList: ClueType[],
+  elements: ElementType[],
+  selection: SelectionType,
+  solution: SolutionType,
+  clue: ClueType
+) => {
+  if (!clueRanks.hasOwnProperty(clue.answer)) {
+    clueRanks[clue.answer] = getClueRank(
+      wordsList,
+      elements,
+      selection,
+      solution,
+      clue
+    );
+  }
+  return clueRanks[clue.answer];
+};
+
+export const clearClueRanks = () => {
+  clueRanks = {};
 };

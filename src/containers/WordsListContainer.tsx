@@ -7,7 +7,12 @@ import { GridModes } from '../constants/GridModes';
 import { useCallback } from 'react';
 import { wordSelected } from '../actions/interactionActions';
 import { addClue } from '../actions/puzzleActions';
-import { getClueRank, getWordsThatFit } from '../utilities/WordsListUtils';
+import {
+  clearClueRanks,
+  getClueRank,
+  getWordsThatFit,
+  memoGetClueRank,
+} from '../utilities/WordsListUtils';
 import { ClueType, ElementType, SolutionType } from '../data/types/PuzzleTypes';
 import { SelectionType } from '../data/types/InteractionTypes';
 import { RootState } from '../reducers';
@@ -41,6 +46,25 @@ const WordsListContainer = ({
     return 0;
   };
 
+  const rankSort = (a: ClueType, b: ClueType): number => {
+    const aRank = memoGetClueRank(
+      wordsList as ClueType[],
+      elements,
+      selection,
+      solution,
+      a
+    );
+    const bRank = memoGetClueRank(
+      wordsList as ClueType[],
+      elements,
+      selection,
+      solution,
+      b
+    );
+
+    return bRank - aRank;
+  };
+
   const handleWordClick = useCallback(
     (clue) => {
       dispatch(wordSelected(clue));
@@ -49,11 +73,16 @@ const WordsListContainer = ({
     [dispatch, selection]
   );
 
+  if (selection.row === -1) {
+    return null;
+  }
+
+  clearClueRanks();
   let displayedWords = (wordsList as ClueType[]).sort(sortFunction);
 
   if (mode === GridModes.LETTER) {
     displayedWords = getWordsThatFit(wordsList, elements, selection, solution);
-    console.log(getClueRank(wordsList, elements, selection, solution));
+    // displayedWords = displayedWords.sort(rankSort);
   } else if (wordsList.length > MAX_WORDS) {
     return (
       <div className='words-list-container'>
