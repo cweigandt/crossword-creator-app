@@ -1,4 +1,4 @@
-import { getElement } from './ElementUtils';
+import { getElement, getElementsForRowColumn } from './ElementUtils';
 import { SelectionType } from '../data/types/InteractionTypes';
 import { ClueType, ElementType, SolutionType } from '../data/types/PuzzleTypes';
 import { addClueToSolution, visitSelectionBlocks } from './SolutionUtils';
@@ -7,11 +7,27 @@ import { getOppositeDirection } from '../constants/Directions';
 const doLettersLineUp = (
   solution: SolutionType,
   word: string,
-  element: ElementType
+  element: ElementType,
+  elements: ElementType[]
 ): boolean => {
   let theyLineUp = true;
   visitSelectionBlocks(element, element.length, (row, column, index) => {
-    if (solution[row][column] !== '' && word[index] !== solution[row][column]) {
+    const possibleElements = getElementsForRowColumn(elements, row, column);
+    let oppositeElement = null;
+    if (possibleElements[0].direction === element.direction) {
+      oppositeElement = possibleElements[1];
+    } else {
+      oppositeElement = possibleElements[0];
+    }
+    if (
+      possibleElements.length === 2 &&
+      oppositeElement &&
+      oppositeElement.answer !== '' &&
+      solution[row][column] !== '' &&
+      word[index] !== solution[row][column]
+    ) {
+      // If there is a crossing element AND a letter exists AND it isn't the same letter as our word
+      // Then we don't have a match
       theyLineUp = false;
     }
   });
@@ -19,6 +35,7 @@ const doLettersLineUp = (
   return theyLineUp;
 };
 
+// Includes words that replace non-overlapping blocks
 export const getWordsThatFit = (
   wordsList: ClueType[],
   elements: ElementType[],
@@ -44,7 +61,8 @@ export const getWordsThatFit = (
       return doLettersLineUp(
         solution,
         word.answer.replace(/[ -]/g, '').toUpperCase(),
-        selectedElement
+        selectedElement,
+        elements
       );
     });
 };
