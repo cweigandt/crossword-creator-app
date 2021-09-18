@@ -7,11 +7,7 @@ import { GridModes } from '../constants/GridModes';
 import { useCallback } from 'react';
 import { wordSelected } from '../actions/interactionActions';
 import { addClue, removeClue } from '../actions/puzzleActions';
-import {
-  clearClueRanks,
-  getWordsThatFit,
-  memoGetClueRank,
-} from '../utilities/WordsListUtils';
+import { getWordsThatFit } from '../utilities/WordsListUtils';
 import { ClueType, ElementType, SolutionType } from '../data/types/PuzzleTypes';
 import { SelectionType } from '../data/types/InteractionTypes';
 import { RootState } from '../reducers';
@@ -22,6 +18,7 @@ type PropsType = {
   mode: GridModes;
   selection: SelectionType;
   solution: SolutionType;
+  selectedClue: ClueType;
 };
 
 const MAX_WORDS = 100;
@@ -31,6 +28,7 @@ const WordsListContainer = ({
   mode,
   selection,
   solution,
+  selectedClue,
 }: PropsType) => {
   const dispatch = useDispatch();
 
@@ -44,43 +42,42 @@ const WordsListContainer = ({
     return 0;
   };
 
-  const rankSort = (a: ClueType, b: ClueType): number => {
-    const aRank = memoGetClueRank(
-      wordsList as ClueType[],
-      elements,
-      selection,
-      solution,
-      a
-    );
-    const bRank = memoGetClueRank(
-      wordsList as ClueType[],
-      elements,
-      selection,
-      solution,
-      b
-    );
-
-    return bRank - aRank;
-  };
-
   const handleWordClick = useCallback(
     (clue) => {
-      dispatch(wordSelected(clue));
-      dispatch(addClue(clue, selection));
+      if (
+        clue.clue === selectedClue.clue &&
+        clue.answer === selectedClue.answer
+      ) {
+        const element = getElement(
+          elements,
+          selection.row,
+          selection.column,
+          selection.direction
+        );
+        if (element) {
+          dispatch(removeClue(element));
+          dispatch(wordSelected({ clue: '', answer: '' }));
+        }
+      } else {
+        dispatch(wordSelected(clue));
+        dispatch(addClue(clue, selection));
+      }
     },
-    [dispatch, selection]
+    [dispatch, elements, selection, selectedClue]
   );
 
-  const handleClearClick = useCallback((element) => {
-    dispatch(removeClue(element));
-    return false;
-  }, []);
+  const handleClearClick = useCallback(
+    (element) => {
+      dispatch(removeClue(element));
+      return false;
+    },
+    [dispatch]
+  );
 
   if (selection.row === -1) {
     return null;
   }
 
-  clearClueRanks();
   let displayedWords = (wordsList as ClueType[]).sort(sortFunction);
   let selectedElement = null;
 
@@ -92,8 +89,6 @@ const WordsListContainer = ({
       selection.column,
       selection.direction
     );
-
-    // displayedWords = displayedWords.sort(rankSort);
   } else if (wordsList.length > MAX_WORDS) {
     return (
       <div className='words-list-container'>
@@ -119,4 +114,5 @@ export default connect((state: RootState) => ({
   selection: state.interaction.selectedElement,
   solution: state.puzzle.solution,
   mode: state.interaction.mode,
+  selectedClue: state.interaction.selectedClue,
 }))(WordsListContainer);

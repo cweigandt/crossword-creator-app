@@ -12,7 +12,7 @@ type ReducerType = {
 };
 
 const initialState: ReducerType = {
-  mode: GridModes.TEMPLATE,
+  mode: GridModes.LETTER,
   selectedElement: {
     row: -1,
     column: -1,
@@ -41,6 +41,9 @@ const reducer = (state: ReducerType = initialState, action: AnyAction) => {
         ...state,
         selectedClue: { ...action.clue },
       };
+
+    case 'RESTORE_STATE':
+      return initialState;
 
     default:
       return state;

@@ -37,4 +37,10 @@
   right: 8px;
 
   cursor: pointer;
+
+  transition: color 0.2s ease;
+}
+
+.word:hover .clear-button {
+  color: white;
 }

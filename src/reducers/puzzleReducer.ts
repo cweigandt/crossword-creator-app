@@ -38,6 +38,9 @@ const reducer = (state = initialState, action: AnyAction) => {
     case 'REMOVE_CLUE':
       return handleRemoveClue(state, action);
 
+    case 'RESTORE_STATE':
+      return handleRestoreState(state, action);
+
     default:
       return state;
   }
@@ -100,6 +103,13 @@ var handleRemoveClue = (state: PuzzleType, action: AnyAction): PuzzleType => {
       rootSelection
     ),
     elements: removeClueFromElements(state.elements, rootSelection),
+  };
+};
+
+var handleRestoreState = (state: PuzzleType, action: AnyAction): PuzzleType => {
+  return {
+    ...initialState,
+    ...action.puzzle,
   };
 };
 
