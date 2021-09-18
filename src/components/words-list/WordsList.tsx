@@ -1,13 +1,20 @@
-import { ClueType } from '../../data/types/PuzzleTypes';
+import { ClueType, ElementType } from '../../data/types/PuzzleTypes';
 import '../../styles/words-list/WordsList.css';
+import { FiXCircle } from 'react-icons/fi';
 
 type PropsType = {
   clues: ClueType[];
   onClick: (clueObj: ClueType) => void;
-  selectedClue: ClueType;
+  onClearClick: (element: ElementType) => void;
+  selectedElement: ElementType | null;
 };
 
-const WordsList = ({ clues, onClick, selectedClue }: PropsType) => {
+const WordsList = ({
+  clues,
+  onClick,
+  onClearClick,
+  selectedElement,
+}: PropsType) => {
   return (
     <div className='words-list'>
       {clues.map((clueObj, index) => {
@@ -16,8 +23,9 @@ const WordsList = ({ clues, onClick, selectedClue }: PropsType) => {
           classes.push('has-answer');
         }
         if (
-          clueObj.clue === selectedClue.clue &&
-          clueObj.answer === selectedClue.answer
+          selectedElement &&
+          clueObj.clue === selectedElement.clue &&
+          clueObj.answer === selectedElement.answer
         ) {
           classes.push('selected');
         }
@@ -29,6 +37,17 @@ const WordsList = ({ clues, onClick, selectedClue }: PropsType) => {
             onClick={() => onClick(clueObj)}
           >
             {clueObj.answer}
+            {classes.includes('selected') && (
+              <div
+                className='clear-button'
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onClearClick(selectedElement!);
+                }}
+              >
+                <FiXCircle />
+              </div>
+            )}
           </div>
         );
       })}

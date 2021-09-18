@@ -16,3 +16,8 @@ export const addClue = (
   clue,
   selection,
 });
+
+export const removeClue = (selection: SelectionType): AnyAction => ({
+  type: 'REMOVE_CLUE',
+  selection,
+});

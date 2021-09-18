@@ -3,6 +3,8 @@
 }
 
 .word {
+  position: relative;
+
   font-family: monospace;
   font-size: 18px;
   font-variant: small-caps;
@@ -24,4 +26,15 @@
 
 .word.selected {
   background-color: yellowgreen;
+}
+
+.word .clear-button {
+  position: absolute;
+
+  font-size: 16px;
+  color: black;
+  top: 5px;
+  right: 8px;
+
+  cursor: pointer;
 }

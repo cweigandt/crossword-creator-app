@@ -9,7 +9,7 @@ import { GridModes } from '../constants/GridModes';
 
 import '../styles/containers/PuzzleContainer.css';
 import { elementSelected } from '../actions/interactionActions';
-import { Directions, getOppositeDirection } from '../constants/Directions';
+import { getOppositeDirection } from '../constants/Directions';
 import {
   ElementType,
   SolutionType,

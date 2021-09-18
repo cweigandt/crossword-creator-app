@@ -22,6 +22,26 @@ export const addClueToElements = (
   });
 };
 
+export const removeClueFromElements = (
+  elements: ElementType[],
+  selection: SelectionType
+): ElementType[] => {
+  return elements.map((el) => {
+    if (
+      el.row === selection.row &&
+      el.column === selection.column &&
+      el.direction === selection.direction
+    ) {
+      el = {
+        ...el,
+        clue: '',
+        answer: '',
+      };
+    }
+    return el;
+  });
+};
+
 export const findElement = (
   elements: ElementType[],
   elementToFind: ElementType

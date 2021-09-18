@@ -6,23 +6,22 @@ import { connect, useDispatch } from 'react-redux';
 import { GridModes } from '../constants/GridModes';
 import { useCallback } from 'react';
 import { wordSelected } from '../actions/interactionActions';
-import { addClue } from '../actions/puzzleActions';
+import { addClue, removeClue } from '../actions/puzzleActions';
 import {
   clearClueRanks,
-  getClueRank,
   getWordsThatFit,
   memoGetClueRank,
 } from '../utilities/WordsListUtils';
 import { ClueType, ElementType, SolutionType } from '../data/types/PuzzleTypes';
 import { SelectionType } from '../data/types/InteractionTypes';
 import { RootState } from '../reducers';
+import { getElement } from '../utilities/ElementUtils';
 
 type PropsType = {
   elements: ElementType[];
   mode: GridModes;
   selection: SelectionType;
   solution: SolutionType;
-  selectedClue: ClueType;
 };
 
 const MAX_WORDS = 100;
@@ -32,7 +31,6 @@ const WordsListContainer = ({
   mode,
   selection,
   solution,
-  selectedClue,
 }: PropsType) => {
   const dispatch = useDispatch();
 
@@ -73,15 +71,28 @@ const WordsListContainer = ({
     [dispatch, selection]
   );
 
+  const handleClearClick = useCallback((element) => {
+    dispatch(removeClue(element));
+    return false;
+  }, []);
+
   if (selection.row === -1) {
     return null;
   }
 
   clearClueRanks();
   let displayedWords = (wordsList as ClueType[]).sort(sortFunction);
+  let selectedElement = null;
 
   if (mode === GridModes.LETTER) {
     displayedWords = getWordsThatFit(wordsList, elements, selection, solution);
+    selectedElement = getElement(
+      elements,
+      selection.row,
+      selection.column,
+      selection.direction
+    );
+
     // displayedWords = displayedWords.sort(rankSort);
   } else if (wordsList.length > MAX_WORDS) {
     return (
@@ -96,7 +107,8 @@ const WordsListContainer = ({
       <WordsList
         clues={displayedWords}
         onClick={handleWordClick}
-        selectedClue={selectedClue}
+        onClearClick={handleClearClick}
+        selectedElement={selectedElement}
       />
     </div>
   );
@@ -107,5 +119,4 @@ export default connect((state: RootState) => ({
   selection: state.interaction.selectedElement,
   solution: state.puzzle.solution,
   mode: state.interaction.mode,
-  selectedClue: state.interaction.selectedClue,
 }))(WordsListContainer);

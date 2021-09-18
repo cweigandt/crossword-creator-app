@@ -6,6 +6,7 @@ import {
   SolutionType,
   TemplateType,
 } from '../data/types/PuzzleTypes';
+import { getElementsForRowColumn } from './ElementUtils';
 
 export const visitSelectionBlocks = (
   selection: SelectionType,
@@ -43,6 +44,41 @@ export const addClueToSolution = (
       solutionCopy[row][column] = compressedAnswer[counter].toUpperCase();
     }
   );
+
+  return solutionCopy;
+};
+
+export const removeSelectionFromSolution = (
+  solution: SolutionType,
+  elements: ElementType[],
+  selection: SelectionType // Has to be a root selection
+): SolutionType => {
+  const solutionCopy = solution.map((row) => row.map((el) => el));
+
+  // Step through solution until hitting the edge or a ''
+  let stopFlag = false;
+  visitSelectionBlocks(selection, 15, (row, column, counter) => {
+    if (row >= 15 || column >= 15 || solutionCopy[row][column] === '') {
+      stopFlag = true;
+    }
+    if (stopFlag) {
+      return;
+    }
+
+    const possibleElements = getElementsForRowColumn(elements, row, column);
+    let oppositeElement = null;
+    if (possibleElements.length > 0) {
+      if (possibleElements[0].direction === selection.direction) {
+        oppositeElement = possibleElements[1];
+      } else {
+        oppositeElement = possibleElements[0];
+      }
+    }
+
+    if (!oppositeElement || oppositeElement.answer === '') {
+      solutionCopy[row][column] = '';
+    }
+  });
 
   return solutionCopy;
 };

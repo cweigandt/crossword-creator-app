@@ -14,19 +14,21 @@ const doLettersLineUp = (
   visitSelectionBlocks(element, element.length, (row, column, index) => {
     const possibleElements = getElementsForRowColumn(elements, row, column);
     let oppositeElement = null;
-    if (possibleElements[0].direction === element.direction) {
-      oppositeElement = possibleElements[1];
-    } else {
-      oppositeElement = possibleElements[0];
+    if (possibleElements.length > 0) {
+      if (possibleElements[0].direction === element.direction) {
+        oppositeElement = possibleElements[1];
+      } else {
+        oppositeElement = possibleElements[0];
+      }
     }
+
     if (
-      possibleElements.length === 2 &&
       oppositeElement &&
       oppositeElement.answer !== '' &&
-      solution[row][column] !== '' &&
       word[index] !== solution[row][column]
     ) {
-      // If there is a crossing element AND a letter exists AND it isn't the same letter as our word
+      // If there is a crossing element that has an answer filled in
+      // AND the block isn't the same letter as our word
       // Then we don't have a match
       theyLineUp = false;
     }
