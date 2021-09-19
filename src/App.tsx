@@ -1,4 +1,5 @@
 import Header from './components/header/Header';
+import ModalOverlay from './components/modal/ModalOverlay';
 
 import CluesListContainer from './containers/CluesListContainer';
 import PanelContainer from './containers/PanelContainer';
@@ -15,6 +16,7 @@ function App() {
         center={<PuzzleContainer />}
         right={<WordsListContainer />}
       />
+      <ModalOverlay />
     </div>
   );
 }

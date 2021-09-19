@@ -1,0 +1,10 @@
+.restore-state-button {
+  width: 20px;
+  height: 20px;
+
+  margin: 6px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+
+  transform: scale(1.5);
+}
