@@ -42,6 +42,13 @@ const WordsListContainer = ({
     return 0;
   };
 
+  // const sortFunction = (a: ClueType, b: ClueType): number => {
+  //   const aRank = memoGetClueRank(wordsList, elements, selection, solution, a);
+  //   const bRank = memoGetClueRank(wordsList, elements, selection, solution, b);
+
+  //   return aRank - bRank;
+  // };
+
   const handleWordClick = useCallback(
     (clue) => {
       if (
