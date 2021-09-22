@@ -7,3 +7,24 @@
 
   cursor: pointer;
 }
+
+.modal.restore-state-modal .form-group {
+  width: 100%;
+  max-width: 100%;
+
+  margin: 10px;
+
+  border-radius: 8px;
+  background-color: #333333;
+}
+
+.modal.restore-state-modal textarea {
+  width: 100%;
+  max-width: 100%;
+
+  padding: 6px;
+
+  border: none;
+  background-color: transparent;
+  color: cornsilk;
+}
