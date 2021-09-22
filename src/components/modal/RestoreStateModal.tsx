@@ -6,15 +6,10 @@ import Modal from './Modal';
 
 import '../../styles/modal/RestoreStateModal.css';
 import { restoreState } from '../../actions/commonActions';
+import validateInput from '../../utilities/RestoreUtils';
 
 type PropsType = {
   id: number;
-};
-
-const hasRequiredProps = (object: object, ...varProps: string[]): boolean => {
-  return varProps.reduce((accum, prop) => {
-    return accum && object.hasOwnProperty(prop);
-  }, true as boolean);
 };
 
 const RestoreStateModal = ({ id }: PropsType) => {
@@ -26,29 +21,13 @@ const RestoreStateModal = ({ id }: PropsType) => {
 
     const formData = new FormData(formRef.current || undefined);
     let inputString = formData.get('state') as string;
-    const jsonPuzzle = JSON.parse(inputString);
-    const hasAllProps = hasRequiredProps(
-      jsonPuzzle,
-      'id',
-      'width',
-      'height',
-      'template',
-      'solution',
-      'elements'
-    );
 
-    // TODO - verify types of each property
-    //   id: number;
-    // width: number;
-    // height: number;
-    // template: TemplateType;
-
-    // solution: SolutionType;
-    // elements: ElementType[];
-
-    if (hasAllProps) {
+    try {
+      const jsonPuzzle = validateInput(inputString);
       dispatch(restoreState(jsonPuzzle));
       dispatch(hideModal(id));
+    } catch (err) {
+      console.error(err);
     }
   };
 

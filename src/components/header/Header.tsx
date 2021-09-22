@@ -8,8 +8,10 @@ const Header = () => {
   return (
     <div className='header'>
       <ModeToggle />
-      <GetStateButton />
-      <RestoreStateButton />
+      <div className='state-buttons'>
+        <GetStateButton />
+        <RestoreStateButton />
+      </div>
     </div>
   );
 };

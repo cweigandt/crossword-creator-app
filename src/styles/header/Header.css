@@ -12,3 +12,21 @@
 
   background-color: white;
 }
+
+.state-buttons {
+  position: absolute;
+  display: flex;
+
+  right: 10px;
+}
+
+.state-buttons div {
+  margin: 5px;
+  padding: 5px 3px 3px 3px;
+  border: 1px solid black;
+  border-radius: 15%;
+
+  color: white;
+  background-color: #458a8a;
+  cursor: pointer;
+}
