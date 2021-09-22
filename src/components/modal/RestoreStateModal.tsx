@@ -37,7 +37,7 @@ const RestoreStateModal = ({ id }: PropsType) => {
 
   return (
     <Modal classes='restore-state-modal'>
-      <div>Load Puzzle</div>
+      <div className='modal-title'>Load Puzzle</div>
       <div className='modal-close-button' onClick={handleClose}>
         ❌
       </div>
@@ -51,8 +51,6 @@ const RestoreStateModal = ({ id }: PropsType) => {
           <textarea
             className='form-control'
             data-test-id='restore-state-textarea'
-            rows={20}
-            cols={40}
             id='state'
             onKeyDown={(e) => {
               if (e.keyCode === 13 || e.key === 'Enter') {

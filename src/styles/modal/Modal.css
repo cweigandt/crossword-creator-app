@@ -24,3 +24,8 @@
   background-color: var(--dark-theme-bg, white);
   color: var(--dark-theme-navbar-text, black);
 }
+
+.modal .modal-title {
+  font-size: 22px;
+  font-family: sans-serif;
+}
