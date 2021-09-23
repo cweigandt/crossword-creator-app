@@ -7,6 +7,7 @@ type PropsType = {
   onClick: (clueObj: ClueType) => void;
   onClearClick: (element: ElementType) => void;
   onMouseEnter: (clueObj: ClueType) => void;
+  onMouseLeave: (clueObj: ClueType) => void;
   selectedElement: ElementType | null;
 };
 
@@ -15,6 +16,7 @@ const WordsList = ({
   onClick,
   onClearClick,
   onMouseEnter,
+  onMouseLeave,
   selectedElement,
 }: PropsType) => {
   return (
@@ -38,6 +40,7 @@ const WordsList = ({
             className={classes.join(' ')}
             onClick={() => onClick(clueObj)}
             onMouseEnter={() => onMouseEnter(clueObj)}
+            onMouseLeave={() => onMouseLeave(clueObj)}
           >
             {clueObj.answer}
             {classes.includes('selected') && (

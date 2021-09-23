@@ -68,3 +68,7 @@
 .crossword-board .block.selected-block {
   background-color: yellowgreen;
 }
+
+.crossword-board .block.temporary {
+  color: gray;
+}

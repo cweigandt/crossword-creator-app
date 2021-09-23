@@ -18,3 +18,12 @@ export const wordSelected = (clue: ClueType): AnyAction => ({
   type: 'WORD_SELECTED',
   clue,
 });
+
+export const temporaryWordSelected = (clue: ClueType): AnyAction => ({
+  type: 'TEMPORARY_WORD_SELECTED',
+  clue,
+});
+
+export const temporaryWordCleared = (): AnyAction => ({
+  type: 'TEMPORARY_WORD_CLEARED',
+});

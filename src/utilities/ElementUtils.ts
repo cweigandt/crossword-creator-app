@@ -232,6 +232,33 @@ export const isRowColumnInElement = (
   return false;
 };
 
+export const getRowColumnIndexInElement = (
+  element: ElementType,
+  row: number,
+  column: number
+): number => {
+  if (element.direction === Directions.ACROSS) {
+    if (element.row !== row) {
+      return -1;
+    }
+
+    if (column >= element.column && column < element.column + element.length) {
+      return column - element.column;
+    }
+  }
+  if (element.direction === Directions.DOWN) {
+    if (element.column !== column) {
+      return -1;
+    }
+
+    if (row >= element.row && row < element.row + element.length) {
+      return row - element.row;
+    }
+  }
+
+  return -1;
+};
+
 export const getElement = (
   elements: ElementType[],
   row: number,

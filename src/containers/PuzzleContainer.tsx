@@ -11,6 +11,7 @@ import '../styles/containers/PuzzleContainer.css';
 import { elementSelected } from '../actions/interactionActions';
 import { getOppositeDirection } from '../constants/Directions';
 import {
+  ClueType,
   ElementType,
   SolutionType,
   TemplateType,
@@ -25,6 +26,7 @@ type PropsType = {
   elements: ElementType[];
   mode: GridModes;
   selection: SelectionType;
+  temporaryClue: ClueType | null;
 };
 const PuzzleContainer = ({
   template,
@@ -32,6 +34,7 @@ const PuzzleContainer = ({
   elements,
   mode,
   selection,
+  temporaryClue,
 }: PropsType) => {
   const dispatch = useDispatch();
 
@@ -95,6 +98,7 @@ const PuzzleContainer = ({
         solution={solution}
         elements={elements}
         selection={mode === GridModes.LETTER ? selection : null}
+        temporaryClue={temporaryClue}
         onClick={handleBlockClicked}
       ></Grid>
       <CountsGraph elements={elements} />
@@ -108,4 +112,5 @@ export default connect((state: RootState) => ({
   elements: state.puzzle.elements,
   mode: state.interaction.mode,
   selection: state.interaction.selectedElement,
+  temporaryClue: state.interaction.temporaryClue,
 }))(PuzzleContainer);

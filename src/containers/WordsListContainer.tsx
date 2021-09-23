@@ -5,7 +5,11 @@ import wordsList from '../data/allClues.json';
 import { connect, useDispatch } from 'react-redux';
 import { GridModes } from '../constants/GridModes';
 import { useCallback } from 'react';
-import { wordSelected } from '../actions/interactionActions';
+import {
+  temporaryWordCleared,
+  temporaryWordSelected,
+  wordSelected,
+} from '../actions/interactionActions';
 import { addClue, removeClue } from '../actions/puzzleActions';
 import { getWordsThatFit } from '../utilities/WordsListUtils';
 import { ClueType, ElementType, SolutionType } from '../data/types/PuzzleTypes';
@@ -78,17 +82,19 @@ const WordsListContainer = ({
   const handleMouseEnter = useCallback(
     (clueObj) => {
       if (selection.row >= 0 && selection.column >= 0) {
-        const canSupportAllElements = getClueRank(
-          wordsList,
-          elements,
-          selection,
-          solution,
-          clueObj
-        );
-        console.log(canSupportAllElements);
+        dispatch(temporaryWordSelected(clueObj));
       }
     },
-    [wordsList, elements, selection, solution]
+    [selection]
+  );
+
+  const handleMouseLeave = useCallback(
+    (clueObj) => {
+      if (selection.row >= 0 && selection.column >= 0) {
+        dispatch(temporaryWordCleared());
+      }
+    },
+    [selection]
   );
 
   if (selection.row === -1) {
@@ -122,6 +128,7 @@ const WordsListContainer = ({
         onClick={handleWordClick}
         onClearClick={handleClearClick}
         onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
         selectedElement={selectedElement}
       />
     </div>

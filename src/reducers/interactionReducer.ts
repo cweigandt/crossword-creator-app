@@ -9,6 +9,7 @@ type ReducerType = {
   mode: GridModes;
   selectedElement: SelectionType;
   selectedClue: ClueType;
+  temporaryClue: ClueType | null;
 };
 
 const initialState: ReducerType = {
@@ -22,6 +23,7 @@ const initialState: ReducerType = {
     clue: '',
     answer: '',
   },
+  temporaryClue: null,
 };
 
 const reducer = (state: ReducerType = initialState, action: AnyAction) => {
@@ -40,6 +42,16 @@ const reducer = (state: ReducerType = initialState, action: AnyAction) => {
       return {
         ...state,
         selectedClue: { ...action.clue },
+      };
+    case 'TEMPORARY_WORD_SELECTED':
+      return {
+        ...state,
+        temporaryClue: { ...action.clue },
+      };
+    case 'TEMPORARY_WORD_CLEARED':
+      return {
+        ...state,
+        temporaryClue: null,
       };
 
     case 'RESTORE_STATE':

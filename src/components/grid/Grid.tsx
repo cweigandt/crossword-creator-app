@@ -1,12 +1,17 @@
 import { useCallback } from 'react';
 import { SelectionType } from '../../data/types/InteractionTypes';
 import {
+  ClueType,
   ElementType,
   SolutionType,
   TemplateType,
 } from '../../data/types/PuzzleTypes';
 import '../../styles/grid/Grid.css';
-import { getElement, isRowColumnInElement } from '../../utilities/ElementUtils';
+import {
+  getElement,
+  getRowColumnIndexInElement,
+  isRowColumnInElement,
+} from '../../utilities/ElementUtils';
 import Block from './Block';
 
 type PropsType = {
@@ -14,6 +19,7 @@ type PropsType = {
   solution: SolutionType;
   template: TemplateType;
   selection: SelectionType | null;
+  temporaryClue: ClueType | null;
   onClick: (row: number, column: number) => void;
 };
 
@@ -41,6 +47,7 @@ const Grid = ({
   solution,
   template,
   selection,
+  temporaryClue,
   onClick,
 }: PropsType) => {
   const handleMouseUp = useCallback(
@@ -55,6 +62,8 @@ const Grid = ({
     getElement(elements, selection.row, selection.column, selection.direction);
 
   const renderBlock = (templateValue: number, row: number, column: number) => {
+    let content = solution[row][column];
+
     const classes = [];
     if (selection && row === selection.row && column === selection.column) {
       classes.push('selected-block');
@@ -62,9 +71,17 @@ const Grid = ({
 
     if (selectedElement && isRowColumnInElement(selectedElement, row, column)) {
       classes.push('selected-word');
-    }
 
-    const content = solution[row][column];
+      if (temporaryClue && !content) {
+        const index = getRowColumnIndexInElement(selectedElement, row, column);
+        if (index !== -1) {
+          content = temporaryClue.answer
+            .replace(/[ -]/g, '')
+            [index].toUpperCase();
+          classes.push('temporary');
+        }
+      }
+    }
 
     return (
       <Block
