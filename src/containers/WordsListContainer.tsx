@@ -12,6 +12,7 @@ import { ClueType, ElementType, SolutionType } from '../data/types/PuzzleTypes';
 import { SelectionType } from '../data/types/InteractionTypes';
 import { RootState } from '../reducers';
 import { getElement } from '../utilities/ElementUtils';
+import { getClueRank } from '../utilities/RankUtils';
 
 type PropsType = {
   elements: ElementType[];
@@ -41,13 +42,6 @@ const WordsListContainer = ({
     }
     return 0;
   };
-
-  // const sortFunction = (a: ClueType, b: ClueType): number => {
-  //   const aRank = memoGetClueRank(wordsList, elements, selection, solution, a);
-  //   const bRank = memoGetClueRank(wordsList, elements, selection, solution, b);
-
-  //   return aRank - bRank;
-  // };
 
   const handleWordClick = useCallback(
     (clue) => {
@@ -81,11 +75,28 @@ const WordsListContainer = ({
     [dispatch]
   );
 
+  const handleMouseEnter = useCallback(
+    (clueObj) => {
+      if (selection.row >= 0 && selection.column >= 0) {
+        const canSupportAllElements = getClueRank(
+          wordsList,
+          elements,
+          selection,
+          solution,
+          clueObj
+        );
+        console.log(canSupportAllElements);
+      }
+    },
+    [wordsList, elements, selection, solution]
+  );
+
   if (selection.row === -1) {
     return null;
   }
 
   let displayedWords = (wordsList as ClueType[]).sort(sortFunction);
+
   let selectedElement = null;
 
   if (mode === GridModes.LETTER) {
@@ -110,6 +121,7 @@ const WordsListContainer = ({
         clues={displayedWords}
         onClick={handleWordClick}
         onClearClick={handleClearClick}
+        onMouseEnter={handleMouseEnter}
         selectedElement={selectedElement}
       />
     </div>

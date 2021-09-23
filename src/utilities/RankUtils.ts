@@ -1,11 +1,9 @@
-import { getElement } from './ElementUtils';
+import { addClueToElements, getElement } from './ElementUtils';
 import { SelectionType } from '../data/types/InteractionTypes';
 import { ClueType, ElementType, SolutionType } from '../data/types/PuzzleTypes';
 import { addClueToSolution, visitSelectionBlocks } from './SolutionUtils';
 import { getOppositeDirection } from '../constants/Directions';
-import { getWordsThatFit } from './WordsListUtils';
-
-let clueRanks: { [key: string]: number } = {};
+import { hasWordThatFits } from './WordsListUtils';
 
 export const getClueRank = (
   wordsList: ClueType[],
@@ -13,11 +11,7 @@ export const getClueRank = (
   selection: SelectionType,
   solution: SolutionType,
   clue: ClueType
-): number => {
-  let crossingCount = 0;
-
-  const newSolution = addClueToSolution(solution, clue, selection);
-
+): boolean => {
   const selectedElement = getElement(
     elements,
     selection.row,
@@ -26,15 +20,20 @@ export const getClueRank = (
   );
 
   if (!selectedElement) {
-    return 0;
+    return false;
   }
 
+  let canSupportAllElements = true;
+
+  const newSolution = addClueToSolution(solution, clue, selectedElement);
+  const newElements = addClueToElements(elements, clue, selectedElement);
+
   visitSelectionBlocks(
-    selection,
+    selectedElement,
     selectedElement.length,
     (row, column, index) => {
       const crossingElement = getElement(
-        elements,
+        newElements,
         row,
         column,
         getOppositeDirection(selection.direction)
@@ -45,39 +44,16 @@ export const getClueRank = (
       }
 
       if (crossingElement.answer === '') {
-        const possibleElements = getWordsThatFit(
+        const hasWord = hasWordThatFits(
           wordsList,
-          elements,
+          newElements,
           crossingElement,
           newSolution
         );
 
-        crossingCount = crossingCount + possibleElements.length;
+        canSupportAllElements = canSupportAllElements && hasWord;
       }
     }
   );
-  return crossingCount;
-};
-
-export const memoGetClueRank = (
-  wordsList: ClueType[],
-  elements: ElementType[],
-  selection: SelectionType,
-  solution: SolutionType,
-  clue: ClueType
-) => {
-  if (!clueRanks.hasOwnProperty(clue.answer)) {
-    clueRanks[clue.answer] = getClueRank(
-      wordsList,
-      elements,
-      selection,
-      solution,
-      clue
-    );
-  }
-  return clueRanks[clue.answer];
-};
-
-export const clearClueRanks = () => {
-  clueRanks = {};
+  return canSupportAllElements;
 };

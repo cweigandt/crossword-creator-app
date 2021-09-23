@@ -68,6 +68,37 @@ export const getWordsThatFit = (
     });
 };
 
+export const hasWordThatFits = (
+  wordsList: ClueType[],
+  elements: ElementType[],
+  selection: SelectionType,
+  solution: SolutionType
+): boolean => {
+  const selectedElement = getElement(
+    elements,
+    selection.row,
+    selection.column,
+    selection.direction
+  );
+
+  if (!selectedElement) {
+    return false;
+  }
+
+  return wordsList
+    .filter((word) => {
+      return word.answer.replace(/[ -]/g, '').length === selectedElement.length;
+    })
+    .some((word) => {
+      return doLettersLineUp(
+        solution,
+        word.answer.replace(/[ -]/g, '').toUpperCase(),
+        selectedElement,
+        elements
+      );
+    });
+};
+
 export const getWordsThatFitV2 = (
   wordsList: ClueType[],
   elements: ElementType[],
