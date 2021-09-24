@@ -14,7 +14,6 @@
 }
 
 .state-buttons {
-  position: absolute;
   display: flex;
 
   right: 10px;
@@ -29,4 +28,15 @@
   color: white;
   background-color: #458a8a;
   cursor: pointer;
+}
+
+.header .header-flex-element {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  position: relative;
+  flex: 1 1 auto;
+
+  height: 50px;
 }

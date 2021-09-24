@@ -16,7 +16,6 @@ import { ClueType, ElementType, SolutionType } from '../data/types/PuzzleTypes';
 import { SelectionType } from '../data/types/InteractionTypes';
 import { RootState } from '../reducers';
 import { getElement } from '../utilities/ElementUtils';
-import { getClueRank } from '../utilities/RankUtils';
 
 type PropsType = {
   elements: ElementType[];
@@ -38,6 +37,13 @@ const WordsListContainer = ({
   const dispatch = useDispatch();
 
   const sortFunction = (a: ClueType, b: ClueType): number => {
+    // if (a.clue === selectedClue.clue && a.answer === selectedClue.answer) {
+    //   return -1;
+    // }
+    // if (b.clue === selectedClue.clue && b.answer === selectedClue.answer) {
+    //   return 1;
+    // }
+
     if (a.clue !== '' && b.clue === '') {
       return -1;
     }
@@ -85,23 +91,23 @@ const WordsListContainer = ({
         dispatch(temporaryWordSelected(clueObj));
       }
     },
-    [selection]
+    [dispatch, selection]
   );
 
   const handleMouseLeave = useCallback(
-    (clueObj) => {
+    (__clueObj) => {
       if (selection.row >= 0 && selection.column >= 0) {
         dispatch(temporaryWordCleared());
       }
     },
-    [selection]
+    [dispatch, selection]
   );
 
   if (selection.row === -1) {
     return null;
   }
 
-  let displayedWords = (wordsList as ClueType[]).sort(sortFunction);
+  let displayedWords = wordsList as ClueType[];
 
   let selectedElement = null;
 
@@ -113,6 +119,8 @@ const WordsListContainer = ({
       selection.column,
       selection.direction
     );
+
+    displayedWords = displayedWords.sort(sortFunction);
   } else if (wordsList.length > MAX_WORDS) {
     return (
       <div className='words-list-container'>

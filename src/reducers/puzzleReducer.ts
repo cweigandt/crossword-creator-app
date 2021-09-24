@@ -41,6 +41,9 @@ const reducer = (state = initialState, action: AnyAction) => {
     case 'RESTORE_STATE':
       return handleRestoreState(state, action);
 
+    case 'REMOVE_ALL_CLUES':
+      return handleRemoveAllClues(state);
+
     default:
       return state;
   }
@@ -110,6 +113,14 @@ var handleRestoreState = (state: PuzzleType, action: AnyAction): PuzzleType => {
   return {
     ...initialState,
     ...action.puzzle,
+  };
+};
+
+var handleRemoveAllClues = (state: PuzzleType): PuzzleType => {
+  return {
+    ...state,
+    solution: state.solution.map((row) => row.map(() => '')),
+    elements: state.elements.map((el) => ({ ...el, clue: '', answer: '' })),
   };
 };
 

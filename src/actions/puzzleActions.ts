@@ -21,3 +21,7 @@ export const removeClue = (selection: SelectionType): AnyAction => ({
   type: 'REMOVE_CLUE',
   selection,
 });
+
+export const removeAllClues = (): AnyAction => ({
+  type: 'REMOVE_ALL_CLUES',
+});
