@@ -1,24 +1,24 @@
-import { useCallback } from 'react';
-import { connect, useDispatch } from 'react-redux';
+import { useCallback } from "react";
+import { connect, useDispatch } from "react-redux";
 
-import Grid from '../components/grid/Grid';
-import { templateUpdated } from '../actions/puzzleActions';
+import Grid from "../components/grid/Grid";
 
-import CountsGraph from '../components/CountsGraph';
-import { GridModes } from '../constants/GridModes';
+import CountsGraph from "../components/CountsGraph";
+import { GridModes } from "../constants/GridModes";
 
-import '../styles/containers/PuzzleContainer.css';
-import { elementSelected } from '../actions/interactionActions';
-import { getOppositeDirection } from '../constants/Directions';
+import "../styles/containers/PuzzleContainer.css";
+import { getOppositeDirection } from "../constants/Directions";
 import {
   ClueType,
   ElementType,
   SolutionType,
   TemplateType,
-} from '../data/types/PuzzleTypes';
-import { SelectionType } from '../data/types/InteractionTypes';
-import { RootState } from '../reducers';
-import { getElementsForRowColumn } from '../utilities/ElementUtils';
+} from "../data/types/PuzzleTypes";
+import { SelectionType } from "../data/types/InteractionTypes";
+import { RootState } from "../reducers";
+import { getElementsForRowColumn } from "../utilities/ElementUtils";
+import interactionSlice from "../reducers/interactionSlice";
+import puzzleSlice from "../reducers/puzzleSlice";
 
 type PropsType = {
   template: TemplateType;
@@ -45,7 +45,7 @@ const PuzzleContainer = ({
         updatedTemplate[row][column] = Math.abs(
           updatedTemplate[row][column] - 1
         ); // 1 -> 0, 0 -> -1 -> 1
-        dispatch(templateUpdated(updatedTemplate));
+        dispatch(puzzleSlice.actions.updateTemplate(updatedTemplate));
       }
 
       if (mode === GridModes.LETTER) {
@@ -84,7 +84,7 @@ const PuzzleContainer = ({
             }
           }
 
-          dispatch(elementSelected(newSelection));
+          dispatch(interactionSlice.actions.selectElement(newSelection));
         }
       }
     },
@@ -92,7 +92,7 @@ const PuzzleContainer = ({
   );
 
   return (
-    <div className='puzzle-container'>
+    <div className="puzzle-container">
       <Grid
         template={template}
         solution={solution}

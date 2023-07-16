@@ -1,21 +1,17 @@
-import WordsList from '../components/words-list/WordsList';
+import WordsList from "../components/words-list/WordsList";
 
-import '../styles/containers/WordsListContainer.css';
-import wordsList from '../data/allClues.json';
-import { connect, useDispatch } from 'react-redux';
-import { GridModes } from '../constants/GridModes';
-import { useCallback } from 'react';
-import {
-  temporaryWordCleared,
-  temporaryWordSelected,
-  wordSelected,
-} from '../actions/interactionActions';
-import { addClue, removeClue } from '../actions/puzzleActions';
-import { getWordsThatFit } from '../utilities/WordsListUtils';
-import { ClueType, ElementType, SolutionType } from '../data/types/PuzzleTypes';
-import { SelectionType } from '../data/types/InteractionTypes';
-import { RootState } from '../reducers';
-import { getElement } from '../utilities/ElementUtils';
+import "../styles/containers/WordsListContainer.css";
+import wordsList from "../data/allClues.json";
+import { connect, useDispatch } from "react-redux";
+import { GridModes } from "../constants/GridModes";
+import { useCallback } from "react";
+import { getWordsThatFit } from "../utilities/WordsListUtils";
+import { ClueType, ElementType, SolutionType } from "../data/types/PuzzleTypes";
+import { SelectionType } from "../data/types/InteractionTypes";
+import { RootState } from "../reducers";
+import { getElement } from "../utilities/ElementUtils";
+import interactionSlice from "../reducers/interactionSlice";
+import puzzleSlice from "../reducers/puzzleSlice";
 
 type PropsType = {
   elements: ElementType[];
@@ -44,10 +40,10 @@ const WordsListContainer = ({
     //   return 1;
     // }
 
-    if (a.clue !== '' && b.clue === '') {
+    if (a.clue !== "" && b.clue === "") {
       return -1;
     }
-    if (b.clue !== '' && a.clue === '') {
+    if (b.clue !== "" && a.clue === "") {
       return 1;
     }
     return 0;
@@ -66,12 +62,14 @@ const WordsListContainer = ({
           selection.direction
         );
         if (element) {
-          dispatch(removeClue(element));
-          dispatch(wordSelected({ clue: '', answer: '' }));
+          dispatch(puzzleSlice.actions.removeClue(element));
+          dispatch(
+            interactionSlice.actions.selectWord({ clue: "", answer: "" })
+          );
         }
       } else {
-        dispatch(wordSelected(clue));
-        dispatch(addClue(clue, selection));
+        dispatch(interactionSlice.actions.selectWord(clue));
+        dispatch(puzzleSlice.actions.addClue({ clue, selection }));
       }
     },
     [dispatch, elements, selection, selectedClue]
@@ -79,7 +77,7 @@ const WordsListContainer = ({
 
   const handleClearClick = useCallback(
     (element) => {
-      dispatch(removeClue(element));
+      dispatch(puzzleSlice.actions.removeClue(element));
       return false;
     },
     [dispatch]
@@ -88,7 +86,7 @@ const WordsListContainer = ({
   const handleMouseEnter = useCallback(
     (clueObj) => {
       if (selection.row >= 0 && selection.column >= 0) {
-        dispatch(temporaryWordSelected(clueObj));
+        dispatch(interactionSlice.actions.temporarilySelectWord(clueObj));
       }
     },
     [dispatch, selection]
@@ -97,7 +95,7 @@ const WordsListContainer = ({
   const handleMouseLeave = useCallback(
     (__clueObj) => {
       if (selection.row >= 0 && selection.column >= 0) {
-        dispatch(temporaryWordCleared());
+        dispatch(interactionSlice.actions.clearTemporarilySelectedWord({}));
       }
     },
     [dispatch, selection]
@@ -120,17 +118,17 @@ const WordsListContainer = ({
       selection.direction
     );
 
-    displayedWords = displayedWords.sort(sortFunction);
+    displayedWords = [...displayedWords].sort(sortFunction);
   } else if (wordsList.length > MAX_WORDS) {
     return (
-      <div className='words-list-container'>
-        <div style={{ textAlign: 'center' }}>{`${wordsList.length} words`}</div>
+      <div className="words-list-container">
+        <div style={{ textAlign: "center" }}>{`${wordsList.length} words`}</div>
       </div>
     );
   }
 
   return (
-    <div className='words-list-container'>
+    <div className="words-list-container">
       <WordsList
         clues={displayedWords}
         onClick={handleWordClick}

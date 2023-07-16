@@ -1,16 +1,16 @@
-import { FiUpload } from 'react-icons/fi';
-import { useDispatch } from 'react-redux';
-import { showModal } from '../../actions/modalActions';
-import { ModalTypes } from '../../constants/ModalTypes';
+import { FiUpload } from "react-icons/fi";
+import { useDispatch } from "react-redux";
+import { ModalTypes } from "../../constants/ModalTypes";
+import modalSlice from "../../reducers/modalSlice";
 
 const RestoreStateButton = () => {
   const dispatch = useDispatch();
 
   return (
     <div
-      className='restore-state-button'
+      className="restore-state-button"
       onClick={() => {
-        dispatch(showModal(ModalTypes.RESTORE_STATE));
+        dispatch(modalSlice.actions.showModal(ModalTypes.RESTORE_STATE));
       }}
     >
       <FiUpload />

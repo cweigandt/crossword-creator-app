@@ -1,13 +1,13 @@
-import { combineReducers } from 'redux';
+import { combineReducers } from "redux";
 
-import puzzleReducer from './puzzleReducer';
-import interactionReducer from './interactionReducer';
-import modalReducer from './modalReducer';
+import interactionSlice from "./interactionSlice";
+import puzzleSlice from "./puzzleSlice";
+import modalSlice from "./modalSlice";
 
 const rootReducer = combineReducers({
-  puzzle: puzzleReducer,
-  interaction: interactionReducer,
-  modal: modalReducer,
+  puzzle: puzzleSlice.reducer,
+  interaction: interactionSlice.reducer,
+  modal: modalSlice.reducer,
 });
 
 export type RootState = ReturnType<typeof rootReducer>;
