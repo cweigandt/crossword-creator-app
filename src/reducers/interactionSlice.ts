@@ -28,7 +28,7 @@ type StateType = {
 };
 
 const initialState: StateType = {
-  mode: GridModes.TEMPLATE,
+  mode: GridModes.LETTER,
   selectedElement: {
     row: -1,
     column: -1,
@@ -67,7 +67,7 @@ const interactionSlice = createSlice({
       state.temporaryClue = null;
     },
     restoreState(state, __action: PayloadAction<RestoreStatePayload>) {
-      state = initialState;
+      return initialState;
     },
   },
 });

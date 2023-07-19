@@ -8,6 +8,7 @@ import { validateJSON } from "../../utilities/RestoreUtils";
 import interactionSlice from "../../reducers/interactionSlice";
 import puzzleSlice from "../../reducers/puzzleSlice";
 import modalSlice from "../../reducers/modalSlice";
+import wordsSlice from "../../reducers/wordsSlice";
 
 type PropsType = {
   id: number;
@@ -29,6 +30,7 @@ const RestoreStateModal = ({ id }: PropsType) => {
         dispatch(interactionSlice.actions.restoreState({}));
         dispatch(puzzleSlice.actions.restoreState(jsonState));
         dispatch(modalSlice.actions.hideModal(id));
+        dispatch(wordsSlice.actions.restoreState(jsonState));
       } catch (err) {
         console.error(err);
       }

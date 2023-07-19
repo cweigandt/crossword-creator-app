@@ -1,7 +1,6 @@
 import WordsList from "../components/words-list/WordsList";
 
 import "../styles/containers/WordsListContainer.css";
-import wordsList from "../data/allClues.json";
 import { connect, useDispatch } from "react-redux";
 import { GridModes } from "../constants/GridModes";
 import { useCallback, useEffect, useState } from "react";
@@ -12,6 +11,7 @@ import { RootState } from "../reducers";
 import { getElement } from "../utilities/ElementUtils";
 import interactionSlice from "../reducers/interactionSlice";
 import puzzleSlice from "../reducers/puzzleSlice";
+import wordsSlice from "../reducers/wordsSlice";
 
 type PropsType = {
   elements: ElementType[];
@@ -19,6 +19,7 @@ type PropsType = {
   selection: SelectionType;
   solution: SolutionType;
   selectedClue: ClueType;
+  clueList: ClueType[];
 };
 
 const MAX_WORDS = 100;
@@ -29,10 +30,10 @@ const WordsListContainer = ({
   selection,
   solution,
   selectedClue,
+  clueList,
 }: PropsType) => {
   const dispatch = useDispatch();
-  const [clueList, setClueList] = useState(wordsList as ClueType[]);
-  const [displayedWords, setDisplayedWords] = useState(wordsList as ClueType[]);
+  const [displayedWords, setDisplayedWords] = useState([] as ClueType[]);
   const [selectedElement, setSelectedElement] = useState<ElementType | null>(
     null
   );
@@ -60,6 +61,7 @@ const WordsListContainer = ({
         clue.clue === selectedClue.clue &&
         clue.answer === selectedClue.answer
       ) {
+        // Clicking already existing element so remove it
         const element = getElement(
           elements,
           selection.row,
@@ -71,18 +73,21 @@ const WordsListContainer = ({
           dispatch(
             interactionSlice.actions.selectWord({ clue: "", answer: "" })
           );
+          dispatch(wordsSlice.actions.unuseClue(clue));
         }
       } else {
         dispatch(interactionSlice.actions.selectWord(clue));
         dispatch(puzzleSlice.actions.addClue({ clue, selection }));
+        dispatch(wordsSlice.actions.useClue(clue));
       }
     },
     [dispatch, elements, selection, selectedClue]
   );
 
   const handleClearClick = useCallback(
-    (element) => {
+    (element: ElementType) => {
       dispatch(puzzleSlice.actions.removeClue(element));
+      dispatch(wordsSlice.actions.unuseClue(element));
       return false;
     },
     [dispatch]
@@ -108,7 +113,12 @@ const WordsListContainer = ({
 
   useEffect(() => {
     if (mode === GridModes.LETTER) {
-      const newWords = getWordsThatFit(clueList, elements, selection, solution);
+      const newWords = getWordsThatFit(
+        [selectedClue].concat(clueList),
+        elements,
+        selection,
+        solution
+      );
       setSelectedElement(
         getElement(
           elements,
@@ -120,16 +130,16 @@ const WordsListContainer = ({
 
       setDisplayedWords(newWords.sort(sortFunction));
     }
-  }, [mode, selection, elements, solution, clueList]);
+  }, [mode, selection, elements, solution, clueList, selectedClue]);
 
   if (selection.row === -1) {
     return null;
   }
 
-  if (mode === GridModes.TEMPLATE && wordsList.length > MAX_WORDS) {
+  if (mode === GridModes.TEMPLATE && clueList.length > MAX_WORDS) {
     return (
       <div className="words-list-container">
-        <div style={{ textAlign: "center" }}>{`${wordsList.length} words`}</div>
+        <div style={{ textAlign: "center" }}>{`${clueList.length} words`}</div>
       </div>
     );
   }
@@ -154,4 +164,5 @@ export default connect((state: RootState) => ({
   solution: state.puzzle.puzzles[state.puzzle.currentPuzzleIndex].solution,
   mode: state.interaction.mode,
   selectedClue: state.interaction.selectedClue,
+  clueList: state.words.clueList,
 }))(WordsListContainer);

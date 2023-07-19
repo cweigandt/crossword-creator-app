@@ -1,6 +1,5 @@
 import { Directions } from "../constants/Directions";
 import { ElementType, PuzzleType } from "../data/types/PuzzleTypes";
-import { RestoreStatePayload } from "../reducers/puzzleSlice";
 
 const hasRequiredProps = (object: object, ...varProps: string[]): boolean => {
   return varProps.reduce((accum, prop) => {
@@ -135,8 +134,13 @@ const validateInput = (jsonPuzzle: PuzzleType) => {
   return jsonPuzzle;
 };
 
-export const validateJSON = (inputString: string): RestoreStatePayload => {
-  const jsonObject = JSON.parse(inputString) as RestoreStatePayload;
+export const validateJSON = (
+  inputString: string
+): { puzzles: PuzzleType[]; currentPuzzleIndex: number } => {
+  const jsonObject = JSON.parse(inputString) as {
+    puzzles: PuzzleType[];
+    currentPuzzleIndex: number;
+  };
   const hasAllProps = hasRequiredProps(
     jsonObject,
     "puzzles",

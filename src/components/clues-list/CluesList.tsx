@@ -20,7 +20,7 @@ const sortFunction = (a: ElementType, b: ElementType): number => {
 
 const makeDisplayString = (element: ElementType): string => {
   const direction = element.direction === Directions.ACROSS ? "a" : "d";
-  return `${element.number}${direction}: ${element.clue} (${element.answer})`;
+  return `${element.number}${direction}: ${element.clue} (${element.answer}) (${element.length})`;
 };
 
 const CluesList = ({ elements }: PropsType) => {

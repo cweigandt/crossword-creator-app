@@ -16,7 +16,7 @@ import {
 } from "../data/types/PuzzleTypes";
 import { SelectionType } from "../data/types/InteractionTypes";
 import { RootState } from "../reducers";
-import { getElementsForRowColumn } from "../utilities/ElementUtils";
+import { getElement, getElementsForRowColumn } from "../utilities/ElementUtils";
 import interactionSlice from "../reducers/interactionSlice";
 import puzzleSlice from "../reducers/puzzleSlice";
 
@@ -85,6 +85,16 @@ const PuzzleContainer = ({
           }
 
           dispatch(interactionSlice.actions.selectElement(newSelection));
+          dispatch(
+            interactionSlice.actions.selectWord(
+              getElement(
+                elements,
+                newSelection.row,
+                newSelection.column,
+                newSelection.direction
+              ) || { clue: "", answer: "" }
+            )
+          );
         }
       }
     },

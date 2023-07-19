@@ -4,8 +4,6 @@ import { ModalTypes } from "../constants/ModalTypes";
 
 let uid = 0;
 
-export type thing = {};
-
 export type ShowModalPayload = ModalTypes;
 export type HideModalPayload = number;
 
