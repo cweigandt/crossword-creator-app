@@ -22,19 +22,32 @@ export type UpdateTemplatePayload = TemplateType;
 export type AddCluePayload = { clue: ClueType; selection: SelectionType };
 export type RemoveCluePayload = SelectionType;
 export type RemoveAllCluesPayload = {};
-export type RestoreStatePayload = PuzzleType;
+export type RestoreStatePayload = StateType;
+export type GoToNextPuzzlePayload = {};
+export type GoToPreviousPuzzlePayload = {};
+export type RemoveCurrentPuzzlePayload = {};
 
-type StateType = PuzzleType;
+const createEmptyPuzzle = (): PuzzleType => {
+  return {
+    ...defaultPuzzle,
+    solution: defaultPuzzle.template.map((row) => row.map(() => "")),
+    elements: generateElements(
+      defaultPuzzle.template,
+      defaultPuzzle.width,
+      defaultPuzzle.height
+    ),
+  };
+};
+
+type StateType = { puzzles: PuzzleType[]; currentPuzzleIndex: number };
 
 const initialState: StateType = {
-  ...defaultPuzzle,
-  solution: defaultPuzzle.template.map((row) => row.map(() => "")),
-  elements: generateElements(
-    defaultPuzzle.template,
-    defaultPuzzle.width,
-    defaultPuzzle.height
-  ),
+  currentPuzzleIndex: 0,
+  puzzles: [createEmptyPuzzle()],
 };
+
+const getCurrentPuzzle = (state: StateType) =>
+  state.puzzles[state.currentPuzzleIndex];
 
 const puzzleSlice = createSlice({
   name: "puzzle",
@@ -42,18 +55,22 @@ const puzzleSlice = createSlice({
   reducers: {
     updateTemplate(state, action: PayloadAction<UpdateTemplatePayload>) {
       const newElements = transferElements(
-        state.elements,
+        getCurrentPuzzle(state).elements,
         action.payload,
-        state.width,
-        state.height
+        getCurrentPuzzle(state).width,
+        getCurrentPuzzle(state).height
       );
-      state.template = action.payload;
-      state.elements = newElements;
-      state.solution = buildSolution(action.payload, newElements);
+      getCurrentPuzzle(state).template = action.payload;
+      getCurrentPuzzle(state).elements = newElements;
+      getCurrentPuzzle(state).solution = buildSolution(
+        action.payload,
+        newElements
+      );
     },
+
     addClue(state, action: PayloadAction<AddCluePayload>) {
       const rootSelection = getRootSelection(
-        state.elements,
+        getCurrentPuzzle(state).elements,
         action.payload.selection,
         action.payload.selection.row,
         action.payload.selection.column
@@ -63,20 +80,21 @@ const puzzleSlice = createSlice({
         return;
       }
 
-      state.solution = addClueToSolution(
-        state.solution,
+      getCurrentPuzzle(state).solution = addClueToSolution(
+        getCurrentPuzzle(state).solution,
         action.payload.clue,
         rootSelection
       );
-      state.elements = addClueToElements(
-        state.elements,
+      getCurrentPuzzle(state).elements = addClueToElements(
+        getCurrentPuzzle(state).elements,
         action.payload.clue,
         rootSelection
       );
     },
+
     removeClue(state, action: PayloadAction<RemoveCluePayload>) {
       const rootSelection = getRootSelection(
-        state.elements,
+        getCurrentPuzzle(state).elements,
         action.payload,
         action.payload.row,
         action.payload.column
@@ -86,26 +104,68 @@ const puzzleSlice = createSlice({
         return;
       }
 
-      state.solution = removeSelectionFromSolution(
-        state.solution,
-        state.elements,
+      getCurrentPuzzle(state).solution = removeSelectionFromSolution(
+        getCurrentPuzzle(state).solution,
+        getCurrentPuzzle(state).elements,
         rootSelection
       );
-      state.elements = removeClueFromElements(state.elements, rootSelection);
+      getCurrentPuzzle(state).elements = removeClueFromElements(
+        getCurrentPuzzle(state).elements,
+        rootSelection
+      );
     },
-    removeAllClues(state, action: PayloadAction<RemoveAllCluesPayload>) {
-      state.solution = state.solution.map((row) => row.map(() => ""));
-      state.elements = state.elements.map((el) => ({
+
+    removeAllClues(state, __action: PayloadAction<RemoveAllCluesPayload>) {
+      getCurrentPuzzle(state).solution = state.puzzles[
+        state.currentPuzzleIndex
+      ].solution.map((row) => row.map(() => ""));
+      getCurrentPuzzle(state).elements = state.puzzles[
+        state.currentPuzzleIndex
+      ].elements.map((el) => ({
         ...el,
         clue: "",
         answer: "",
       }));
     },
-    restoreState(state, action: PayloadAction<RestoreStatePayload>) {
-      state = {
+
+    restoreState(__state, action: PayloadAction<RestoreStatePayload>) {
+      return {
         ...initialState,
         ...action.payload,
       };
+    },
+
+    goToNextPuzzle(state, __action: PayloadAction<GoToNextPuzzlePayload>) {
+      if (state.currentPuzzleIndex + 1 === state.puzzles.length) {
+        state.puzzles.push(createEmptyPuzzle());
+      }
+      state.currentPuzzleIndex = state.currentPuzzleIndex + 1;
+    },
+
+    goToPreviousPuzzle(
+      state,
+      __action: PayloadAction<GoToPreviousPuzzlePayload>
+    ) {
+      if (state.currentPuzzleIndex === 0) {
+        return;
+      }
+      state.currentPuzzleIndex = state.currentPuzzleIndex - 1;
+    },
+
+    removeCurrentPuzzle(
+      state,
+      action: PayloadAction<RemoveCurrentPuzzlePayload>
+    ) {
+      if (state.currentPuzzleIndex === 0 && state.puzzles.length === 1) {
+        state.puzzles = [createEmptyPuzzle()];
+        return;
+      }
+
+      if (state.currentPuzzleIndex === state.puzzles.length - 1) {
+        state.currentPuzzleIndex = state.currentPuzzleIndex - 1;
+      }
+
+      state.puzzles.splice(state.currentPuzzleIndex, 1);
     },
   },
 });

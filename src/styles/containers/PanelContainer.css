@@ -1,8 +1,8 @@
 .panel-container {
   position: relative;
   width: 100%;
-  height: calc(100% - 50px);
-  top: 50px;
+  height: calc(100% - 0px);
+  top: 100px;
 
   display: flex;
   flex-direction: row;
@@ -10,7 +10,7 @@
 }
 
 .panel {
-  height: calc(100vh - 50px);
+  height: calc(100vh - 0px);
 
   padding: 5px;
 }

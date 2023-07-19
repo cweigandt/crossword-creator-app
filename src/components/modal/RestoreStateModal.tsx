@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux";
 import Modal from "./Modal";
 
 import "../../styles/modal/RestoreStateModal.css";
-import validateInput from "../../utilities/RestoreUtils";
+import { validateJSON } from "../../utilities/RestoreUtils";
 import interactionSlice from "../../reducers/interactionSlice";
 import puzzleSlice from "../../reducers/puzzleSlice";
 import modalSlice from "../../reducers/modalSlice";
@@ -17,21 +17,24 @@ const RestoreStateModal = ({ id }: PropsType) => {
   const dispatch = useDispatch();
   const formRef = useRef<HTMLFormElement | null>(null);
 
-  const handleFormSubmit = (e: any) => {
-    e.preventDefault();
+  const handleFormSubmit = useCallback(
+    (e: any) => {
+      e.preventDefault();
 
-    const formData = new FormData(formRef.current || undefined);
-    let inputString = formData.get("state") as string;
+      const formData = new FormData(formRef.current || undefined);
+      let inputString = formData.get("state") as string;
 
-    try {
-      const jsonPuzzle = validateInput(inputString);
-      dispatch(interactionSlice.actions.restoreState({}));
-      dispatch(puzzleSlice.actions.restoreState(jsonPuzzle));
-      dispatch(modalSlice.actions.hideModal(id));
-    } catch (err) {
-      console.error(err);
-    }
-  };
+      try {
+        const jsonState = validateJSON(inputString);
+        dispatch(interactionSlice.actions.restoreState({}));
+        dispatch(puzzleSlice.actions.restoreState(jsonState));
+        dispatch(modalSlice.actions.hideModal(id));
+      } catch (err) {
+        console.error(err);
+      }
+    },
+    [id, dispatch]
+  );
 
   const handleClose = useCallback(() => {
     dispatch(modalSlice.actions.hideModal(id));

@@ -4,7 +4,7 @@ import "../styles/containers/WordsListContainer.css";
 import wordsList from "../data/allClues.json";
 import { connect, useDispatch } from "react-redux";
 import { GridModes } from "../constants/GridModes";
-import { useCallback } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { getWordsThatFit } from "../utilities/WordsListUtils";
 import { ClueType, ElementType, SolutionType } from "../data/types/PuzzleTypes";
 import { SelectionType } from "../data/types/InteractionTypes";
@@ -31,6 +31,11 @@ const WordsListContainer = ({
   selectedClue,
 }: PropsType) => {
   const dispatch = useDispatch();
+  const [clueList, setClueList] = useState(wordsList as ClueType[]);
+  const [displayedWords, setDisplayedWords] = useState(wordsList as ClueType[]);
+  const [selectedElement, setSelectedElement] = useState<ElementType | null>(
+    null
+  );
 
   const sortFunction = (a: ClueType, b: ClueType): number => {
     // if (a.clue === selectedClue.clue && a.answer === selectedClue.answer) {
@@ -101,25 +106,27 @@ const WordsListContainer = ({
     [dispatch, selection]
   );
 
+  useEffect(() => {
+    if (mode === GridModes.LETTER) {
+      const newWords = getWordsThatFit(clueList, elements, selection, solution);
+      setSelectedElement(
+        getElement(
+          elements,
+          selection.row,
+          selection.column,
+          selection.direction
+        )
+      );
+
+      setDisplayedWords(newWords.sort(sortFunction));
+    }
+  }, [mode, selection, elements, solution, clueList]);
+
   if (selection.row === -1) {
     return null;
   }
 
-  let displayedWords = wordsList as ClueType[];
-
-  let selectedElement = null;
-
-  if (mode === GridModes.LETTER) {
-    displayedWords = getWordsThatFit(wordsList, elements, selection, solution);
-    selectedElement = getElement(
-      elements,
-      selection.row,
-      selection.column,
-      selection.direction
-    );
-
-    displayedWords = [...displayedWords].sort(sortFunction);
-  } else if (wordsList.length > MAX_WORDS) {
+  if (mode === GridModes.TEMPLATE && wordsList.length > MAX_WORDS) {
     return (
       <div className="words-list-container">
         <div style={{ textAlign: "center" }}>{`${wordsList.length} words`}</div>
@@ -142,9 +149,9 @@ const WordsListContainer = ({
 };
 
 export default connect((state: RootState) => ({
-  elements: state.puzzle.elements,
+  elements: state.puzzle.puzzles[state.puzzle.currentPuzzleIndex].elements,
   selection: state.interaction.selectedElement,
-  solution: state.puzzle.solution,
+  solution: state.puzzle.puzzles[state.puzzle.currentPuzzleIndex].solution,
   mode: state.interaction.mode,
   selectedClue: state.interaction.selectedClue,
 }))(WordsListContainer);

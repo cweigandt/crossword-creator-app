@@ -28,7 +28,7 @@ type StateType = {
 };
 
 const initialState: StateType = {
-  mode: GridModes.LETTER,
+  mode: GridModes.TEMPLATE,
   selectedElement: {
     row: -1,
     column: -1,
