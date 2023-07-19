@@ -11,7 +11,7 @@ const RemovePuzzleButton = () => {
     <ProgressButton
       color="black"
       text="Remove Puzzle"
-      onComplete={() => dispatch(puzzleSlice.actions.removeAllClues({}))}
+      onComplete={() => dispatch(puzzleSlice.actions.removeCurrentPuzzle({}))}
     />
   );
 };

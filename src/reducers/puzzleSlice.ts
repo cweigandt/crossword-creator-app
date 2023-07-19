@@ -156,16 +156,17 @@ const puzzleSlice = createSlice({
       state,
       action: PayloadAction<RemoveCurrentPuzzlePayload>
     ) {
-      if (state.currentPuzzleIndex === 0 && state.puzzles.length === 1) {
+      const oldCurrentPuzzleIndex = state.currentPuzzleIndex;
+      if (oldCurrentPuzzleIndex === 0 && state.puzzles.length === 1) {
         state.puzzles = [createEmptyPuzzle()];
         return;
       }
 
-      if (state.currentPuzzleIndex === state.puzzles.length - 1) {
-        state.currentPuzzleIndex = state.currentPuzzleIndex - 1;
+      if (oldCurrentPuzzleIndex === state.puzzles.length - 1) {
+        state.currentPuzzleIndex = oldCurrentPuzzleIndex - 1;
       }
 
-      state.puzzles.splice(state.currentPuzzleIndex, 1);
+      state.puzzles.splice(oldCurrentPuzzleIndex, 1);
     },
   },
 });

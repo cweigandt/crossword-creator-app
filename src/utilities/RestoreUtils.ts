@@ -114,8 +114,8 @@ const validateInput = (jsonPuzzle: PuzzleType) => {
 
     if (
       element.length <= 1 ||
-      element.length >= jsonPuzzle.width ||
-      element.length >= jsonPuzzle.height
+      element.length > jsonPuzzle.width ||
+      element.length > jsonPuzzle.height
     ) {
       throw new Error(
         `Element ${element.number} ${element.direction}: length must be positive greater than 1 and less than puzzle's width and height`
