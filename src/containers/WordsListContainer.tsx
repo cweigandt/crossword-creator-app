@@ -159,9 +159,13 @@ const WordsListContainer = ({
 };
 
 export default connect((state: RootState) => ({
-  elements: state.puzzle.puzzles[state.puzzle.currentPuzzleIndex].elements,
+  elements:
+    state.puzzle.present.puzzles[state.puzzle.present.currentPuzzleIndex]
+      .elements,
   selection: state.interaction.selectedElement,
-  solution: state.puzzle.puzzles[state.puzzle.currentPuzzleIndex].solution,
+  solution:
+    state.puzzle.present.puzzles[state.puzzle.present.currentPuzzleIndex]
+      .solution,
   mode: state.interaction.mode,
   selectedClue: state.interaction.selectedClue,
   clueList: state.words.clueList,

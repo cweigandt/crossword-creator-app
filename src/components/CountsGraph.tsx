@@ -14,7 +14,8 @@ const CountsGraph = ({ elements }: PropsType) => {
   });
 
   return (
-    <div>
+    <div style={{ marginTop: "60px" }}>
+      <div style={{ textAlign: "center" }}>Word Lengths</div>
       <Chart
         loader={<div style={{ height: 200 }}></div>}
         width={500}

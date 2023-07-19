@@ -4,14 +4,15 @@ import { RootState } from "../../reducers";
 import puzzleSlice from "../../reducers/puzzleSlice";
 import interactionSlice from "../../reducers/interactionSlice";
 import { GridModes } from "../../constants/GridModes";
+import UndoRedoButtons from "./UndoRedoButtons";
 
 const TitleContainer = () => {
   const dispatch = useDispatch();
   const puzzleNumber = useSelector(
-    (state: RootState) => state.puzzle.currentPuzzleIndex
+    (state: RootState) => state.puzzle.present.currentPuzzleIndex
   );
   const puzzleCount = useSelector(
-    (state: RootState) => state.puzzle.puzzles.length
+    (state: RootState) => state.puzzle.present.puzzles.length
   );
 
   const handleLeftClick = useCallback(() => {
@@ -28,6 +29,8 @@ const TitleContainer = () => {
 
   return (
     <div className="header-title">
+      <UndoRedoButtons />
+
       <div className="puzzle-arrow" onClick={handleLeftClick}>
         ⬅️
       </div>

@@ -5,8 +5,10 @@ import puzzleSlice from "./puzzleSlice";
 import modalSlice from "./modalSlice";
 import wordsSlice from "./wordsSlice";
 
+import undoable from "redux-undo";
+
 const rootReducer = combineReducers({
-  puzzle: puzzleSlice.reducer,
+  puzzle: undoable(puzzleSlice.reducer),
   interaction: interactionSlice.reducer,
   modal: modalSlice.reducer,
   words: wordsSlice.reducer,

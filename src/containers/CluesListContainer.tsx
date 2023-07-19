@@ -6,7 +6,8 @@ import { RootState } from "../reducers";
 const CluesListContainer = () => {
   const elements = useSelector(
     (state: RootState) =>
-      state.puzzle.puzzles[state.puzzle.currentPuzzleIndex].elements
+      state.puzzle.present.puzzles[state.puzzle.present.currentPuzzleIndex]
+        .elements
   );
 
   return (

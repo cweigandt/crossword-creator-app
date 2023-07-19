@@ -117,9 +117,15 @@ const PuzzleContainer = ({
 };
 
 export default connect((state: RootState) => ({
-  template: state.puzzle.puzzles[state.puzzle.currentPuzzleIndex].template,
-  solution: state.puzzle.puzzles[state.puzzle.currentPuzzleIndex].solution,
-  elements: state.puzzle.puzzles[state.puzzle.currentPuzzleIndex].elements,
+  template:
+    state.puzzle.present.puzzles[state.puzzle.present.currentPuzzleIndex]
+      .template,
+  solution:
+    state.puzzle.present.puzzles[state.puzzle.present.currentPuzzleIndex]
+      .solution,
+  elements:
+    state.puzzle.present.puzzles[state.puzzle.present.currentPuzzleIndex]
+      .elements,
   mode: state.interaction.mode,
   selection: state.interaction.selectedElement,
   temporaryClue: state.interaction.temporaryClue,
