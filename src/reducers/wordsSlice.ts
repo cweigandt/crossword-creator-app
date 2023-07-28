@@ -23,12 +23,13 @@ const wordsSlice = createSlice({
   reducers: {
     useClue(state, action: PayloadAction<UseCluePayload>) {
       const clueIndex = state.clueList.findIndex(
-        (c) =>
-          c.clue === action.payload.clue && c.answer === action.payload.answer
+        (c) => c.answer === action.payload.answer
       );
 
       if (clueIndex === -1) {
-        throw new Error("Clue index in clueList was -1");
+        throw new Error(
+          `Clue index for ${action.payload.answer} in clueList was -1`
+        );
       }
 
       state.clueList = state.clueList
@@ -44,7 +45,7 @@ const wordsSlice = createSlice({
       action.payload.puzzles.forEach((puzzle) => {
         puzzle.elements.forEach((element) => {
           const clueIndex = state.clueList.findIndex(
-            (c) => c.clue === element.clue && c.answer === element.answer
+            (c) => c.answer === element.answer
           );
 
           if (clueIndex > -1) {

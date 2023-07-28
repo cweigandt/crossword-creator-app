@@ -90,9 +90,9 @@
     "isFinalized": true
   },
   {
-    "clue": "Yesterday started to be a positive response",
+    "clue": "Yesterday started OK",
     "answer": "yes",
-    "isFinalized": false
+    "isFinalized": true
   },
   {
     "clue": "Therefore, never gobble indoors",
@@ -132,9 +132,9 @@
     "isFinalized": true
   },
   {
-    "clue": "Cats!  Must I call, missing tail's fringe?",
+    "clue": "Cats! Must it call endlessly",
     "answer": "musical",
-    "isFinalized": false
+    "isFinalized": true
   },
   {
     "clue": "Actual aurora borealis - ignore first nucleus",
@@ -456,7 +456,7 @@
     "isFinalized": false
   },
   {
-    "clue": "Recipe: Titanium, a plum, and heart metal",
+    "clue": "Metal recipe: Tin and a plum",
     "answer": "platinum",
     "isFinalized": true
   },

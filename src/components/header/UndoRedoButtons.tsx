@@ -1,4 +1,3 @@
-import { FiUpload } from "react-icons/fi";
 import { useDispatch, useSelector } from "react-redux";
 
 import { ActionCreators } from "redux-undo";

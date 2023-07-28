@@ -45,6 +45,12 @@ const WordsListContainer = ({
     // if (b.clue === selectedClue.clue && b.answer === selectedClue.answer) {
     //   return 1;
     // }
+    if (a.isFinalized && !b.isFinalized) {
+      return -1;
+    }
+    if (!a.isFinalized && b.isFinalized) {
+      return 1;
+    }
 
     if (a.clue !== "" && b.clue === "") {
       return -1;
@@ -54,6 +60,15 @@ const WordsListContainer = ({
     }
     return 0;
   };
+
+  const unSelectWord = useCallback(
+    (element: ElementType, clue: ClueType) => {
+      dispatch(puzzleSlice.actions.removeClue(element));
+      dispatch(interactionSlice.actions.selectWord({ clue: "", answer: "" }));
+      dispatch(wordsSlice.actions.unuseClue(clue));
+    },
+    [dispatch]
+  );
 
   const handleWordClick = useCallback(
     (clue) => {
@@ -69,28 +84,26 @@ const WordsListContainer = ({
           selection.direction
         );
         if (element) {
-          dispatch(puzzleSlice.actions.removeClue(element));
-          dispatch(
-            interactionSlice.actions.selectWord({ clue: "", answer: "" })
-          );
-          dispatch(wordsSlice.actions.unuseClue(clue));
+          unSelectWord(element, clue);
         }
       } else {
+        if (selectedElement) {
+          dispatch(wordsSlice.actions.unuseClue(selectedElement));
+        }
         dispatch(interactionSlice.actions.selectWord(clue));
         dispatch(puzzleSlice.actions.addClue({ clue, selection }));
         dispatch(wordsSlice.actions.useClue(clue));
       }
     },
-    [dispatch, elements, selection, selectedClue]
+    [dispatch, elements, selection, selectedClue, unSelectWord, selectedElement]
   );
 
   const handleClearClick = useCallback(
     (element: ElementType) => {
-      dispatch(puzzleSlice.actions.removeClue(element));
-      dispatch(wordsSlice.actions.unuseClue(element));
+      unSelectWord(element, element);
       return false;
     },
-    [dispatch]
+    [unSelectWord]
   );
 
   const handleMouseEnter = useCallback(
@@ -113,12 +126,12 @@ const WordsListContainer = ({
 
   useEffect(() => {
     if (mode === GridModes.LETTER) {
-      const newWords = getWordsThatFit(
-        [selectedClue].concat(clueList),
-        elements,
-        selection,
-        solution
-      );
+      let fullList = clueList;
+      if (selectedClue) {
+        fullList = [selectedClue].concat(clueList);
+      }
+
+      const newWords = getWordsThatFit(fullList, elements, selection, solution);
       setSelectedElement(
         getElement(
           elements,

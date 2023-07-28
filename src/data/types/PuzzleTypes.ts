@@ -24,4 +24,5 @@ export type PuzzleType = {
 export type ClueType = {
   clue: string;
   answer: string;
+  isFinalized?: boolean;
 };

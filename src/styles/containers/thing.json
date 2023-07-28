@@ -1,5 +1,5 @@
 {
-  "currentPuzzleIndex": 0,
+  "currentPuzzleIndex": 2,
   "puzzles": [
     {
       "width": 15,
@@ -1006,21 +1006,133 @@
         [1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1]
       ],
       "solution": [
-        ["", "", "", "", "", "", "", "", "", "", "", "", "", "", ""],
-        ["", "", "", "", "", "", "", "", "", "", "", "", "", "", ""],
-        ["", "", "", "", "", "", "", "", "", "", "", "", "", "", ""],
-        ["", "", "", "", "", "", "", "", "", "", "", "", "", "", ""],
-        ["", "", "", "", "", "", "", "", "", "", "", "", "", "", ""],
-        ["", "", "", "", "", "", "", "", "", "", "", "", "", "", ""],
-        ["", "", "", "", "", "", "", "", "", "", "", "", "", "", ""],
-        ["", "", "", "", "", "", "", "", "", "", "", "", "", "", ""],
-        ["", "", "", "", "", "", "", "", "", "", "", "", "", "", ""],
-        ["", "", "", "", "", "", "", "", "", "", "", "", "", "", ""],
-        ["", "", "", "", "", "", "", "", "", "", "", "", "", "", ""],
-        ["", "", "", "", "", "", "", "", "", "", "", "", "", "", ""],
-        ["", "", "", "", "", "", "", "", "", "", "", "", "", "", ""],
-        ["", "", "", "", "", "", "", "", "", "", "", "", "", "", ""],
-        ["", "", "", "", "", "", "", "", "", "", "", "", "", "", ""]
+        [
+          "R",
+          "O",
+          "C",
+          "K",
+          "",
+          "P",
+          "O",
+          "R",
+          "C",
+          "U",
+          "P",
+          "I",
+          "N",
+          "E",
+          "S"
+        ],
+        ["E", "", "A", "", "A", "", "F", "", "O", "", "A", "", "O", "", "A"],
+        [
+          "A",
+          "P",
+          "R",
+          "I",
+          "L",
+          "",
+          "F",
+          "U",
+          "N",
+          "C",
+          "T",
+          "I",
+          "O",
+          "N",
+          "S"
+        ],
+        ["D", "", "B", "", "P", "", "I", "", "G", "", "H", "", "T", "", "H"],
+        [
+          "",
+          "G",
+          "O",
+          "T",
+          "H",
+          "I",
+          "C",
+          "",
+          "R",
+          "E",
+          "S",
+          "O",
+          "R",
+          "T",
+          ""
+        ],
+        ["G", "", "N", "", "A", "", "I", "", "A", "", "", "", "O", "", "U"],
+        [
+          "U",
+          "T",
+          "A",
+          "H",
+          "",
+          "H",
+          "A",
+          "S",
+          "T",
+          "E",
+          "",
+          "O",
+          "P",
+          "E",
+          "N"
+        ],
+        ["M", "", "R", "", "P", "", "L", "", "U", "", "T", "", "I", "", "I"],
+        [
+          "B",
+          "E",
+          "A",
+          "T",
+          "L",
+          "E",
+          "S",
+          "",
+          "L",
+          "",
+          "Y",
+          "A",
+          "C",
+          "H",
+          "T"
+        ],
+        ["O", "", "", "", "A", "", "", "C", "A", "M", "P", "", "S", "", "Y"],
+        ["", "P", "L", "A", "T", "E", "S", "", "T", "", "E", "R", "G", "O", ""],
+        ["A", "", "I", "", "I", "", "P", "", "I", "", "", "E", "", "", "A"],
+        [
+          "B",
+          "E",
+          "G",
+          "A",
+          "N",
+          "",
+          "L",
+          "I",
+          "O",
+          "N",
+          "T",
+          "A",
+          "M",
+          "E",
+          "R"
+        ],
+        ["L", "", "H", "", "U", "", "I", "", "N", "", "", "P", "", "", "C"],
+        [
+          "E",
+          "S",
+          "T",
+          "I",
+          "M",
+          "A",
+          "T",
+          "E",
+          "S",
+          "",
+          "P",
+          "S",
+          "Y",
+          "C",
+          "H"
+        ]
       ],
       "elements": [
         {
@@ -1029,8 +1141,9 @@
           "column": 0,
           "length": 4,
           "direction": "across",
-          "clue": "",
-          "answer": ""
+          "clue": "Sock rolls back the front into a stone",
+          "answer": "rock",
+          "isFinalized": false
         },
         {
           "number": 1,
@@ -1038,8 +1151,9 @@
           "column": 0,
           "length": 4,
           "direction": "down",
-          "clue": "",
-          "answer": ""
+          "clue": "Study the inner workings of bare adrenaline",
+          "answer": "read",
+          "isFinalized": true
         },
         {
           "number": 2,
@@ -1047,8 +1161,9 @@
           "column": 2,
           "length": 9,
           "direction": "down",
-          "clue": "",
-          "answer": ""
+          "clue": "Sayonara lost its voice after car braked first into pasta dish",
+          "answer": "carbonara",
+          "isFinalized": false
         },
         {
           "number": 3,
@@ -1056,8 +1171,9 @@
           "column": 5,
           "length": 10,
           "direction": "across",
-          "clue": "",
-          "answer": ""
+          "clue": "Sounds like poor coupons result in small animals",
+          "answer": "porcupines",
+          "isFinalized": false
         },
         {
           "number": 4,
@@ -1066,7 +1182,8 @@
           "length": 9,
           "direction": "down",
           "clue": "",
-          "answer": ""
+          "answer": "officials",
+          "isFinalized": false
         },
         {
           "number": 5,
@@ -1075,7 +1192,8 @@
           "length": 15,
           "direction": "down",
           "clue": "",
-          "answer": ""
+          "answer": "congratulations",
+          "isFinalized": false
         },
         {
           "number": 6,
@@ -1084,7 +1202,8 @@
           "length": 5,
           "direction": "down",
           "clue": "",
-          "answer": ""
+          "answer": "paths",
+          "isFinalized": false
         },
         {
           "number": 7,
@@ -1093,7 +1212,7 @@
           "length": 9,
           "direction": "down",
           "clue": "",
-          "answer": ""
+          "answer": "nootropic"
         },
         {
           "number": 8,
@@ -1102,7 +1221,7 @@
           "length": 4,
           "direction": "down",
           "clue": "",
-          "answer": ""
+          "answer": "sash"
         },
         {
           "number": 9,
@@ -1111,7 +1230,8 @@
           "length": 5,
           "direction": "down",
           "clue": "",
-          "answer": ""
+          "answer": "alpha",
+          "isFinalized": false
         },
         {
           "number": 10,
@@ -1119,8 +1239,9 @@
           "column": 0,
           "length": 5,
           "direction": "across",
-          "clue": "",
-          "answer": ""
+          "clue": "Messed up 49 par month",
+          "answer": "april",
+          "isFinalized": false
         },
         {
           "number": 11,
@@ -1129,7 +1250,8 @@
           "length": 9,
           "direction": "across",
           "clue": "",
-          "answer": ""
+          "answer": "functions",
+          "isFinalized": false
         },
         {
           "number": 12,
@@ -1138,7 +1260,8 @@
           "length": 6,
           "direction": "across",
           "clue": "",
-          "answer": ""
+          "answer": "gothic",
+          "isFinalized": false
         },
         {
           "number": 13,
@@ -1147,7 +1270,8 @@
           "length": 6,
           "direction": "across",
           "clue": "",
-          "answer": ""
+          "answer": "resort",
+          "isFinalized": false
         },
         {
           "number": 14,
@@ -1155,8 +1279,9 @@
           "column": 0,
           "length": 5,
           "direction": "down",
-          "clue": "",
-          "answer": ""
+          "clue": "Chewy substance removes decay from robot leaving stew",
+          "answer": "gumbo",
+          "isFinalized": false
         },
         {
           "number": 15,
@@ -1165,7 +1290,8 @@
           "length": 5,
           "direction": "down",
           "clue": "",
-          "answer": ""
+          "answer": "unity",
+          "isFinalized": false
         },
         {
           "number": 16,
@@ -1174,7 +1300,8 @@
           "length": 4,
           "direction": "across",
           "clue": "",
-          "answer": ""
+          "answer": "utah",
+          "isFinalized": false
         },
         {
           "number": 17,
@@ -1182,8 +1309,9 @@
           "column": 5,
           "length": 5,
           "direction": "across",
-          "clue": "",
-          "answer": ""
+          "clue": "Hurry from the middle unbalanced seat",
+          "answer": "haste",
+          "isFinalized": false
         },
         {
           "number": 18,
@@ -1191,8 +1319,9 @@
           "column": 11,
           "length": 4,
           "direction": "across",
-          "clue": "",
-          "answer": ""
+          "clue": "Free writer followed love",
+          "answer": "open",
+          "isFinalized": false
         },
         {
           "number": 19,
@@ -1200,8 +1329,9 @@
           "column": 4,
           "length": 8,
           "direction": "down",
-          "clue": "",
-          "answer": ""
+          "clue": "Metal recipe: Tin and a plum",
+          "answer": "platinum",
+          "isFinalized": true
         },
         {
           "number": 20,
@@ -1210,7 +1340,8 @@
           "length": 4,
           "direction": "down",
           "clue": "",
-          "answer": ""
+          "answer": "type",
+          "isFinalized": false
         },
         {
           "number": 21,
@@ -1219,7 +1350,8 @@
           "length": 7,
           "direction": "across",
           "clue": "",
-          "answer": ""
+          "answer": "beatles",
+          "isFinalized": false
         },
         {
           "number": 22,
@@ -1227,8 +1359,9 @@
           "column": 10,
           "length": 5,
           "direction": "across",
-          "clue": "",
-          "answer": ""
+          "clue": "Boat you ought to hear",
+          "answer": "yacht",
+          "isFinalized": true
         },
         {
           "number": 23,
@@ -1236,8 +1369,9 @@
           "column": 7,
           "length": 4,
           "direction": "across",
-          "clue": "",
-          "answer": ""
+          "clue": "Scamper into site",
+          "answer": "camp",
+          "isFinalized": false
         },
         {
           "number": 24,
@@ -1246,7 +1380,8 @@
           "length": 6,
           "direction": "across",
           "clue": "",
-          "answer": ""
+          "answer": "plates",
+          "isFinalized": false
         },
         {
           "number": 25,
@@ -1254,8 +1389,9 @@
           "column": 2,
           "length": 5,
           "direction": "down",
-          "clue": "",
-          "answer": ""
+          "clue": "Brighten, the Egyptian sun god, left.  Alright?",
+          "answer": "light",
+          "isFinalized": false
         },
         {
           "number": 26,
@@ -1264,7 +1400,8 @@
           "length": 5,
           "direction": "down",
           "clue": "",
-          "answer": ""
+          "answer": "split",
+          "isFinalized": false
         },
         {
           "number": 27,
@@ -1272,8 +1409,9 @@
           "column": 10,
           "length": 4,
           "direction": "across",
-          "clue": "",
-          "answer": ""
+          "clue": "Therefore, never gobble indoors",
+          "answer": "ergo",
+          "isFinalized": true
         },
         {
           "number": 28,
@@ -1281,8 +1419,9 @@
           "column": 11,
           "length": 5,
           "direction": "down",
-          "clue": "",
-          "answer": ""
+          "clue": "Harvests pears?",
+          "answer": "reaps",
+          "isFinalized": false
         },
         {
           "number": 29,
@@ -1291,7 +1430,8 @@
           "length": 4,
           "direction": "down",
           "clue": "",
-          "answer": ""
+          "answer": "able",
+          "isFinalized": false
         },
         {
           "number": 30,
@@ -1299,8 +1439,9 @@
           "column": 14,
           "length": 4,
           "direction": "down",
-          "clue": "",
-          "answer": ""
+          "clue": "Char-grilled dome",
+          "answer": "arch",
+          "isFinalized": false
         },
         {
           "number": 31,
@@ -1308,8 +1449,9 @@
           "column": 0,
           "length": 5,
           "direction": "across",
-          "clue": "",
-          "answer": ""
+          "clue": "Started to beg and lost it's tail",
+          "answer": "began",
+          "isFinalized": true
         },
         {
           "number": 32,
@@ -1317,8 +1459,9 @@
           "column": 6,
           "length": 9,
           "direction": "across",
-          "clue": "",
-          "answer": ""
+          "clue": "Fifty one - no take backs.  Messy meat on top rack for a circus act",
+          "answer": "lion tamer",
+          "isFinalized": false
         },
         {
           "number": 33,
@@ -1327,7 +1470,8 @@
           "length": 9,
           "direction": "across",
           "clue": "",
-          "answer": ""
+          "answer": "estimates",
+          "isFinalized": false
         },
         {
           "number": 34,
@@ -1335,8 +1479,10 @@
           "column": 10,
           "length": 5,
           "direction": "across",
-          "clue": "",
-          "answer": ""
+          "clue": "Mentally prepare for spy novel chapter",
+          "answer": "Psych",
+          "isFinalized": true,
+          "best": true
         }
       ]
     }

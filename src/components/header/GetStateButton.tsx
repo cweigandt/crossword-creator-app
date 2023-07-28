@@ -7,7 +7,7 @@ const GetStateButton = () => {
   const puzzleState = useSelector((state: RootState) => state.puzzle);
 
   const handleClick = useCallback(() => {
-    navigator.clipboard.writeText(JSON.stringify(puzzleState)).then(
+    navigator.clipboard.writeText(JSON.stringify(puzzleState.present)).then(
       function () {
         console.log("Copying to clipboard was successful!");
       },
