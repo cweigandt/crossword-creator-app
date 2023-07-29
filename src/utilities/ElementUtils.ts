@@ -1,6 +1,6 @@
-import { Directions } from '../constants/Directions';
-import { SelectionType } from '../data/types/InteractionTypes';
-import { ClueType, ElementType, TemplateType } from '../data/types/PuzzleTypes';
+import { Directions } from "../constants/Directions";
+import { SelectionType } from "../data/types/InteractionTypes";
+import { ClueType, ElementType, TemplateType } from "../data/types/PuzzleTypes";
 
 export const addClueToElements = (
   elements: ElementType[],
@@ -34,8 +34,8 @@ export const removeClueFromElements = (
     ) {
       el = {
         ...el,
-        clue: '',
-        answer: '',
+        clue: "",
+        answer: "",
       };
     }
     return el;
@@ -81,8 +81,8 @@ const buildAcrossElement = (
       column,
       length,
       direction: Directions.ACROSS,
-      clue: '',
-      answer: '',
+      clue: "",
+      answer: "",
     };
   }
 
@@ -116,8 +116,8 @@ const buildDownElement = (
       column,
       length,
       direction: Directions.DOWN,
-      clue: '',
-      answer: '',
+      clue: "",
+      answer: "",
     };
   }
 
@@ -146,6 +146,16 @@ const getLength = (
     currentColumn = currentColumn + yStep;
   }
   return len;
+};
+
+export const getLengthOfSelection = (
+  template: TemplateType,
+  selection: SelectionType
+) => {
+  if (selection.direction === Directions.ACROSS) {
+    return getLength(template, selection.row, selection.column, 1, 0);
+  }
+  return getLength(template, selection.row, selection.column, 0, 1);
 };
 
 export const generateElements = (

@@ -19,6 +19,7 @@ import { RootState } from "../reducers";
 import { getElement, getElementsForRowColumn } from "../utilities/ElementUtils";
 import interactionSlice from "../reducers/interactionSlice";
 import puzzleSlice from "../reducers/puzzleSlice";
+import ClueEditor from "../components/clueEditor/ClueEditor";
 
 type PropsType = {
   template: TemplateType;
@@ -111,7 +112,8 @@ const PuzzleContainer = ({
         temporaryClue={temporaryClue}
         onClick={handleBlockClicked}
       ></Grid>
-      <CountsGraph elements={elements} />
+      {mode === GridModes.TEMPLATE && <CountsGraph elements={elements} />}
+      {mode === GridModes.LETTER && <ClueEditor />}
     </div>
   );
 };

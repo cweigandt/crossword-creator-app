@@ -1,0 +1,28 @@
+.clue-editor-wrapper {
+  margin: 10px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.clue-editor-wrapper .clue-editor-title {
+  text-align: center;
+  font-size: 24px;
+  margin: 20px;
+}
+
+.clue-editor-wrapper .clue-editor-input {
+  text-align: center;
+}
+
+.clue-editor-wrapper .button-wrapper {
+  margin: 20px;
+}
+
+.clue-editor-wrapper .replace-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
