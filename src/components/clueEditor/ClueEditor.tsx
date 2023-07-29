@@ -1,12 +1,14 @@
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../reducers";
 import { ChangeEvent, useCallback, useEffect, useState } from "react";
-import { getLengthOfSelection } from "../../utilities/ElementUtils";
+import { getElement, getLengthOfSelection } from "../../utilities/ElementUtils";
 
 import "../../styles/clueEditor/ClueEditor.css";
 import wordsSlice from "../../reducers/wordsSlice";
 import interactionSlice from "../../reducers/interactionSlice";
 import puzzleSlice from "../../reducers/puzzleSlice";
+import { getRootSelection } from "../../utilities/SelectionUtils";
+import { doLettersLineUp } from "../../utilities/WordsListUtils";
 
 const ALPHABET_REGEX = /^[A-Za-z -]*$/;
 
@@ -19,18 +21,28 @@ const ClueEditor = () => {
   const selectedElement = useSelector(
     (state: RootState) => state.interaction.selectedElement
   );
-  const template = useSelector(
+  const { template, elements, solution } = useSelector(
     (state: RootState) =>
       state.puzzle.present.puzzles[state.puzzle.present.currentPuzzleIndex]
-        .template
   );
+
   const clueList = useSelector((state: RootState) => state.words.clueList);
 
   const [value, setValue] = useState("");
 
   const handleChange = useCallback(
     (event: ChangeEvent<HTMLInputElement>) => {
-      const letterCount = getLengthOfSelection(template, selectedElement);
+      const rootSelection = getRootSelection(
+        elements,
+        selectedElement,
+        selectedElement.row,
+        selectedElement.column
+      );
+
+      if (!rootSelection) {
+        return null;
+      }
+      const letterCount = getLengthOfSelection(template, rootSelection);
 
       if (!ALPHABET_REGEX.test(event.target.value)) {
         return false;
@@ -40,11 +52,11 @@ const ClueEditor = () => {
       }
       setValue(event.target.value.toUpperCase());
     },
-    [template, selectedElement]
+    [elements, selectedElement, template]
   );
 
   const handleReplaceClicked = useCallback(() => {
-    const newClue = { clue: "", answer: value };
+    const newClue = { clue: "", answer: value.toLowerCase() };
 
     if (selectedElement) {
       dispatch(wordsSlice.actions.unuseClue(selectedClue));
@@ -64,12 +76,44 @@ const ClueEditor = () => {
     setValue("");
   }, [selectedElement]);
 
-  if (selectedClue.answer === "" || selectedElement.row === -1) {
+  if (selectedElement.row === -1) {
     return null;
   }
 
-  const letterCount = getLengthOfSelection(template, selectedElement);
-  const canReplace = value.length === letterCount;
+  const rootSelection = getRootSelection(
+    elements,
+    selectedElement,
+    selectedElement.row,
+    selectedElement.column
+  );
+
+  if (!rootSelection) {
+    return null;
+  }
+
+  const letterCount = getLengthOfSelection(template, rootSelection);
+
+  let lettersFit = true;
+  if (value.length === letterCount) {
+    lettersFit = doLettersLineUp(
+      solution,
+      value,
+      getElement(
+        elements,
+        rootSelection.row,
+        rootSelection.column,
+        rootSelection.direction
+      )!,
+      elements
+    );
+  }
+
+  const canReplace = value.length === letterCount && lettersFit;
+
+  let subtitle = `${value.length} / ${letterCount}`;
+  if (!lettersFit) {
+    subtitle = "Error: Letters do not line up";
+  }
 
   return (
     <div className="clue-editor-wrapper">
@@ -81,6 +125,7 @@ const ClueEditor = () => {
         value={value}
         onChange={handleChange}
       />
+      <div className="clue-editor-letter-count-wrapper">{subtitle}</div>
       <div className="button-wrapper">
         <button
           className="replace-button"

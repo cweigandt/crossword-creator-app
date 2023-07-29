@@ -1,9 +1,9 @@
-import { getElement, getElementsForRowColumn } from './ElementUtils';
-import { SelectionType } from '../data/types/InteractionTypes';
-import { ClueType, ElementType, SolutionType } from '../data/types/PuzzleTypes';
-import { visitSelectionBlocks } from './SolutionUtils';
+import { getElement, getElementsForRowColumn } from "./ElementUtils";
+import { SelectionType } from "../data/types/InteractionTypes";
+import { ClueType, ElementType, SolutionType } from "../data/types/PuzzleTypes";
+import { visitSelectionBlocks } from "./SolutionUtils";
 
-const doLettersLineUp = (
+export const doLettersLineUp = (
   solution: SolutionType,
   word: string,
   element: ElementType,
@@ -23,7 +23,7 @@ const doLettersLineUp = (
 
     if (
       oppositeElement &&
-      oppositeElement.answer !== '' &&
+      oppositeElement.answer !== "" &&
       word[index] !== solution[row][column]
     ) {
       // If there is a crossing element that has an answer filled in
@@ -56,12 +56,12 @@ export const getWordsThatFit = (
 
   return wordsList
     .filter((word) => {
-      return word.answer.replace(/[ -]/g, '').length === selectedElement.length;
+      return word.answer.replace(/[ -]/g, "").length === selectedElement.length;
     })
     .filter((word) => {
       return doLettersLineUp(
         solution,
-        word.answer.replace(/[ -]/g, '').toUpperCase(),
+        word.answer.replace(/[ -]/g, "").toUpperCase(),
         selectedElement,
         elements
       );
@@ -87,12 +87,12 @@ export const hasWordThatFits = (
 
   return wordsList
     .filter((word) => {
-      return word.answer.replace(/[ -]/g, '').length === selectedElement.length;
+      return word.answer.replace(/[ -]/g, "").length === selectedElement.length;
     })
     .some((word) => {
       return doLettersLineUp(
         solution,
-        word.answer.replace(/[ -]/g, '').toUpperCase(),
+        word.answer.replace(/[ -]/g, "").toUpperCase(),
         selectedElement,
         elements
       );
@@ -116,20 +116,20 @@ export const getWordsThatFitV2 = (
     return [];
   }
 
-  let existing = '^';
+  let existing = "^";
   visitSelectionBlocks(
     selection,
     selectedElement.length,
     (row, column, index) => {
-      existing = existing + (solution[row][column] || '.');
+      existing = existing + (solution[row][column] || ".");
     }
   );
 
-  existing = existing + '$';
+  existing = existing + "$";
 
   const regex = new RegExp(existing);
 
   return wordsList.filter((word) => {
-    return word.answer.replace(/[ -]/g, '').match(regex);
+    return word.answer.replace(/[ -]/g, "").match(regex);
   });
 };
