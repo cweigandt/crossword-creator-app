@@ -12,6 +12,9 @@ import { doLettersLineUp } from "../../utilities/WordsListUtils";
 
 const ALPHABET_REGEX = /^[A-Za-z -]*$/;
 
+const trimValue = (value: string) => {
+  return value.replace(/[ -]/g, "");
+};
 const ClueEditor = () => {
   const dispatch = useDispatch();
 
@@ -47,7 +50,7 @@ const ClueEditor = () => {
       if (!ALPHABET_REGEX.test(event.target.value)) {
         return false;
       }
-      if (event.target.value.length > letterCount) {
+      if (trimValue(event.target.value).length > letterCount) {
         return false;
       }
       setValue(event.target.value.toUpperCase());
@@ -94,10 +97,10 @@ const ClueEditor = () => {
   const letterCount = getLengthOfSelection(template, rootSelection);
 
   let lettersFit = true;
-  if (value.length === letterCount) {
+  if (trimValue(value).length === letterCount) {
     lettersFit = doLettersLineUp(
       solution,
-      value,
+      trimValue(value),
       getElement(
         elements,
         rootSelection.row,
@@ -108,9 +111,9 @@ const ClueEditor = () => {
     );
   }
 
-  const canReplace = value.length === letterCount && lettersFit;
+  const canReplace = trimValue(value).length === letterCount && lettersFit;
 
-  let subtitle = `${value.length} / ${letterCount}`;
+  let subtitle = `${trimValue(value).length} / ${letterCount}`;
   if (!lettersFit) {
     subtitle = "Error: Letters do not line up";
   }
