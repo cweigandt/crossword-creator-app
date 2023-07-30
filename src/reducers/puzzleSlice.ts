@@ -22,7 +22,7 @@ export type UpdateTemplatePayload = TemplateType;
 export type AddCluePayload = { clue: ClueType; selection: SelectionType };
 export type RemoveCluePayload = SelectionType;
 export type RemoveAllCluesPayload = {};
-export type RestoreStatePayload = StateType;
+export type RestoreStatePayload = StateType["puzzles"];
 export type GoToNextPuzzlePayload = {};
 export type GoToPreviousPuzzlePayload = {};
 export type RemoveCurrentPuzzlePayload = {};
@@ -131,7 +131,8 @@ const puzzleSlice = createSlice({
     restoreState(__state, action: PayloadAction<RestoreStatePayload>) {
       return {
         ...initialState,
-        ...action.payload,
+        puzzles: action.payload,
+        currentPuzzleIndex: action.payload.length - 1,
       };
     },
 

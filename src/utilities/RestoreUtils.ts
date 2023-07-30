@@ -134,26 +134,10 @@ const validateInput = (jsonPuzzle: PuzzleType) => {
   return jsonPuzzle;
 };
 
-export const validateJSON = (
-  inputString: string
-): { puzzles: PuzzleType[]; currentPuzzleIndex: number } => {
-  const jsonObject = JSON.parse(inputString) as {
-    puzzles: PuzzleType[];
-    currentPuzzleIndex: number;
-  };
-  const hasAllProps = hasRequiredProps(
-    jsonObject,
-    "puzzles",
-    "currentPuzzleIndex"
-  );
+export const validateJSON = (inputString: string): PuzzleType[] => {
+  const jsonObject = JSON.parse(inputString) as PuzzleType[];
 
-  if (!hasAllProps) {
-    throw new Error(
-      "Missing required key - one of: puzzles, currentPuzzleIndex"
-    );
-  }
-
-  jsonObject.puzzles.forEach(validateInput);
+  jsonObject.forEach(validateInput);
 
   return jsonObject;
 };

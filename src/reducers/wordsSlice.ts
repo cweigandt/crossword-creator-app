@@ -4,10 +4,7 @@ import wordsList from "../data/allClues.json";
 
 export type UseCluePayload = ClueType;
 export type UnuseCluePayload = ClueType;
-export type RestoreStatePayload = {
-  puzzles: PuzzleType[];
-  currentPuzzleIndex: number;
-};
+export type RestoreStatePayload = PuzzleType[];
 
 type StateType = {
   clueList: ClueType[];
@@ -42,7 +39,7 @@ const wordsSlice = createSlice({
     },
 
     restoreState(state, action: PayloadAction<RestoreStatePayload>) {
-      action.payload.puzzles.forEach((puzzle) => {
+      action.payload.forEach((puzzle) => {
         puzzle.elements.forEach((element) => {
           const clueIndex = state.clueList.findIndex(
             (c) => c.answer === element.answer

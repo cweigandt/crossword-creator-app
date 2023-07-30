@@ -4,10 +4,12 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../reducers";
 
 const GetStateButton = () => {
-  const puzzleState = useSelector((state: RootState) => state.puzzle);
+  const puzzlesState = useSelector(
+    (state: RootState) => state.puzzle.present.puzzles
+  );
 
   const handleClick = useCallback(() => {
-    navigator.clipboard.writeText(JSON.stringify(puzzleState.present)).then(
+    navigator.clipboard.writeText(JSON.stringify(puzzlesState)).then(
       function () {
         console.log("Copying to clipboard was successful!");
       },
@@ -15,7 +17,7 @@ const GetStateButton = () => {
         console.error("Could not copy text: ", err);
       }
     );
-  }, [puzzleState]);
+  }, [puzzlesState]);
 
   return (
     <div className="get-state-button" onClick={handleClick}>
