@@ -5,16 +5,22 @@ import Block from "./Block";
 
 type PropsType = {
   template: TemplateType;
-  onClick: () => void;
+  onClick: (template: TemplateType) => void;
+  style?: object;
 };
 
-const TemplatePreviewGrid = ({ template, onClick }: PropsType) => {
+const TemplatePreviewGrid = ({ template, onClick, style = {} }: PropsType) => {
   const handleClick = useCallback(() => {
-    onClick();
-  }, [onClick]);
+    onClick(template);
+  }, [onClick, template]);
 
   return (
-    <div id="crossword" className="crossword-board" onClick={handleClick}>
+    <div
+      id="crossword"
+      className="crossword-board"
+      onClick={handleClick}
+      style={style}
+    >
       {template.map((row, rowIndex) => {
         return (
           <div key={rowIndex} className="row">
