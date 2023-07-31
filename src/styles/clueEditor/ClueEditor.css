@@ -13,8 +13,12 @@
   margin: 20px;
 }
 
-.clue-editor-wrapper .clue-editor-input {
+.clue-editor-wrapper .answer-editor-input {
   text-align: center;
+}
+
+.clue-editor-wrapper .clue-editor-input {
+  width: 600px;
 }
 
 .clue-editor-wrapper .button-wrapper {

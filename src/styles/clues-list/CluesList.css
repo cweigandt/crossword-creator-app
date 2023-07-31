@@ -16,6 +16,10 @@
   border: 1px solid transparent;
 }
 
+.element:not(.has-answer) {
+  background-color: rgb(255, 245, 245);
+}
+
 .element.selected-element {
   background-color: lightblue;
   border: 1px solid lightcoral;

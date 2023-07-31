@@ -20,11 +20,14 @@ const TemplateChooserContainer = () => {
 
   return (
     <div className="template-chooser-container">
-      {templates.map((template: ImportedTemplate) => (
-        <TemplatePreviewGrid
-          template={template.template}
-          onClick={handleTemplateClicked}
-        />
+      <div className="template-chooser-title">Premade Templates</div>
+      {templates.map((template: ImportedTemplate, index) => (
+        <div className="template-container">
+          <TemplatePreviewGrid
+            template={template.template}
+            onClick={handleTemplateClicked}
+          />
+        </div>
       ))}
     </div>
   );

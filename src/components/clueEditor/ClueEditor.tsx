@@ -31,9 +31,10 @@ const ClueEditor = () => {
 
   const clueList = useSelector((state: RootState) => state.words.clueList);
 
-  const [value, setValue] = useState("");
+  const [answerValue, setAnswerValue] = useState("");
+  const [clueValue, setClueValue] = useState("");
 
-  const handleChange = useCallback(
+  const handleAnswerChange = useCallback(
     (event: ChangeEvent<HTMLInputElement>) => {
       const rootSelection = getRootSelection(
         elements,
@@ -53,13 +54,20 @@ const ClueEditor = () => {
       if (trimValue(event.target.value).length > letterCount) {
         return false;
       }
-      setValue(event.target.value.toUpperCase());
+      setAnswerValue(event.target.value.toUpperCase());
     },
     [elements, selectedElement, template]
   );
 
+  const handleClueChange = useCallback(
+    (event: ChangeEvent<HTMLTextAreaElement>) => {
+      setClueValue(event.target.value);
+    },
+    []
+  );
+
   const handleReplaceClicked = useCallback(() => {
-    const newClue = { clue: "", answer: value.toLowerCase() };
+    const newClue = { clue: clueValue, answer: answerValue.toLowerCase() };
 
     if (selectedElement) {
       dispatch(wordsSlice.actions.unuseClue(selectedClue));
@@ -73,11 +81,19 @@ const ClueEditor = () => {
     if (foundIndex > -1) {
       dispatch(wordsSlice.actions.useClue(clueList[foundIndex]));
     }
-  }, [clueList, dispatch, selectedClue, selectedElement, value]);
+  }, [
+    clueValue,
+    answerValue,
+    selectedElement,
+    dispatch,
+    clueList,
+    selectedClue,
+  ]);
 
   useEffect(() => {
-    setValue("");
-  }, [selectedElement]);
+    setAnswerValue(selectedClue.answer.toUpperCase());
+    setClueValue(selectedClue.clue);
+  }, [selectedClue.answer, selectedClue.clue]);
 
   if (selectedElement.row === -1) {
     return null;
@@ -97,10 +113,10 @@ const ClueEditor = () => {
   const letterCount = getLengthOfSelection(template, rootSelection);
 
   let lettersFit = true;
-  if (trimValue(value).length === letterCount) {
+  if (trimValue(answerValue).length === letterCount) {
     lettersFit = doLettersLineUp(
       solution,
-      trimValue(value),
+      trimValue(answerValue),
       getElement(
         elements,
         rootSelection.row,
@@ -111,9 +127,10 @@ const ClueEditor = () => {
     );
   }
 
-  const canReplace = trimValue(value).length === letterCount && lettersFit;
+  const canReplace =
+    trimValue(answerValue).length === letterCount && lettersFit;
 
-  let subtitle = `${trimValue(value).length} / ${letterCount}`;
+  let subtitle = `${trimValue(answerValue).length} / ${letterCount}`;
   if (!lettersFit) {
     subtitle = "Error: Letters do not line up";
   }
@@ -122,13 +139,17 @@ const ClueEditor = () => {
     <div className="clue-editor-wrapper">
       <div className="clue-editor-title">Clue Editor</div>
       <input
-        className="clue-editor-input"
-        placeholder={selectedClue.answer.toUpperCase()}
+        className="answer-editor-input"
         type="text"
-        value={value}
-        onChange={handleChange}
+        value={answerValue}
+        onChange={handleAnswerChange}
       />
       <div className="clue-editor-letter-count-wrapper">{subtitle}</div>
+      <textarea
+        className="clue-editor-input"
+        value={clueValue}
+        onChange={handleClueChange}
+      />
       <div className="button-wrapper">
         <button
           className="replace-button"

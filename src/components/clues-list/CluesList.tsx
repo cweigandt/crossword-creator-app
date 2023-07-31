@@ -65,6 +65,10 @@ const CluesList = ({ elements }: PropsType) => {
           classes.push("selected-element");
         }
 
+        if (element.clue.length > 0) {
+          classes.push("has-answer");
+        }
+
         return (
           <div
             key={index}
