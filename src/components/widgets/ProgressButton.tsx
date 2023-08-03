@@ -1,8 +1,8 @@
-import { useCallback } from 'react';
-import { useRef } from 'react';
-import { useState } from 'react';
+import { useCallback, useEffect } from "react";
+import { useRef } from "react";
+import { useState } from "react";
 
-import '../../styles/widgets/ProgressButton.css';
+import "../../styles/widgets/ProgressButton.css";
 
 type PropTypes = {
   color: string;
@@ -26,26 +26,28 @@ const ProgressButton = ({ color, onComplete, text }: PropTypes) => {
     }, 10);
   }, [setProgress]);
 
-  if (progress === 100) {
-    onComplete();
-    endInterval();
-  }
+  useEffect(() => {
+    if (progress === 100) {
+      onComplete();
+      endInterval();
+    }
+  }, [progress, onComplete, endInterval]);
 
   return (
     <div
-      className={'progress-button-wrapper'}
-      style={{ fontStyle: progress > 0 ? 'italic' : '', color }}
+      className={"progress-button-wrapper"}
+      style={{ fontStyle: progress > 0 ? "italic" : "", color }}
       onMouseDown={handleMouseDown}
       onMouseUp={endInterval}
       onMouseOut={endInterval}
     >
       <div
-        className={'progress-button-progress'}
+        className={"progress-button-progress"}
         style={{
           width: `${progress}%`,
         }}
       ></div>
-      <div className={'progress-button-text'}>{text}</div>
+      <div className={"progress-button-text"}>{text}</div>
     </div>
   );
 };

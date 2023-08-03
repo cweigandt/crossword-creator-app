@@ -1,31 +1,29 @@
-import { useCallback } from 'react';
-import { FiDownload } from 'react-icons/fi';
-import { connect } from 'react-redux';
-import { PuzzleType } from '../../data/types/PuzzleTypes';
-import { RootState } from '../../reducers';
+import { useCallback } from "react";
+import { FiDownload } from "react-icons/fi";
+import { useSelector } from "react-redux";
+import { RootState } from "../../reducers";
 
-type PropsType = {
-  puzzle: PuzzleType;
-};
+const GetStateButton = () => {
+  const puzzlesState = useSelector(
+    (state: RootState) => state.puzzle.present.puzzles
+  );
 
-const GetStateButton = ({ puzzle }: PropsType) => {
   const handleClick = useCallback(() => {
-    navigator.clipboard.writeText(JSON.stringify(puzzle)).then(
+    navigator.clipboard.writeText(JSON.stringify(puzzlesState)).then(
       function () {
-        console.log('Copying to clipboard was successful!');
+        console.log("Copying to clipboard was successful!");
       },
       function (err) {
-        console.error('Could not copy text: ', err);
+        console.error("Could not copy text: ", err);
       }
     );
-  }, [puzzle]);
+  }, [puzzlesState]);
+
   return (
-    <div className='get-state-button' onClick={handleClick}>
+    <div className="get-state-button" onClick={handleClick}>
       <FiDownload />
     </div>
   );
 };
 
-export default connect((state: RootState) => ({
-  puzzle: state.puzzle,
-}))(GetStateButton);
+export default GetStateButton;

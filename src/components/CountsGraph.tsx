@@ -1,6 +1,6 @@
-import Chart from 'react-google-charts';
-import { ElementType } from '../data/types/PuzzleTypes';
-import '../styles/CountsGraph.css';
+import Chart from "react-google-charts";
+import { ElementType } from "../data/types/PuzzleTypes";
+import "../styles/CountsGraph.css";
 
 type PropsType = {
   elements: ElementType[];
@@ -14,24 +14,25 @@ const CountsGraph = ({ elements }: PropsType) => {
   });
 
   return (
-    <div>
+    <div style={{ marginTop: "60px" }}>
+      <div style={{ textAlign: "center" }}>Word Lengths</div>
       <Chart
         loader={<div style={{ height: 200 }}></div>}
         width={500}
         height={200}
-        chartType='ColumnChart'
-        data={[['Length', 'Count'], ...data]}
+        chartType="ColumnChart"
+        data={[["Length", "Count"], ...data]}
         options={{
           animation: {
             duration: 300,
-            easing: 'out',
+            easing: "out",
             startup: true,
           },
-          backgroundColor: 'transparent',
+          backgroundColor: "transparent",
           chart: {
-            title: 'Clue Length Counts',
+            title: "Clue Length Counts",
           },
-          legend: { position: 'none' },
+          legend: { position: "none" },
           hAxis: {
             ticks: new Array(15).fill([]).map((_, i) => i + 1),
             viewWindow: {

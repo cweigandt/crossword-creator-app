@@ -28,6 +28,11 @@
   background-color: yellowgreen;
 }
 
+.word.finalized {
+  box-sizing: border-box;
+  border: 2px solid green;
+}
+
 .word .clear-button {
   position: absolute;
 

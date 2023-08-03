@@ -1,4 +1,4 @@
-import { Directions } from '../../constants/Directions';
+import { Directions } from "../../constants/Directions";
 
 export type TemplateType = number[][];
 export type SolutionType = string[][];
@@ -13,7 +13,6 @@ export type ElementType = {
   answer: string;
 };
 export type PuzzleType = {
-  id: number;
   width: number;
   height: number;
   template: TemplateType;
@@ -25,4 +24,5 @@ export type PuzzleType = {
 export type ClueType = {
   clue: string;
   answer: string;
+  isFinalized?: boolean;
 };

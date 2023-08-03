@@ -1,0 +1,49 @@
+.template-chooser-container {
+  height: calc(100vh - 100px);
+  overflow-y: scroll;
+  box-sizing: border-box;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  padding: 5px 3px 30px 3px;
+}
+
+.template-chooser-container .template-chooser-title {
+  width: 100%;
+  text-align: center;
+
+  padding: 8px;
+
+  font-size: 18px;
+  border-bottom: 1px solid black;
+}
+
+.template-chooser-container .crossword-board {
+  cursor: pointer;
+
+  margin: 30px;
+  width: 180px;
+  height: 180px;
+  background-color: white;
+  border: 1px solid black;
+}
+
+.template-chooser-container .template-container:hover {
+  background-color: lightgreen;
+}
+
+.template-chooser-container .crossword-board .row {
+  width: 100%;
+  height: 12px;
+  position: relative;
+}
+
+.template-chooser-container .crossword-board .row .block {
+  position: relative;
+  display: inline-block;
+  width: 12px;
+  height: 100%;
+  box-shadow: inset 0 0 0 1px black;
+}

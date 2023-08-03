@@ -1,6 +1,6 @@
-import { ClueType, ElementType } from '../../data/types/PuzzleTypes';
-import '../../styles/words-list/WordsList.css';
-import { FiXCircle } from 'react-icons/fi';
+import { ClueType, ElementType } from "../../data/types/PuzzleTypes";
+import "../../styles/words-list/WordsList.css";
+import { FiXCircle } from "react-icons/fi";
 
 type PropsType = {
   clues: ClueType[];
@@ -20,32 +20,36 @@ const WordsList = ({
   selectedElement,
 }: PropsType) => {
   return (
-    <div className='words-list'>
+    <div className="words-list">
       {clues.map((clueObj, index) => {
-        const classes = ['word'];
+        const classes = ["word"];
         if (clueObj.clue.length > 0) {
-          classes.push('has-answer');
+          classes.push("has-answer");
         }
         if (
           selectedElement &&
           clueObj.clue === selectedElement.clue &&
           clueObj.answer === selectedElement.answer
         ) {
-          classes.push('selected');
+          classes.push("selected");
+        }
+
+        if (clueObj.isFinalized) {
+          classes.push("finalized");
         }
 
         return (
           <div
             key={index}
-            className={classes.join(' ')}
+            className={classes.join(" ")}
             onClick={() => onClick(clueObj)}
             onMouseEnter={() => onMouseEnter(clueObj)}
             onMouseLeave={() => onMouseLeave(clueObj)}
           >
             {clueObj.answer}
-            {classes.includes('selected') && (
+            {classes.includes("selected") && (
               <div
-                className='clear-button'
+                className="clear-button"
                 onClick={(e) => {
                   e.stopPropagation();
                   onClearClick(selectedElement!);

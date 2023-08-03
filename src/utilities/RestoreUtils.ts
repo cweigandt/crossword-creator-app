@@ -1,5 +1,5 @@
-import { Directions } from '../constants/Directions';
-import { ElementType, PuzzleType } from '../data/types/PuzzleTypes';
+import { Directions } from "../constants/Directions";
+import { ElementType, PuzzleType } from "../data/types/PuzzleTypes";
 
 const hasRequiredProps = (object: object, ...varProps: string[]): boolean => {
   return varProps.reduce((accum, prop) => {
@@ -23,7 +23,7 @@ const validateTemplateElement = (
   templateElement: number,
   printString: string
 ) => {
-  validateType(templateElement, printString, 'number');
+  validateType(templateElement, printString, "number");
   if (templateElement !== 0 && templateElement !== 1) {
     throw new Error(`'template' values must be either 0 or 1`);
   }
@@ -33,7 +33,7 @@ const validateSolutionElement = (
   solutionElement: string,
   printString: string
 ) => {
-  validateType(solutionElement, printString, 'string');
+  validateType(solutionElement, printString, "string");
   if (solutionElement.length > 1) {
     throw new Error(
       `'solution' values must be either empty or a single character`
@@ -41,39 +41,34 @@ const validateSolutionElement = (
   }
 };
 
-const validateInput = (inputString: string): PuzzleType => {
-  let jsonPuzzle = {} as PuzzleType;
-  jsonPuzzle = JSON.parse(inputString);
-
+const validateInput = (jsonPuzzle: PuzzleType) => {
   const hasAllProps = hasRequiredProps(
     jsonPuzzle,
-    'id',
-    'width',
-    'height',
-    'template',
-    'solution',
-    'elements'
+    "width",
+    "height",
+    "template",
+    "solution",
+    "elements"
   );
 
   if (!hasAllProps) {
     throw new Error(
-      'Missing required key - one of: id, width, height, template, solution, elements'
+      "Missing required key - one of: id, width, height, template, solution, elements"
     );
   }
 
-  validateType(jsonPuzzle.id, 'id', 'number');
-  validateType(jsonPuzzle.width, 'width', 'number');
-  validateType(jsonPuzzle.height, 'height', 'number');
-  validateType(jsonPuzzle.template, 'template', 'object');
-  validateType(jsonPuzzle.solution, 'solution', 'object');
-  validateType(jsonPuzzle.elements, 'elements', 'object');
+  validateType(jsonPuzzle.width, "width", "number");
+  validateType(jsonPuzzle.height, "height", "number");
+  validateType(jsonPuzzle.template, "template", "object");
+  validateType(jsonPuzzle.solution, "solution", "object");
+  validateType(jsonPuzzle.elements, "elements", "object");
 
   // template and solution
   for (let rowIndex = 0; rowIndex < jsonPuzzle.height; rowIndex++) {
     const templateRow = jsonPuzzle.template[rowIndex];
     const solutionRow = jsonPuzzle.solution[rowIndex];
-    validateLength(templateRow, jsonPuzzle.width, 'template');
-    validateLength(solutionRow, jsonPuzzle.width, 'solution');
+    validateLength(templateRow, jsonPuzzle.width, "template");
+    validateLength(solutionRow, jsonPuzzle.width, "solution");
 
     for (let columnIndex = 0; columnIndex < jsonPuzzle.width; columnIndex++) {
       const templateElement = templateRow[columnIndex];
@@ -91,13 +86,13 @@ const validateInput = (inputString: string): PuzzleType => {
 
   jsonPuzzle.elements.forEach((el) => {
     const element = el as ElementType;
-    validateType(element.number, 'elements->number', 'number');
-    validateType(element.row, 'elements->row', 'number');
-    validateType(element.column, 'elements->column', 'number');
-    validateType(element.length, 'elements->length', 'number');
-    validateType(element.direction, 'elements->direction', 'string');
-    validateType(element.clue, 'elements->clue', 'string');
-    validateType(element.answer, 'elements->answer', 'string');
+    validateType(element.number, "elements->number", "number");
+    validateType(element.row, "elements->row", "number");
+    validateType(element.column, "elements->column", "number");
+    validateType(element.length, "elements->length", "number");
+    validateType(element.direction, "elements->direction", "string");
+    validateType(element.clue, "elements->clue", "string");
+    validateType(element.answer, "elements->answer", "string");
 
     if (element.number <= 0) {
       throw new Error(
@@ -118,8 +113,8 @@ const validateInput = (inputString: string): PuzzleType => {
 
     if (
       element.length <= 1 ||
-      element.length >= jsonPuzzle.width ||
-      element.length >= jsonPuzzle.height
+      element.length > jsonPuzzle.width ||
+      element.length > jsonPuzzle.height
     ) {
       throw new Error(
         `Element ${element.number} ${element.direction}: length must be positive greater than 1 and less than puzzle's width and height`
@@ -139,4 +134,10 @@ const validateInput = (inputString: string): PuzzleType => {
   return jsonPuzzle;
 };
 
-export default validateInput;
+export const validateJSON = (inputString: string): PuzzleType[] => {
+  const jsonObject = JSON.parse(inputString) as PuzzleType[];
+
+  jsonObject.forEach(validateInput);
+
+  return jsonObject;
+};

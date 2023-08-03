@@ -29,142 +29,149 @@
     "answer": "grow",
     "isFinalized": true
   },
-  { "clue": "Smear, stapler, smear", "answer": "plaster", "isFinalized": true },
+  { "clue": "Smear stapler?", "answer": "plaster", "isFinalized": true },
   { "clue": "Earlier a start", "answer": "ago", "isFinalized": true },
   { "clue": "Nice dink on the head", "answer": "kind", "isFinalized": true },
   {
-    "clue": "Concerning find: ridiculous pal!",
+    "clue": "Concerning find is ridiculous, pal",
     "answer": "friend",
-    "isFinalized": false
+    "isFinalized": true
   },
   {
-    "clue": "Edge of mirror reflection.  But only half.",
+    "clue": "Edge of mirror reflection holds one?",
     "answer": "rim",
-    "isFinalized": false
+    "isFinalized": true
   },
   {
-    "clue": "Card game from drink ownership?",
+    "clue": "Card game for your drink exchange?",
     "answer": "rummy",
-    "isFinalized": false
+    "isFinalized": true
   },
   {
     "clue": "Tree comes from damp lanterns",
     "answer": "plant",
-    "isFinalized": false
-  },
-  {
-    "clue": "Focaccia's first and double agency.",
-    "answer": "fcc",
-    "isFinalized": false
+    "isFinalized": true
   },
   {
     "clue": "Expertise, it sounds like pan",
     "answer": "skillet",
-    "isFinalized": false
+    "isFinalized": true
   },
   {
     "clue": "Have to have a bit of one edible",
     "answer": "need",
-    "isFinalized": false
+    "isFinalized": true
   },
-  { "clue": "Eat mixed drink", "answer": "tea", "isFinalized": false },
+  { "clue": "Eat mixed bag", "answer": "tea", "isFinalized": true },
   {
-    "clue": "Guy joins Drug Enforcment Agency without a second trick step",
+    "clue": "Drug Enforcement Agency, without a second try, follows guy to steps",
     "answer": "ladder",
-    "isFinalized": false
+    "isFinalized": true
   },
   {
-    "clue": "Meat add-on where even offal sit back",
+    "clue": "Meat covering where odd flan sit back",
     "answer": "fat",
-    "isFinalized": false
+    "isFinalized": true
   },
   {
-    "clue": "Argumentative slice of couscous accepts tank near trouble",
+    "clue": "Argumentative slice of couscous consumes tank near trouble",
     "answer": "cantankerous",
-    "isFinalized": false
+    "isFinalized": true,
+    "best": true
   },
   {
-    "clue": "Endless shoulder indicates obligation",
+    "clue": "Endless shoulder obligation",
     "answer": "should",
-    "isFinalized": false
+    "isFinalized": true
   },
   {
-    "clue": "Smash reps messily with pole",
+    "clue": "Smash reps with pole?",
     "answer": "press",
-    "isFinalized": false
+    "isFinalized": true
   },
   {
-    "clue": "Yesterday started to be a positive response",
+    "clue": "Yesterday started OK",
     "answer": "yes",
-    "isFinalized": false
+    "isFinalized": true
   },
   {
     "clue": "Therefore, never gobble indoors",
     "answer": "ergo",
-    "isFinalized": false
+    "isFinalized": true
   },
-  { "clue": "Normal jet I hear", "answer": "plain", "isFinalized": false },
   {
-    "clue": "Initiate of being insane",
+    "clue": "Normal jet sound",
+    "answer": "plain",
+    "isFinalized": true,
+    "best": true
+  },
+  {
+    "clue": "Initiate being insane",
     "answer": "begin",
-    "isFinalized": false
+    "isFinalized": true
   },
   {
-    "clue": "Study the midst of bare adrenaline",
+    "clue": "Study the inner workings of bare adrenaline",
     "answer": "read",
-    "isFinalized": false
+    "isFinalized": true
   },
   {
-    "clue": "Thug row messily brought to shape",
+    "clue": "Wide receiver should have worked",
     "answer": "wrought",
-    "isFinalized": false
+    "isFinalized": true
   },
   {
-    "clue": "\"I must procede first,\" troublesome one",
+    "clue": "Mentally prepare for spy novel chapter",
+    "answer": "psych",
+    "isFinalized": true,
+    "best": true
+  },
+  {
+    "clue": "\"I must first apply core, troublesome one\"",
     "answer": "imp",
-    "isFinalized": false
+    "isFinalized": true
   },
   {
-    "clue": "Cats!  Must I call, missing tail's fringe?",
+    "clue": "Cats! Must it call endlessly",
     "answer": "musical",
-    "isFinalized": false
+    "isFinalized": true
   },
   {
-    "clue": "Madrid Unfortunately dead, Mr. Liar formed a soccer team",
+    "clue": "Actual aurora borealis - ignore first nucleus",
     "answer": "real",
-    "isFinalized": false
+    "isFinalized": true
   },
-  { "clue": "Boat ya ought to hear", "answer": "yacht", "isFinalized": false },
+  { "clue": "Boat you ought to hear", "answer": "yacht", "isFinalized": true },
   {
     "clue": "Repel back sickly person",
     "answer": "leper",
-    "isFinalized": false
+    "isFinalized": true
   },
   { "clue": "Actress Marisa's book", "answer": "tome", "isFinalized": false },
   {
-    "clue": "The ride always has a thought",
+    "clue": "Thought of the ride away",
     "answer": "idea",
-    "isFinalized": false
+    "isFinalized": true
   },
   {
-    "clue": "Screaming without a mouth, first enters English movie",
+    "clue": "Screaming supplants morning for English movie",
     "answer": "screening",
-    "isFinalized": false
+    "isFinalized": true
   },
   {
-    "clue": "Wholly fly, underline intercepting",
+    "clue": "Thoroughly fly, underline intercepting",
     "answer": "fully",
-    "isFinalized": false
+    "isFinalized": true
   },
   {
     "clue": "Started to beg and lost it's tail",
     "answer": "began",
-    "isFinalized": false
+    "isFinalized": true
   },
   {
-    "clue": "Fifth and second elements turn red for respected person",
+    "clue": "Senior makes pit of hell turn red",
     "answer": "elder",
-    "isFinalized": false
+    "isFinalized": true
   },
   {
     "clue": "Curse of initial seven places everyone likely loves",
@@ -241,11 +248,6 @@
   {
     "clue": "Ship sinker, lacerating badly pale",
     "answer": "glacier",
-    "isFinalized": false
-  },
-  {
-    "clue": "If accessing little walls - that's essence",
-    "answer": "life",
     "isFinalized": false
   },
   {
@@ -449,7 +451,7 @@
     "isFinalized": false
   },
   {
-    "clue": "Recipe: Titanium, a plum, and heart metal",
+    "clue": "Metal recipe: Tin and a plum",
     "answer": "platinum",
     "isFinalized": true
   },
@@ -839,8 +841,8 @@
     "isFinalized": false
   },
   {
-    "clue": "Instance of previous husband getting enough",
-    "answer": "example",
+    "clue": "Instances of previous husband getting enough",
+    "answer": "examples",
     "isFinalized": false
   },
   {
@@ -950,7 +952,7 @@
     "answer": "tonic",
     "isFinalized": false
   },
-  { "clue": "Lispy smooch friends", "answer": "kith", "isFinalized": false },
+  { "clue": "Lispy smooch for friends", "answer": "kith", "isFinalized": true },
   {
     "clue": "A foot goes to emergency room later",
     "answer": "after",
@@ -1799,7 +1801,7 @@
     "isFinalized": false
   },
   {
-    "clue": "Existence proliferated centrally",
+    "clue": "Existence centrally proliferated",
     "answer": "life",
     "isFinalized": false
   },
@@ -2041,12 +2043,12 @@
   },
   {
     "clue": "Angering war tsars is a scifi movie",
-    "answer": "starwars",
+    "answer": "star wars",
     "isFinalized": false
   },
   {
     "clue": "Django lost his musician and preceded nothing with king, right before emergency room abandoned water temple",
-    "answer": "angkorwat",
+    "answer": "angkor wat",
     "isFinalized": false
   },
   {
@@ -4923,6 +4925,7 @@
   { "clue": "", "answer": "concerns", "isFinalized": false },
   { "clue": "", "answer": "vendor", "isFinalized": false },
   { "clue": "", "answer": "originally", "isFinalized": false },
+  { "clue": "", "answer": "tacet", "isFinalized": false },
   { "clue": "", "answer": "intel", "isFinalized": false },
   { "clue": "", "answer": "utilities", "isFinalized": false },
   { "clue": "", "answer": "philosophy", "isFinalized": false },
@@ -10609,6 +10612,5 @@
   { "clue": "", "answer": "varieties", "isFinalized": false },
   { "clue": "", "answer": "arbor", "isFinalized": false },
   { "clue": "", "answer": "configurations", "isFinalized": false },
-  { "clue": "", "answer": "poison", "isFinalized": false },
-  { "clue": "", "answer": "", "isFinalized": false }
+  { "clue": "", "answer": "poison", "isFinalized": false }
 ]

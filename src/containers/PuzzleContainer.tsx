@@ -1,24 +1,25 @@
-import { useCallback } from 'react';
-import { connect, useDispatch } from 'react-redux';
+import { useCallback } from "react";
+import { connect, useDispatch } from "react-redux";
 
-import Grid from '../components/grid/Grid';
-import { templateUpdated } from '../actions/puzzleActions';
+import Grid from "../components/grid/Grid";
 
-import CountsGraph from '../components/CountsGraph';
-import { GridModes } from '../constants/GridModes';
+import CountsGraph from "../components/CountsGraph";
+import { GridModes } from "../constants/GridModes";
 
-import '../styles/containers/PuzzleContainer.css';
-import { elementSelected } from '../actions/interactionActions';
-import { getOppositeDirection } from '../constants/Directions';
+import "../styles/containers/PuzzleContainer.css";
+import { getOppositeDirection } from "../constants/Directions";
 import {
   ClueType,
   ElementType,
   SolutionType,
   TemplateType,
-} from '../data/types/PuzzleTypes';
-import { SelectionType } from '../data/types/InteractionTypes';
-import { RootState } from '../reducers';
-import { getElementsForRowColumn } from '../utilities/ElementUtils';
+} from "../data/types/PuzzleTypes";
+import { SelectionType } from "../data/types/InteractionTypes";
+import { RootState } from "../reducers";
+import { getElement, getElementsForRowColumn } from "../utilities/ElementUtils";
+import interactionSlice from "../reducers/interactionSlice";
+import puzzleSlice from "../reducers/puzzleSlice";
+import ClueEditor from "../components/clueEditor/ClueEditor";
 
 type PropsType = {
   template: TemplateType;
@@ -45,7 +46,7 @@ const PuzzleContainer = ({
         updatedTemplate[row][column] = Math.abs(
           updatedTemplate[row][column] - 1
         ); // 1 -> 0, 0 -> -1 -> 1
-        dispatch(templateUpdated(updatedTemplate));
+        dispatch(puzzleSlice.actions.updateTemplate(updatedTemplate));
       }
 
       if (mode === GridModes.LETTER) {
@@ -84,7 +85,17 @@ const PuzzleContainer = ({
             }
           }
 
-          dispatch(elementSelected(newSelection));
+          dispatch(interactionSlice.actions.selectElement(newSelection));
+          dispatch(
+            interactionSlice.actions.selectWord(
+              getElement(
+                elements,
+                newSelection.row,
+                newSelection.column,
+                newSelection.direction
+              ) || { clue: "", answer: "" }
+            )
+          );
         }
       }
     },
@@ -92,7 +103,7 @@ const PuzzleContainer = ({
   );
 
   return (
-    <div className='puzzle-container'>
+    <div className="puzzle-container">
       <Grid
         template={template}
         solution={solution}
@@ -101,15 +112,22 @@ const PuzzleContainer = ({
         temporaryClue={temporaryClue}
         onClick={handleBlockClicked}
       ></Grid>
-      <CountsGraph elements={elements} />
+      {mode === GridModes.TEMPLATE && <CountsGraph elements={elements} />}
+      {mode === GridModes.LETTER && <ClueEditor />}
     </div>
   );
 };
 
 export default connect((state: RootState) => ({
-  template: state.puzzle.template,
-  solution: state.puzzle.solution,
-  elements: state.puzzle.elements,
+  template:
+    state.puzzle.present.puzzles[state.puzzle.present.currentPuzzleIndex]
+      .template,
+  solution:
+    state.puzzle.present.puzzles[state.puzzle.present.currentPuzzleIndex]
+      .solution,
+  elements:
+    state.puzzle.present.puzzles[state.puzzle.present.currentPuzzleIndex]
+      .elements,
   mode: state.interaction.mode,
   selection: state.interaction.selectedElement,
   temporaryClue: state.interaction.temporaryClue,
