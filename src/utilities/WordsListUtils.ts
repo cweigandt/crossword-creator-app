@@ -133,3 +133,30 @@ export const getWordsThatFitV2 = (
     return word.answer.replace(/[ -]/g, "").match(regex);
   });
 };
+
+export const getLengthDisplayString = (
+  answer: string,
+  delimiters: string[] = [" ", "-"]
+) => {
+  let output = "";
+
+  const [currentDelimiter, ...rest] = delimiters;
+
+  if (!currentDelimiter) {
+    return "";
+  }
+
+  const words = answer.split(currentDelimiter);
+  words.forEach((word, wordIndex) => {
+    let wordDisplay = `${word.length}`;
+    if (rest.length > 0) {
+      wordDisplay = getLengthDisplayString(word, rest);
+    }
+
+    output = `${output}${wordDisplay}${
+      wordIndex < words.length - 1 ? currentDelimiter : ""
+    }`;
+  });
+
+  return output;
+};

@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import interactionSlice from "../../reducers/interactionSlice";
 import { RootState } from "../../reducers";
 import { getElement } from "../../utilities/ElementUtils";
+import { getLengthDisplayString } from "../../utilities/WordsListUtils";
 
 type PropsType = {
   elements: ElementType[];
@@ -25,7 +26,11 @@ const sortFunction = (a: ElementType, b: ElementType): number => {
 
 const makeDisplayString = (element: ElementType): string => {
   const direction = element.direction === Directions.ACROSS ? "a" : "d";
-  return `${element.number}${direction}: ${element.clue} (${element.answer}) (${element.length})`;
+  return `${element.number}${direction}: ${
+    element.clue
+  } (${element.answer.toUpperCase()}) (${getLengthDisplayString(
+    element.answer
+  )})`;
 };
 
 const CluesList = ({ elements }: PropsType) => {
