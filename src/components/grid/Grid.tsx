@@ -1,26 +1,26 @@
-import { useCallback } from 'react';
-import { SelectionType } from '../../data/types/InteractionTypes';
+import { useCallback } from "react";
+import { SelectionType } from "../../data/types/InteractionTypes";
 import {
   ClueType,
   ElementType,
   SolutionType,
   TemplateType,
-} from '../../data/types/PuzzleTypes';
-import '../../styles/grid/Grid.css';
+} from "../../data/types/PuzzleTypes";
+import "../../styles/grid/Grid.css";
 import {
   getElement,
   getRowColumnIndexInElement,
   isRowColumnInElement,
-} from '../../utilities/ElementUtils';
-import Block from './Block';
+} from "../../utilities/ElementUtils";
+import Block from "./Block";
 
 type PropsType = {
   elements: ElementType[];
-  solution: SolutionType;
+  solution?: SolutionType;
   template: TemplateType;
   selection: SelectionType | null;
   temporaryClue: ClueType | null;
-  onClick: (row: number, column: number) => void;
+  onClick: ((row: number, column: number) => void) | null;
 };
 
 const getClueNumber = (
@@ -52,7 +52,7 @@ const Grid = ({
 }: PropsType) => {
   const handleMouseUp = useCallback(
     (row, column) => {
-      onClick(row, column);
+      onClick && onClick(row, column);
     },
     [onClick]
   );
@@ -62,23 +62,23 @@ const Grid = ({
     getElement(elements, selection.row, selection.column, selection.direction);
 
   const renderBlock = (templateValue: number, row: number, column: number) => {
-    let content = solution[row][column];
+    let content = solution ? solution[row][column] : "";
 
     const classes = [];
     if (selection && row === selection.row && column === selection.column) {
-      classes.push('selected-block');
+      classes.push("selected-block");
     }
 
     if (selectedElement && isRowColumnInElement(selectedElement, row, column)) {
-      classes.push('selected-word');
+      classes.push("selected-word");
 
       if (temporaryClue && !content) {
         const index = getRowColumnIndexInElement(selectedElement, row, column);
         if (index !== -1) {
           content = temporaryClue.answer
-            .replace(/[ -]/g, '')
+            .replace(/[ -]/g, "")
             [index].toUpperCase();
-          classes.push('temporary');
+          classes.push("temporary");
         }
       }
     }
@@ -92,16 +92,16 @@ const Grid = ({
         clueNumber={getClueNumber(elements, row, column)}
         key={row * 100 + column}
         onMouseUp={handleMouseUp}
-        classes={classes.join(' ')}
+        classes={classes.join(" ")}
       />
     );
   };
 
   return (
-    <div id='crossword' className='crossword-board'>
+    <div id="crossword" className="crossword-board">
       {template.map((row, rowIndex) => {
         return (
-          <div key={rowIndex} className='row'>
+          <div key={rowIndex} className="row">
             {row.map((templateValue, columnIndex) =>
               renderBlock(templateValue, rowIndex, columnIndex)
             )}
