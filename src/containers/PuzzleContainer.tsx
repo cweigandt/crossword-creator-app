@@ -111,7 +111,7 @@ const PuzzleContainer = ({
         selection={mode === GridModes.LETTER ? selection : null}
         temporaryClue={temporaryClue}
         onClick={handleBlockClicked}
-      ></Grid>
+      />
       {mode === GridModes.TEMPLATE && <CountsGraph elements={elements} />}
       {mode === GridModes.LETTER && <ClueEditor />}
     </div>

@@ -1,0 +1,16 @@
+.print-puzzle-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.print-clues-wrapper {
+  width: 100%;
+  columns: 2;
+}
+
+@media print {
+  .crossword-board .block.empty {
+    background-color: black !important;
+  }
+}

@@ -5,6 +5,7 @@ import puzzleSlice from "../../reducers/puzzleSlice";
 import interactionSlice from "../../reducers/interactionSlice";
 import { GridModes } from "../../constants/GridModes";
 import UndoRedoButtons from "./UndoRedoButtons";
+import PrintLink from "./PrintLink";
 
 const TitleContainer = () => {
   const dispatch = useDispatch();
@@ -38,6 +39,8 @@ const TitleContainer = () => {
       <div className="puzzle-arrow" onClick={handleRightClick}>
         ➡️
       </div>
+
+      <PrintLink />
     </div>
   );
 };
