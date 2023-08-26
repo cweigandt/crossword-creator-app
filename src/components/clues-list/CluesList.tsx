@@ -55,11 +55,21 @@ const CluesList = ({ elements }: PropsType) => {
     [dispatch]
   );
 
+  const reactToSelectedElementChange = useCallback(
+    (node: HTMLDivElement | null) => {
+      if (node) {
+        node.scrollIntoView({ block: "end", behavior: "smooth" });
+      }
+    },
+    []
+  );
+
   return (
     <div className="clues-list">
       <div className="clue-count">{`${elements.length} clues`}</div>
 
       {displayedClues.map((element, index) => {
+        let isSelected = false;
         const classes = ["element"];
         if (
           rootSelectedElement &&
@@ -68,6 +78,7 @@ const CluesList = ({ elements }: PropsType) => {
           element.direction === rootSelectedElement.direction
         ) {
           classes.push("selected-element");
+          isSelected = true;
         }
 
         if (element.clue.length > 0) {
@@ -77,6 +88,7 @@ const CluesList = ({ elements }: PropsType) => {
         return (
           <div
             key={index}
+            ref={isSelected ? reactToSelectedElementChange : null}
             className={classes.join(" ")}
             onClick={() => {
               handleClick(element);
