@@ -10,9 +10,9 @@ interface PrinterContainerProps {
 const PrinterContainer = ({ puzzles }: PrinterContainerProps) => {
   return (
     <div>
-      {puzzles.map((puzzle) => (
+      {puzzles.map((puzzle, index) => (
         <>
-          <PrintReadyPuzzle puzzle={puzzle} />
+          <PrintReadyPuzzle puzzle={puzzle} key={index} />
           <div className="pagebreak"></div>
         </>
       ))}

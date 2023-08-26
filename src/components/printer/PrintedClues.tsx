@@ -35,7 +35,7 @@ const PrintedClues = ({ puzzle }: PrintedCluesProps) => {
   return (
     <div className="print-clues-wrapper">
       {displayedClues.map((clue) => {
-        return <div>{makeDisplayString(clue)}</div>;
+        return <div key={clue.number}>{makeDisplayString(clue)}</div>;
       })}
     </div>
   );

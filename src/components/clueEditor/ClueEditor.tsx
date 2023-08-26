@@ -131,7 +131,9 @@ const ClueEditor = () => {
     trimValue(answerValue).length === letterCount && lettersFit;
 
   let subtitle = `${trimValue(answerValue).length} / ${letterCount}`;
+  let hasError = false;
   if (!lettersFit) {
+    hasError = true;
     subtitle = "Error: Letters do not line up";
   }
 
@@ -144,7 +146,12 @@ const ClueEditor = () => {
         value={answerValue}
         onChange={handleAnswerChange}
       />
-      <div className="clue-editor-letter-count-wrapper">{subtitle}</div>
+      <div
+        className="clue-editor-letter-count-wrapper"
+        style={{ color: hasError ? "red" : "black" }}
+      >
+        {subtitle}
+      </div>
       <textarea
         className="clue-editor-input"
         value={clueValue}
